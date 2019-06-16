@@ -19,7 +19,7 @@ export class RegistrationFormComponent implements OnInit {
   prevPage(){
     this.page-=1
   }
-  submit(){
+  submiting(){
     //todo
   }
 

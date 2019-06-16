@@ -12,6 +12,7 @@
               <div class="progress-bar progress-bar progress-bar-striped" role="progressbar" [style.width]="((this.page-1)/this.numPages)*100+'%'" aria-valuenow="((this.page-1)/this.numPages)*100" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
             <div class="form-itself">
+              <label>Name</label>
               <div class="form-row">
                 <div class="col">
                   <input type="text" class="form-control" placeholder="First name">
@@ -20,31 +21,45 @@
                   <input type="text" class="form-control" placeholder="Last name">
                 </div>
               </div>
+              <div class="form-row">
+                <div class="col">
+                  <label for="inputEmail">Email</label>
+                  <input type="email" class="form-control" id="inputEmail" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}" [(ngModel)]="inputEmail" (focus)="email.active = true" (blur)="email.active = false" name="inputEmail" #email="ngModel">
+                  <div *ngIf="email.errors && (email.dirty || email.touched) && !email.active" class="alert alert-danger">
+                    <div *ngIf="email.errors.required">
+                      Email is required
+                    </div>
+                    <div *ngIf="email.invalid && !email.errors.required">
+                      That email is invalid
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <label for="inputPhone">Phone</label>
+                  <input type="tel" id="inputPhone" placeholder="5417543010" pattern="^[0-9]{9,10}$" class="form-control">
+                </div>
+              </div>
               <div class="form-group">
                 <label for="inputEmail">Email address</label>
-                <input type="email" class="form-control" id="inputEmail" placeholder="Enter email">
-              </div>
-              <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                <input type="email" class="form-control" id="inputEmail2" placeholder="Enter email">
               </div>
             </div>
           </fieldset>
-            <div class="row">
-              <div class="col">
-                <div *ngIf="this.page!=1">
-                  <button type="button" class="btn btn-secondary" (click)=prevPage()>Back</button>
-                </div>
-              </div>
-              <div class="col text-right">
-                <div *ngIf="this.page!=this.numPages; else submit">
-                  <button type="button" class="btn btn-primary .navbar-right" (click)=nextPage()>Next</button>
-                </div>
-                <ng-template #submit>
-                  <button type="button" class="btn btn-primary .navbar-right" (click)=submit()>Submit</button>
-                </ng-template>
+          <div class="row">
+            <div class="col">
+              <div *ngIf="this.page!=1">
+                <button type="button" class="btn btn-secondary" (click)="prevPage()">Back</button>
               </div>
             </div>
+            <div class="col text-right">
+              <div *ngIf="this.page!=this.numPages; else submit">
+                <button type="button" class="btn btn-primary .navbar-right" (click)="nextPage()">Next</button>
+              </div>
+              <ng-template #submit>
+                <button type="button" class="btn btn-primary .navbar-right" (click)="submit()">Submit</button>
+              </ng-template>
+            </div>
+          </div>
         </form>
       </div>
     </div>
