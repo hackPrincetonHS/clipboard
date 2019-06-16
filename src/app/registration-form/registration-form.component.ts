@@ -8,15 +8,19 @@ export class RegistrationFormComponent implements OnInit {
   page=1
   numPages=3
 
-  stu=20
-
   constructor() { }
 
   ngOnInit() {
   }
 
-  calculatePercentage(){
-    return this.page/this.numPages
+  nextPage(){
+    this.page+=1
+  }
+  prevPage(){
+    this.page-=1
+  }
+  submit(){
+    //todo
   }
 
 }

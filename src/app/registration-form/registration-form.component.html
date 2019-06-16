@@ -1,56 +1,52 @@
 <div class=backround>
   <div class="page-wrap">
-    <div class=page>
-      <div class="container">
-
+    <div class="page">
+      <div class="page-content">
         <form class="well form-horizontal" action=" " method="post"  id="contact_form">
           <fieldset>
-
             <!-- Form Name -->
             <div class="form-title">
               <legend><div style="text-align: center;"><h2><b>Registration Form</b></h2></div></legend><br>
             </div>
             <div class="progress">
-              <div class="progress-bar" role="progressbar" attr.aria-valuenow="{{stu}}" aria-valuemin="0" aria-valuemax="100"></div>
+              <div class="progress-bar progress-bar progress-bar-striped" role="progressbar" [style.width]="((this.page-1)/this.numPages)*100+'%'" aria-valuenow="((this.page-1)/this.numPages)*100" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
-            <div class=form-itself>
-              <!-- Text input-->
-              <div class="form-group">
-                <label class="col-md-4 control-label">First Name</label>
-                <div class="col-md-8 inputGroupContainer">
-                  <div class="input-group-btn">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><span octicon=person></span></span>
-                      <input name="first_name" placeholder="First Name" class="form-control"  type="text">
-                      <input name="first_name" placeholder="First Name" class="form-control"  type="text">
-                    </div>
-                  </div>
+            <div class="form-itself">
+              <div class="form-row">
+                <div class="col">
+                  <input type="text" class="form-control" placeholder="First name">
+                </div>
+                <div class="col">
+                  <input type="text" class="form-control" placeholder="Last name">
                 </div>
               </div>
-
               <div class="form-group">
-                <label class="col-md-4 control-label">Department / Office</label>
-                <div class="col-md-4 selectContainer">
-                  <div class="input-group">
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-                    <select name="department" class="form-control selectpicker">
-                      <option value="">Select your Department/Office</option>
-                      <option>Department of Engineering</option>
-                      <option>Department of Agriculture</option>
-                      <option >Accounting Office</option>
-                      <option >Tresurer's Office</option>
-                      <option >MPDC</option>
-                      <option >MCTC</option>
-                      <option >MCR</option>
-                      <option >Mayor's Office</option>
-                      <option >Tourism Office</option>
-                    </select>
-                  </div>
-                </div>
+                <label for="inputEmail">Email address</label>
+                <input type="email" class="form-control" id="inputEmail" placeholder="Enter email">
+              </div>
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">Check me out</label>
               </div>
             </div>
-
           </fieldset>
+          <div class="page-content">
+            <div class="row">
+              <div class="col">
+                <div *ngIf="this.page!=1">
+                  <button type="button" class="btn btn-secondary" (click)=prevPage()>Back</button>
+                </div>
+              </div>
+              <div class="col text-right">
+                <div *ngIf="this.page!=this.numPages; else submit">
+                  <button type="button" class="btn btn-primary .navbar-right" (click)=nextPage()>Next</button>
+                </div>
+                <ng-template #submit>
+                  <button type="button" class="btn btn-primary .navbar-right" (click)=submit()>Submit</button>
+                </ng-template>
+              </div>
+            </div>
+          </div>
         </form>
       </div>
     </div>
