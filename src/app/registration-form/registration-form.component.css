@@ -1,0 +1,26 @@
+.page-wrap {
+     padding-top: 100px;
+     padding-bottom: 100px;
+     max-width: 800px;
+     margin: 0 auto;
+}
+
+.backround {
+  overflow-y: auto;
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: repeat;
+  background-color: rgba(204,204,204,1);
+}
+.page {
+  background-color: rgb(255, 255, 255);
+  -webkit-box-shadow: -1px 1px 5px 3px rgba(0,0,0,0.2);
+  -moz-box-shadow: -1px 1px 5px 3px rgba(0,0,0,0.2);
+  box-shadow: -1px 1px 5px 3px rgba(0,0,0,0.2);
+}
+.form-title {
+  padding-top: 10px
+}
+.form-itself {
+  padding-top: 10px
+}
