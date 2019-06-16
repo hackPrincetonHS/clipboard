@@ -36,7 +36,10 @@
                 </div>
                 <div class="col">
                   <label for="inputPhone">Phone</label>
-                  <input type="text" name="zipcode" id="inputPhone" placeholder="555-555-5555" maxlength="10" inputmode="numeric" pattern="[0-9]*" digitOnly class=form-control>
+                  <input type="text" name="zipcode" id="inputPhone" placeholder="555-555-5555" maxlength="10" inputmode="numeric" pattern="[0-9]*" digitOnly class=form-control [(ngModel)]="inputPhone" #phone="ngModel">
+                  <div *ngIf="phone.value && phone.value.length!=10" class="alert alert-danger">
+                    That phone number is invalid
+                  </div>
                 </div>
               </div>
               <div class="form-group">
