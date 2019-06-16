@@ -7,7 +7,7 @@ import { RegistrationFormComponent } from './registration-form/registration-form
 import { OcticonDirective } from './octicon.directive';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { DigitOnlyModule } from '@uiowa/digit-only';
 
 @NgModule({
   declarations: [
@@ -19,7 +19,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DigitOnlyModule
   ],
   providers: [],
   bootstrap: [AppComponent]
