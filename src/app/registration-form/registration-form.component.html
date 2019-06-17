@@ -40,9 +40,11 @@
                       <label for="inputPhone1">Phone</label>
                       <input (input)="autoTab($event,'inputPhone2')" type="tel" name="inputPhone1" id="inputPhone1" placeholder="555" maxlength="3" required inputmode="numeric" (focus)="phone1.active = true" (blur)="phone1.active = false" pattern="[0-9]{3}" digitOnly class=form-control [(ngModel)]="inputPhone1" #phone1="ngModel">
                     </div>
+                    <div class="phone-dash">-</div>
                     <div class="col-3 padding-0">
                       <input (input)="autoTab($event,'inputPhone3')" type="tel" name="inputPhone2" id="inputPhone2" placeholder="555" maxlength="3" required inputmode="numeric" (focus)="phone2.active = true" (blur)="phone2.active = false" pattern="[0-9]{3}" digitOnly class=form-control [(ngModel)]="inputPhone2" #phone2="ngModel">
                     </div>
+                    <div class="phone-dash">-</div>
                     <div class="col-4 padding-0">
                       <input type="tel" name="inputPhone3" id="inputPhone3" placeholder="555" maxlength="4" required inputmode="numeric" (focus)="phone3.active = true" (blur)="phone3.active = false" pattern="[0-9]{4}" digitOnly class=form-control [(ngModel)]="inputPhone3" #phone3="ngModel">
                     </div>

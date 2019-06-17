@@ -45,3 +45,8 @@
 .padding-right-0{
     padding-right:0;
 }
+.phone-dash{
+  font-size: 1rem;
+  padding: 0.5rem 0.4rem;
+  line-height: 1.5;
+}
