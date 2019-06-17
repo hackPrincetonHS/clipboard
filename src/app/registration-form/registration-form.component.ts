@@ -28,6 +28,8 @@ export class RegistrationFormComponent implements OnInit {
   studyLevel;
   graduationYear;
   specialAccomadations;
+  shirtSize;
+  haveGithub;
 
   schoolList=[
     ["Milburn High School"],
