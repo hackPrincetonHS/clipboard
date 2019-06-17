@@ -24,7 +24,7 @@
               <div class="form-row">
                 <div class="col">
                   <label for="inputEmail">Email</label>
-                  <input type="email" class="form-control" id="inputEmail" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}" [(ngModel)]="inputEmail" (focus)="email.active = true" (blur)="email.active = false" name="inputEmail" #email="ngModel">
+                  <input placeholder="example@example.com" type="email" class="form-control" id="inputEmail" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}" [(ngModel)]="inputEmail" (focus)="email.active = true" (blur)="email.active = false" name="inputEmail" #email="ngModel">
                   <div *ngIf="email.errors && (email.dirty || email.touched) && !email.active" class="alert alert-danger">
                     <div *ngIf="email.errors.required">
                       Email is required
