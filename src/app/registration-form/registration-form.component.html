@@ -12,20 +12,24 @@
               <div class="progress-bar progress-bar progress-bar-striped" role="progressbar" [style.width]="((this.page-1)/this.numPages)*100+'%'" aria-valuenow="((this.page-1)/this.numPages)*100" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
             <div class="form-itself">
-              <label>Name</label>
+              <label for="inputFirstName" class="req-label-text">Name</label>
               <div class="form-row">
                 <div class="col">
-                  <input type="text" class="form-control" placeholder="First name">
+                  <input type="text" class="form-control" placeholder="First name" id="inputFirstName" required [(ngModel)]="inputFirstName" (focus)="firstName.active = true" (blur)="firstName.active = false" name="inputFirstName" #firstName="ngModel">
+                  <div *ngIf="((firstName.errors && firstName.errors.required) || (lastName.errors && lastName.errors.required)) && ((this.attemptSubmit || firstName.dirty || firstName.touched || lastName.dirty || lastName.touched) && !(firstName.active || lastName.active))" class="alert alert-danger">
+                    Name is required
+                  </div>
                 </div>
                 <div class="col">
-                  <input type="text" class="form-control" placeholder="Last name">
+                  <input type="text" class="form-control" placeholder="Last name" id="inputLastName" required [(ngModel)]="inputLastName" (focus)="lastName.active = true" (blur)="lastName.active = false" name="inputLastName" #lastName="ngModel">
                 </div>
               </div>
+
               <div class="form-row">
                 <div class="col">
-                  <label for="inputEmail">Email</label>
+                  <label for="inputEmail" class="req-label-text">Email</label>
                   <input placeholder="example@example.com" type="email" class="form-control" id="inputEmail" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}" [(ngModel)]="inputEmail" (focus)="email.active = true" (blur)="email.active = false" name="inputEmail" #email="ngModel">
-                  <div *ngIf="email.errors && (email.dirty || email.touched) && !email.active" class="alert alert-danger">
+                  <div *ngIf="(email.errors && (this.attemptSubmit || email.dirty || email.touched) && !email.active)" class="alert alert-danger">
                     <div *ngIf="email.errors.required">
                       Email is required
                     </div>
@@ -37,7 +41,7 @@
                 <div class="col">
                   <div class="row phone-header">
                     <div class="col-3 padding-right-0">
-                      <label for="inputPhone1">Phone</label>
+                      <label for="inputPhone1" class="req-label-text">Phone</label>
                       <input (input)="autoTab($event,'inputPhone2')" type="tel" name="inputPhone1" id="inputPhone1" placeholder="555" maxlength="3" required inputmode="numeric" (focus)="phone1.active = true" (blur)="phone1.active = false" pattern="[0-9]{3}" digitOnly class=form-control [(ngModel)]="inputPhone1" #phone1="ngModel">
                     </div>
                     <div class="phone-dash">-</div>
@@ -49,19 +53,133 @@
                       <input type="tel" name="inputPhone3" id="inputPhone3" placeholder="555" maxlength="4" required inputmode="numeric" (focus)="phone3.active = true" (blur)="phone3.active = false" pattern="[0-9]{4}" digitOnly class=form-control [(ngModel)]="inputPhone3" #phone3="ngModel">
                     </div>
                   </div>
-                  <div *ngIf="(phone1.errors || phone2.errors || phone3.errors) && (phone1.dirty || phone1.touched || phone2.dirty || phone2.touched || phone3.dirty || phone3.dirty) && !(phone1.active || phone2.active || phone3.active)" class="alert alert-danger">
-                    <div *ngIf="(phone1.errors && phone1.errors.required) || (phone2.errors && phone2.errors.required) || (phone3.errors && phone3.errors.required)">
+                  <div *ngIf="(phone1.errors || phone2.errors || phone3.errors) && (this.attemptSubmit || phone1.dirty || phone1.touched || phone2.dirty || phone2.touched || phone3.dirty || phone3.dirty) && !(phone1.active || phone2.active || phone3.active)">
+                    <div *ngIf="(phone1.errors && phone1.errors.required) || (phone2.errors && phone2.errors.required) || (phone3.errors && phone3.errors.required)" class="alert alert-danger">
                       Phone number is required
                     </div>
-                    <div *ngIf="!((phone1.errors && phone1.errors.required) || (phone2.errors && phone2.errors.required) || (phone3.errors && phone3.errors.required)) && (phone1.invalid || phone2.invalid || phone3.invalid)">
+                    <div *ngIf="!((phone1.errors && phone1.errors.required) || (phone2.errors && phone2.errors.required) || (phone3.errors && phone3.errors.required)) && (phone1.invalid || phone2.invalid || phone3.invalid)" class="alert alert-danger">
                       That phone number is invalid
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="form-group">
-                <label for="inputEmail">Email address</label>
-                <input type="email" class="form-control" id="inputEmail2" placeholder="Enter email">
+              <div class="form-row">
+                <div class="col-6">
+                  <label for="inputPhone1" class="req-label-text">Date of Birth</label>
+                  <div class="row phone-header">
+                    <div class="col-3">
+                      <input type="text" name="inputMonth" id="inputMonth" aria-described-by="month-help" placeholder="3" maxlength="12" required pattern="([1-9]|1[0-2])" inputmode="numeric" (focus)="month.active = true" (blur)="month.active = false" digitOnly class=form-control [(ngModel)]="inputMonth" #month="ngModel">
+                      <p id="month-help" class="form-text text-muted">
+                        Month
+                      </p>
+                    </div>
+                    <div class="col-3">
+                      <input type="text" name="inputDay" id="inputDay" aria-described-by="day-help" placeholder="25" maxlength="2" required pattern="([1-9]|[12][0-9]|3[01])" inputmode="numeric" (focus)="day.active = true" (blur)="day.active = false" digitOnly class=form-control [(ngModel)]="inputDay" #day="ngModel">
+                      <p id="day-help" class="form-text text-muted">
+                        Day
+                      </p>
+                    </div>
+                    <div class="col-4">
+                      <input type="text" name="inputYear" id="inputYear" aria-described-by="year-help" placeholder="2003" maxlength="4" required pattern="(19[4-8][0-9]|199[0-9]|200[0-9]|201[0-9])" inputmode="numeric" (focus)="year.active = true" (blur)="year.active = false" digitOnly class=form-control [(ngModel)]="inputYear" #year="ngModel">
+                      <p id="day-help" class="form-text text-muted">
+                        Year
+                      </p>
+                    </div>
+                  </div>
+                  <div *ngIf="(this.attemptSubmit || month.dirty || month.touched || day.dirty || day.touched || year.dirty || year.dirty) && !(month.active || day.active || year.active)">
+                    <div *ngIf="(month.errors || day.errors || year.errors)">
+                      <div *ngIf="(month.errors && month.errors.required) || (day.errors && day.errors.required) || (year.errors && year.errors.required); else notrequiredyear" class="alert alert-danger">
+                        Date of Birth is required
+                      </div>
+                    </div>
+                    <div *ngIf="!validateDate(month,day,year)" class="alert alert-danger">
+                      That date is invalid
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <label for="shirtSize" class="req-label-text">T-Shirt Size</label>
+                  <div class="full-width-dropdown">
+                    <select class="selectpicker" id="shirtSize" name="shirtSize" title="T-Shirt Size" [(ngModel)]="shirtSize" #tshirt=ngModel>
+                      <option>S</option>
+                      <option>M</option>
+                      <option>L</option>
+                      <option>XL</option>
+                      <option>XXL</option>
+                    </select>
+                  </div>
+                  <div *ngIf="this.attemptSubmit && tshirt.pristine" class="alert alert-danger">
+                    You must select a T-Shirt size
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-6 full-width-dropdown">
+                  <label for="genderMale" class="req-label-text">Gender</label>
+                  <!-- You have to hack around the radios not updating the entire thing's pristine status (but they do touched????) Angular requires non standard syntax-->
+                  <div class="form-check" id="gender">
+                    <input class="form-check-input" type="radio" id="genderMale" value="Male" name="pickGender" [(ngModel)]="pickGender" #gender1=ngModel>
+                    <label class="form-check-label" for="genderMale">
+                      Male
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" id="genderFemale" value="Female" name="genderFemale" [(ngModel)]="pickGender" #gender2=ngModel>
+                    <label class="form-check-label" for="genderFemale">
+                      Female
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" id="genderNonBin" value="Non-Binary" name="genderNonBin" [(ngModel)]="pickGender" #gender3=ngModel>
+                    <label class="form-check-label" for="genderNonBin">
+                      Non-Binary
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" id="genderPrefNot" value="Prefer Not to Say" name="genderPrefNot" [(ngModel)]="pickGender" #gender4=ngModel>
+                    <label class="form-check-label" for="genderPrefNot">
+                      Prefer Not to Say
+                    </label>
+                  </div>
+                  <div *ngIf="this.attemptSubmit && gender1.pristine && gender2.pristine && gender3.pristine && gender4.pristine" class="alert alert-danger">
+                    You must select an option
+                  </div>
+                </div>
+                <div div class="col-6 full-width-dropdown">
+                  <label for="race-ethnicity" class="req-label-text">Race/Ethnicity</label>
+                  <select class="selectpicker" data-live-search="true" id="race-ethnicity" name="race-ethnicity" multiple data-width="auto" [(ngModel)]="race-ethnicity" #race=ngModel>
+                    <option>White</option>
+                    <option>Black or African American</option>
+                    <option>American Indian or Alaskan Native</option>
+                    <option>Asian</option>
+                    <option>Native Hawaiian or other Pacific Islander</option>
+                    <option>Prefer Not To Say</option>
+                  </select>
+                  <div *ngIf="this.attemptSubmit && race.pristine" class="alert alert-danger">
+                    You must select an option
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div [className]="school.value=='My school isn\'t here' ? 'col-6 full-width-dropdown' : 'col-12 full-width-dropdown'">
+                  <label for="schoolInput" class="req-label-text">School</label>
+                  <select class="selectpicker" data-live-search="true" id="schoolInput" name="schoolInput" data-width="100%" [(ngModel)]="schoolInput" #school=ngModel>
+                    <optgroup label="Other">
+                      <!-- I add all the attributes to this so that it doesn't go away during search-->
+                      <option [attr.data-tokens]="this.schoolList.toString()">My school isn't here</option>
+                    </optgroup>
+                    <optgroup label="Schools">
+                      <option *ngFor="let item of this.schoolList;" [attr.data-tokens]="item.slice(1).toString()">{{item[0]}}</option>
+                    </optgroup>
+                  </select>
+                  <div *ngIf="(this.attemptSubmit && school.pristine) || (school.value=='My school isn\'t here' && schoolText.errors && (this.attemptSubmit || schoolText.dirty || schoolText.touched))" class="alert alert-danger">
+                    School is required
+                  </div>
+                </div>
+                <div [className]="school.value=='My school isn\'t here' ? ' col-6 full-width-dropdown' : 'hide-completely col-6 full-width-dropdown'">
+                    <label for="schoolInputText" class="req-label-text">Enter your school here</label>
+                    <input type="text" class="form-control" placeholder="School" id="schoolInputText" required [(ngModel)]="schoolInputText" (focus)="schoolText.active = true" (blur)="schoolText.active = false" name="schoolInputText" #schoolText="ngModel">
+                </div>
               </div>
             </div>
           </fieldset>
@@ -76,7 +194,7 @@
                 <button type="button" class="btn btn-primary .navbar-right" (click)="nextPage()">Next</button>
               </div>
               <ng-template #submit>
-                <button type="button" class="btn btn-primary .navbar-right" (click)="submit()">Submit</button>
+                <button type="button" class="btn btn-primary .navbar-right" (click)="submitting()">Submit</button>
               </ng-template>
             </div>
           </div>

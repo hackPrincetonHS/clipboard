@@ -7,6 +7,7 @@
 
 .backround {
   overflow-y: auto;
+  min-height: 100vh;
   background-size: cover;
   background-attachment: fixed;
   background-repeat: repeat;
@@ -49,4 +50,19 @@
   font-size: 1rem;
   padding: 0.5rem 0.4rem;
   line-height: 1.5;
+}
+.align-to-text{
+  margin-top: 0.5rem;
+  padding-top: 1.5rem;
+}
+.req-label-text:after{
+    content:" *" ;
+    color:red;
+}
+.full-width-dropdown{
+  width:100%;
+  margin-bottom: 1rem;
+}
+.hide-completely{
+  display: none !important;
 }

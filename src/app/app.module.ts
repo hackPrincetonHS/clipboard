@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { RegistrationFormComponent } from './registration-form/registration-form.component';
 import { OcticonDirective } from './octicon.directive';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { DigitOnlyModule } from '@uiowa/digit-only';
 
 @NgModule({
@@ -19,7 +19,6 @@ import { DigitOnlyModule } from '@uiowa/digit-only';
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
-    ReactiveFormsModule,
     DigitOnlyModule
   ],
   providers: [],

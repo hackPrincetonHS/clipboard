@@ -1,12 +1,44 @@
 import { Component, OnInit } from '@angular/core';
+import * as moment from 'moment';
+
 @Component({
   selector: 'registration-form',
   templateUrl: './registration-form.component.html',
   styleUrls: ['./registration-form.component.css']
 })
 export class RegistrationFormComponent implements OnInit {
-  page=1
-  numPages=3
+  page=1;
+  numPages=3;
+  attemptSubmit=false;
+
+  schoolList=[
+    ["Milburn High School"],
+    ["Montgomery High School"],
+    ["Bergen County Academies"],
+    ["Princeton High School", "PHS"],
+    ["Freehold High School"],
+    ["Robbinsville High School"],
+    ["HightsTown High School"],
+    ["Stuyvesant High School"],
+    ["East Stroudsburg High School"],
+    ["Livingston High School"],
+    ["Princeton Day School", "PDS"],
+    ["Noor-ul-Iman", "Noor ul Iman"],
+    ["Wardlaw + Hartridge School"],
+    ["South Brunswick High School"],
+    ["Ridge High School"],
+    ["West Windsor Plainsborough High North", "WWP", "North"],
+    ["West Windsor Plainsborough High South", "WWP", "South"],
+    ["Middlesex County Academy"],
+    ["Perth Amboy Vocational Technical School"],
+    ["Raritan High School"],
+    ["Pennington School"],
+    ["Manav Rachna International"],
+    ["Edison Academy"],
+    ["Port Credit Secondary School"],
+    ["John P. Stevens High School", "J.P. Stevens"]
+  ];
+
 
   constructor() { }
 
@@ -14,13 +46,13 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   nextPage(){
-    this.page+=1
+    this.page+=1;
   }
   prevPage(){
-    this.page-=1
+    this.page-=1;
   }
-  submiting(){
-    //todo
+  submitting(){
+    this.attemptSubmit=true;
   }
   autoTab(event, nextInput) {
     const getMethods = (obj) => {
@@ -38,4 +70,16 @@ export class RegistrationFormComponent implements OnInit {
       document.getElementById(nextInput).focus();
     }
   }
+  validateDate(monthObj,dayObj,yearObj) {
+    let month=monthObj.value
+    let day=dayObj.value
+    let year=yearObj.value
+    if(month && day && year){
+      var mom=moment(year+"-"+month+"-"+day, "YYYY-MM-DD")
+      return  mom.isValid() && mom.year()>1900 && mom.isBefore(moment());
+    }
+    //one of the fields is empty, so we ignore it
+    return true
+  }
+
 }
