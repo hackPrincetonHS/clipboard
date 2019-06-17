@@ -22,5 +22,20 @@ export class RegistrationFormComponent implements OnInit {
   submiting(){
     //todo
   }
-
+  autoTab(event, nextInput) {
+    const getMethods = (obj) => {
+      let properties = new Set()
+      let currentObj = obj
+      do {
+        Object.getOwnPropertyNames(currentObj).map(item => properties.add(item))
+      } while ((currentObj = Object.getPrototypeOf(currentObj)))
+      return [...properties.keys()].filter(item => typeof obj[item] === 'function')
+    }
+    let input = event.target;
+    let length = input.value.length;
+    let maxLength = input.attributes.maxlength.value;
+    if (length >= maxLength) {
+      document.getElementById(nextInput).focus();
+    }
+  }
 }

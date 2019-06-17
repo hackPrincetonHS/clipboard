@@ -35,10 +35,25 @@
                   </div>
                 </div>
                 <div class="col">
-                  <label for="inputPhone">Phone</label>
-                  <input type="text" name="zipcode" id="inputPhone" placeholder="555-555-5555" maxlength="10" inputmode="numeric" pattern="[0-9]*" digitOnly class=form-control [(ngModel)]="inputPhone" #phone="ngModel">
-                  <div *ngIf="phone.value && phone.value.length!=10" class="alert alert-danger">
-                    That phone number is invalid
+                  <div class="row phone-header">
+                    <div class="col-3 padding-right-0">
+                      <label for="inputPhone1">Phone</label>
+                      <input (input)="autoTab($event,'inputPhone2')" type="tel" name="inputPhone1" id="inputPhone1" placeholder="555" maxlength="3" required inputmode="numeric" (focus)="phone1.active = true" (blur)="phone1.active = false" pattern="[0-9]{3}" digitOnly class=form-control [(ngModel)]="inputPhone1" #phone1="ngModel">
+                    </div>
+                    <div class="col-3 padding-0">
+                      <input (input)="autoTab($event,'inputPhone3')" type="tel" name="inputPhone2" id="inputPhone2" placeholder="555" maxlength="3" required inputmode="numeric" (focus)="phone2.active = true" (blur)="phone2.active = false" pattern="[0-9]{3}" digitOnly class=form-control [(ngModel)]="inputPhone2" #phone2="ngModel">
+                    </div>
+                    <div class="col-4 padding-0">
+                      <input type="tel" name="inputPhone3" id="inputPhone3" placeholder="555" maxlength="4" required inputmode="numeric" (focus)="phone3.active = true" (blur)="phone3.active = false" pattern="[0-9]{4}" digitOnly class=form-control [(ngModel)]="inputPhone3" #phone3="ngModel">
+                    </div>
+                  </div>
+                  <div *ngIf="(phone1.errors || phone2.errors || phone3.errors) && (phone1.dirty || phone1.touched || phone2.dirty || phone2.touched || phone3.dirty || phone3.dirty) && !(phone1.active || phone2.active || phone3.active)" class="alert alert-danger">
+                    <div *ngIf="(phone1.errors && phone1.errors.required) || (phone2.errors && phone2.errors.required) || (phone3.errors && phone3.errors.required)">
+                      Phone number is required
+                    </div>
+                    <div *ngIf="!((phone1.errors && phone1.errors.required) || (phone2.errors && phone2.errors.required) || (phone3.errors && phone3.errors.required)) && (phone1.invalid || phone2.invalid || phone3.invalid)">
+                      That phone number is invalid
+                    </div>
                   </div>
                 </div>
               </div>

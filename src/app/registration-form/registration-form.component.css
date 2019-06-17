@@ -34,3 +34,14 @@
 .page-content {
   padding: 25px 25px;
 }
+.phone-header {
+  display: flex;
+  align-items: flex-end;
+}
+.padding-0{
+    padding-right:0;
+    padding-left:0;
+}
+.padding-right-0{
+    padding-right:0;
+}
