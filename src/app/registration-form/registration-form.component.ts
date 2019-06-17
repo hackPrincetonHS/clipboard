@@ -83,9 +83,5 @@ export class RegistrationFormComponent implements OnInit {
     //one of the fields is empty, so we ignore it
     return true
   }
-  check(ra){
-    console.log(ra.value)
-    return true
-  }
 
 }
