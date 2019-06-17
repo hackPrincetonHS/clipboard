@@ -11,6 +11,24 @@ export class RegistrationFormComponent implements OnInit {
   numPages=3;
   attemptSubmit=false;
 
+  //have to list all the properties out for AOT compiler
+  inputFirstName;
+  inputLastName;
+  inputEmail;
+  inputPhone1;
+  inputPhone2;
+  inputPhone3;
+  inputMonth;
+  inputDay;
+  inputYear;
+  pickGender;
+  ethnicity;
+  schoolInput;
+  schoolInputText;
+  studyLevel;
+  graduationYear;
+  specialAccomadations;
+
   schoolList=[
     ["Milburn High School"],
     ["Montgomery High School"],

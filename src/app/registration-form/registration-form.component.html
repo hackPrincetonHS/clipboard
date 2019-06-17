@@ -97,6 +97,7 @@
                     </div>
                   </div>
                 </div>
+                <!--
                 <div class="col-6">
                   <label for="shirtSize" class="req-label-text">T-Shirt Size</label>
                   <div class="full-width-dropdown">
@@ -112,6 +113,7 @@
                     You must select a T-Shirt size
                   </div>
                 </div>
+                -->
               </div>
               <div class="form-row">
                 <div class="col-6 full-width-dropdown">
@@ -172,7 +174,7 @@
                       <option *ngFor="let item of this.schoolList;" [attr.data-tokens]="item.slice(1).toString()">{{item[0]}}</option>
                     </optgroup>
                   </select>
-                  <div *ngIf="(this.attemptSubmit && school.pristine) || (school.value=='My school isn\'t here' && schoolText.errors && (this.attemptSubmit || schoolText.dirty || schoolText.touched) && !schoolText.active)" class="alert alert-danger">
+                  <div *ngIf="this.attemptSubmit && school.pristine" class="alert alert-danger col-6">
                     School is required
                   </div>
                 </div>
@@ -180,6 +182,40 @@
                     <label for="schoolInputText" class="req-label-text">Enter your school here</label>
                     <input type="text" class="form-control" placeholder="School" id="schoolInputText" required [(ngModel)]="schoolInputText" (focus)="schoolText.active = true" (blur)="schoolText.active = false" name="schoolInputText" #schoolText="ngModel">
                 </div>
+              </div>
+              <div *ngIf="(school.value=='My school isn\'t here' && schoolText.errors && (this.attemptSubmit || schoolText.dirty || schoolText.touched) && !schoolText.active)" class="alert alert-danger">
+                You must either pick or enter a school
+              </div>
+              <div class="form-row">
+                <div class="col-6 full-width-dropdown">
+                  <label for="studyLevel" class="req-label-text">Current Level Of Study</label>
+                  <select class="selectpicker" id="studyLevel" name="studyLevel" data-width="100%" [(ngModel)]="studyLevel" #study=ngModel>
+                    <option>Below High School</option>
+                    <option>High School</option>
+                    <option>Undergraduate</option>
+                    <option>Graduate</option>
+                  </select>
+                  <div *ngIf="this.attemptSubmit && study.pristine" class="alert alert-danger">
+                    You must select a level of study
+                  </div>
+                </div>
+                <div class="col-6 full-width-dropdown">
+                  <label for="graduationYear" class="req-label-text">Graduation Year</label>
+                  <select class="selectpicker" id="graduationYear" name="graduationYear" data-width="100%" [(ngModel)]="graduationYear" #graduation=ngModel>
+                    <option>2020</option>
+                    <option>2021</option>
+                    <option>2022</option>
+                    <option>2023</option>
+                    <option>After 2023</option>
+                  </select>
+                  <div *ngIf="this.attemptSubmit && graduation.pristine" class="alert alert-danger">
+                    You must select a graduation year
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="specialAccomadations">Please list any speical accomadations you may require (e.g late arrival, early departure)</label>
+                <textarea class="form-control" id="specialAccomadations" name="specialAccomadations" rows="3" [(ngModel)]="specialAccomadations" #accomadations=ngModel></textarea>
               </div>
             </div>
           </fieldset>
