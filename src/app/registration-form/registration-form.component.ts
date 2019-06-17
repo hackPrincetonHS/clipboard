@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import * as moment from 'moment';
 
 @Component({
@@ -40,7 +40,7 @@ export class RegistrationFormComponent implements OnInit {
   ];
 
 
-  constructor() { }
+  constructor(private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
   }
@@ -53,6 +53,8 @@ export class RegistrationFormComponent implements OnInit {
   }
   submitting(){
     this.attemptSubmit=true;
+    this.cdr.detectChanges();
+    console.log(document.getElementsByClassName("alert").length)
   }
   autoTab(event, nextInput) {
     const getMethods = (obj) => {
@@ -79,6 +81,10 @@ export class RegistrationFormComponent implements OnInit {
       return  mom.isValid() && mom.year()>1900 && mom.isBefore(moment());
     }
     //one of the fields is empty, so we ignore it
+    return true
+  }
+  check(ra){
+    console.log(ra.value)
     return true
   }
 
