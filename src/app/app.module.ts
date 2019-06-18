@@ -8,6 +8,7 @@ import { OcticonDirective } from './octicon.directive';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { DigitOnlyModule } from '@uiowa/digit-only';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { DigitOnlyModule } from '@uiowa/digit-only';
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
-    DigitOnlyModule
+    DigitOnlyModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

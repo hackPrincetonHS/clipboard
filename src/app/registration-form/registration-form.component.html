@@ -203,21 +203,33 @@
                   <div class="col-4">
                     <label for="haveGithubNo" class="full-width-dropdown">Do you have a Github?</label>
                     <div class="form-check-inline">
-                      <input class="form-check-input" type="radio" name="haveGithub" id="noHaveGithub" value="No" [(ngModel)]="haveGithub">
+                      <input class="form-check-input" type="radio" name="haveGithub" id="noHaveGithub" (click)="setRadio(githubYes, 'false')" value="No" [(ngModel)]="haveGithub">
                       <label class="form-check-label" for="noHaveGithub">
                         No
                       </label>
                     </div>
                     <div class="form-check-inline">
-                      <input class="form-check-input" type="radio" name="haveGithub" id="yesHaveGithub" value="Yes" [(ngModel)]="haveGithub">
+                      <input class="form-check-input" type="radio" name="haveGithub" id="yesHaveGithub" (click)="setRadio(githubYes, 'true')" value="Yes" #githubYes [(ngModel)]="haveGithub">
                       <label class="form-check-label" for="yesHaveGithub">
                         Yes
                       </label>
                     </div>
-
                   </div>
-                  <div *ngIf="needGithubLink" class="alert alert-danger">
-                    You must select a graduation year
+                  <div [className]="githubYes.value=='true' ? ' col-8 full-width-dropdown' : 'hide-completely col-8 full-width-dropdown'">
+                    <label for="githubLinkInput" class="req-label-text">Paste the link to your profile here</label>
+                    <div class="input-group">
+                      <input type="text" class="form-control" placeholder="https://github.com/hackPrincetonHS" id="githubLinkInput" pattern="http(s)?:\/\/(www\.)?github\.com\/[A-z0-9_-]+\/?" required [(ngModel)]="githubLinkInput" (focus)="githubLink.active = true" (blur)="githubLink.active = false" name="githubLinkInput" #githubLink="ngModel">
+                      <!-- TODO: Add a google recaptcha -->
+                      <button type="button" class="btn btn-secondary" (click)="checkGithubProfile(githubLink.value)">Check Link</button>
+                    </div>
+                    <div *ngIf="(githubYes.value=='true' && githubLink.errors && (this.attemptSubmit || githubLink.dirty || githubLink.touched) && !githubLink.active)" class="alert alert-danger">
+                      <div *ngIf="githubLink.errors.required">
+                        Please enter your profile
+                      </div>
+                      <div *ngIf="!githubLink.errors.required && (githubLink.errors.pattern || githubLink.badProfile)">
+                        That is not a valid github profile
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

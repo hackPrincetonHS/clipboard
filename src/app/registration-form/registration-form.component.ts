@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
 
 @Component({
@@ -34,6 +35,8 @@ export class RegistrationFormComponent implements OnInit {
   shirtSize;
   haveGithub;
 
+  githubLink;
+
   schoolList=[
     ["Milburn High School"],
     ["Montgomery High School"],
@@ -63,19 +66,19 @@ export class RegistrationFormComponent implements OnInit {
   ];
 
 
-  constructor(private cdr: ChangeDetectorRef) { }
+  constructor(private cdr: ChangeDetectorRef, private httpClient: HttpClient) { }
 
   ngOnInit() {
     this.haveGithub="No"
   }
 
-  nextPage(){
+  nextPage() {
     this.page+=1;
   }
-  prevPage(){
+  prevPage() {
     this.page-=1;
   }
-  submitting(){
+  submitting() {
     this.attemptSubmit=true;
     this.cdr.detectChanges();
     console.log(document.getElementsByClassName("alert").length)
@@ -107,9 +110,17 @@ export class RegistrationFormComponent implements OnInit {
     //one of the fields is empty, so we ignore it
     return true
   }
-  setRadio(e: string): void
-  {
-    console.log("heyyy")
+  setRadio(dom, set) {
+    dom.value=set;
   }
+  checkGithubProfile(smallString){
+        this.httpClient.get("https:\/\/api.github.com/users/"+smallString.split("/")[3]).subscribe((res)=>{
+          if(res["login"]){
+            this.githubLink.badProfile=false
+          } else {
+            this.githubLink.badProfile=true
+          }
+        });
+    }
 
 }
