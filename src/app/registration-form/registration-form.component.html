@@ -236,24 +236,24 @@
                   </div>
                 </div>
                 <div class=form-row>
-                  <div class="col-4">
+                  <div class="col-4 minheight86">
                     <label for="haveResumeNo" class="full-width-dropdown">Do you have a Resume?</label>
                     <div class="form-check-inline">
-                      <input class="form-check-input" type="radio" name="haveResume" id="noHaveResume" (click)="setRadio(haveResume, 'false')" value="No" [(ngModel)]="haveResume">
+                      <input class="form-check-input" type="radio" name="haveResume" id="noHaveResume" (click)="setRadio(resumeYes, 'false')" value="No" [(ngModel)]="haveResume">
                       <label class="form-check-label" for="noHaveResume">
                         No
                       </label>
                     </div>
                     <div class="form-check-inline">
-                      <input class="form-check-input" type="radio" name="haveResume" id="yesHaveResume" (click)="setRadio(haveResume, 'true')" value="Yes" #resumeYes [(ngModel)]="haveResume">
+                      <input class="form-check-input" type="radio" name="haveResume" id="yesHaveResume" (click)="setRadio(resumeYes, 'true')" value="Yes" #resumeYes [(ngModel)]="haveResume">
                       <label class="form-check-label" for="yesHaveResume">
                         Yes
                       </label>
                     </div>
                   </div>
                   <div [className]="resumeYes.value=='true' ? ' col-8 full-width-dropdown' : 'hide-completely col-8 full-width-dropdown'">
-                    <label for="githubLinkInput" class="req-label-text">Paste the link to your profile here</label>
-                    ASDSFADF
+                    <label for="githubLinkInput" class="req-label-text">Paste upload your resume</label>
+
                   </div>
                 </div>
               </div>

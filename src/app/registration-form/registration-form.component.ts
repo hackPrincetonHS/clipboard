@@ -36,6 +36,7 @@ export class RegistrationFormComponent implements OnInit {
   specialAccomadations;
   shirtSize;
   haveGithub;
+  haveResume;
 
   githubLinkInput;
 
@@ -81,7 +82,8 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.haveGithub="No"
+    this.haveGithub="No";
+    this.haveResume="No"
   }
 
   nextPage() {
