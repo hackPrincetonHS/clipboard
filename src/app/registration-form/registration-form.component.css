@@ -69,3 +69,12 @@
 .half-width{
   width:30% !important;
 }
+.greeniconcolor{
+  color:#80f442;
+}
+.rediconcolor{
+  color:red;
+}
+.minheight86{
+  min-height: 86px;
+}

@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="form-row">
-                  <div class="col">
+                  <div class="col-md">
                     <label for="inputEmail" class="req-label-text">Email</label>
                     <input placeholder="example@example.com" type="email" class="form-control" id="inputEmail" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}" [(ngModel)]="inputEmail" (focus)="email.active = true" (blur)="email.active = false" name="inputEmail" #email="ngModel">
                     <div *ngIf="(email.errors && (this.attemptSubmit || email.dirty || email.touched) && !email.active)" class="alert alert-danger">
@@ -41,7 +41,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col">
+                  <div class="col-md">
                     <div class="row phone-header">
                       <div class="col-3 padding-right-0">
                         <label for="inputPhone1" class="req-label-text">Phone</label>
@@ -67,7 +67,7 @@
                   </div>
                 </div>
                 <div class="form-row">
-                  <div class="col-6">
+                  <div class="col-md-6">
                     <label for="inputPhone1" class="req-label-text">Date of Birth</label>
                     <div class="row phone-header">
                       <div class="col-3">
@@ -102,7 +102,7 @@
                   </div>
                 </div>
                 <div class="form-row">
-                  <div class="col-6 full-width-dropdown">
+                  <div class="col-md-6 full-width-dropdown">
                     <label for="genderMale" class="req-label-text">Gender</label>
                     <!-- You have to hack around the radios not updating the entire thing's pristine status (but they do touched????) Angular requires non standard syntax-->
                     <div class="form-check" id="gender">
@@ -133,9 +133,9 @@
                       You must select an option
                     </div>
                   </div>
-                  <div div class="col-6 full-width-dropdown">
+                  <div div class="col-md-6 full-width-dropdown">
                     <label for="race-ethnicity" class="req-label-text">Race/Ethnicity</label>
-                    <select class="selectpicker" data-live-search="true" id="race-ethnicity" name="race-ethnicity" multiple data-width="auto" [(ngModel)]="race-ethnicity" #race=ngModel>
+                    <select class="selectpicker" data-live-search="true" id="race-ethnicity" name="race-ethnicity" multiple data-width="100%" [(ngModel)]="race-ethnicity" #race=ngModel>
                       <option>White</option>
                       <option>Black or African American</option>
                       <option>American Indian or Alaskan Native</option>
@@ -200,7 +200,7 @@
                   </div>
                 </div>
                 <div class=form-row>
-                  <div class="col-4">
+                  <div class="col-md-4 minheight86">
                     <label for="haveGithubNo" class="full-width-dropdown">Do you have a Github?</label>
                     <div class="form-check-inline">
                       <input class="form-check-input" type="radio" name="haveGithub" id="noHaveGithub" (click)="setRadio(githubYes, 'false')" value="No" [(ngModel)]="haveGithub">
@@ -215,21 +215,45 @@
                       </label>
                     </div>
                   </div>
-                  <div [className]="githubYes.value=='true' ? ' col-8 full-width-dropdown' : 'hide-completely col-8 full-width-dropdown'">
+                  <div [className]="githubYes.value=='true' ? ' col-md-8 full-width-dropdown' : 'hide-completely col-md-8 full-width-dropdown'">
                     <label for="githubLinkInput" class="req-label-text">Paste the link to your profile here</label>
                     <div class="input-group">
                       <input type="text" class="form-control" placeholder="https://github.com/hackPrincetonHS" id="githubLinkInput" pattern="http(s)?:\/\/(www\.)?github\.com\/[A-z0-9_-]+\/?" required [(ngModel)]="githubLinkInput" (focus)="githubLink.active = true" (blur)="githubLink.active = false" name="githubLinkInput" #githubLink="ngModel">
                       <!-- TODO: Add a google recaptcha -->
-                      <button type="button" class="btn btn-secondary" (click)="checkGithubProfile(githubLink.value)">Check Link</button>
+                      <button type="button" class="btn btn-secondary" (click)="checkGithubProfile(githubLink)">Validate Profile <i [className]="githubLink.loading ? 'fas fa-cog fa-spin' : (githubLink.pristine || githubLink.profileData!=githubLink.value) ? 'fa fa-minus' : (githubLink.badProfile) ? 'fa fa-times rediconcolor' : 'fa fa-check greeniconcolor'" aria-hidden="true"></i></button>
                     </div>
-                    <div *ngIf="(githubYes.value=='true' && githubLink.errors && (this.attemptSubmit || githubLink.dirty || githubLink.touched) && !githubLink.active)" class="alert alert-danger">
-                      <div *ngIf="githubLink.errors.required">
+                    <div *ngIf="(githubYes.value=='true' && (this.attemptSubmit || githubLink.dirty || githubLink.touched) && !githubLink.active)">
+                      <div *ngIf="githubLink.errors && githubLink.errors.required" class="alert alert-danger">
                         Please enter your profile
                       </div>
-                      <div *ngIf="!githubLink.errors.required && (githubLink.errors.pattern || githubLink.badProfile)">
+                      <div *ngIf=" ((githubLink.errors && githubLink.errors.pattern && !githubLink.errors.required) || githubLink.badProfile)" class="alert alert-danger">
                         That is not a valid github profile
                       </div>
+                      <div *ngIf="!(githubLink.errors && !githubLink.errors.required) && !((githubLink.errors && githubLink.errors.pattern) || githubLink.badProfile || githubLink.loading) && githubLink.profileData!=githubLink.value" class="alert alert-danger">
+                        You must validate your profile
+                      </div>
                     </div>
+                  </div>
+                </div>
+                <div class=form-row>
+                  <div class="col-4">
+                    <label for="haveResumeNo" class="full-width-dropdown">Do you have a Resume?</label>
+                    <div class="form-check-inline">
+                      <input class="form-check-input" type="radio" name="haveResume" id="noHaveResume" (click)="setRadio(haveResume, 'false')" value="No" [(ngModel)]="haveResume">
+                      <label class="form-check-label" for="noHaveResume">
+                        No
+                      </label>
+                    </div>
+                    <div class="form-check-inline">
+                      <input class="form-check-input" type="radio" name="haveResume" id="yesHaveResume" (click)="setRadio(haveResume, 'true')" value="Yes" #resumeYes [(ngModel)]="haveResume">
+                      <label class="form-check-label" for="yesHaveResume">
+                        Yes
+                      </label>
+                    </div>
+                  </div>
+                  <div [className]="resumeYes.value=='true' ? ' col-8 full-width-dropdown' : 'hide-completely col-8 full-width-dropdown'">
+                    <label for="githubLinkInput" class="req-label-text">Paste the link to your profile here</label>
+                    ASDSFADF
                   </div>
                 </div>
               </div>
@@ -237,10 +261,10 @@
               <div class="containter">
                 <h3>Logistical Info</h3>
                 <div class="form-group">
-                  <div class="col-6">
+                  <div class="col-md-6">
                     <label for="shirtSize" class="req-label-text">T-Shirt Size</label>
                     <div class="full-width-dropdown">
-                      <select class="selectpicker" id="shirtSize" name="shirtSize" title="T-Shirt Size" [(ngModel)]="shirtSize" #tshirt=ngModel>
+                      <select class="selectpicker" id="shirtSize" data-width=100% name="shirtSize" title="T-Shirt Size" [(ngModel)]="shirtSize" #tshirt=ngModel>
                         <option>S</option>
                         <option>M</option>
                         <option>L</option>
@@ -254,7 +278,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="specialAccomadations">Please list any speical accomadations you may require (e.g late arrival, early departure)</label>
+                  <label for="specialAccomadations">Please list any special accomadations you may require (e.g late arrival, early departure)</label>
                   <textarea class="form-control" id="specialAccomadations" name="specialAccomadations" rows="3" [(ngModel)]="specialAccomadations" #accomadations=ngModel></textarea>
                 </div>
               </div>

@@ -1,6 +1,8 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
+import { catchError } from 'rxjs/operators';
+
 
 @Component({
   selector: 'registration-form',
@@ -35,7 +37,7 @@ export class RegistrationFormComponent implements OnInit {
   shirtSize;
   haveGithub;
 
-  githubLink;
+  githubLinkInput;
 
   schoolList=[
     ["Milburn High School"],
@@ -67,6 +69,16 @@ export class RegistrationFormComponent implements OnInit {
 
 
   constructor(private cdr: ChangeDetectorRef, private httpClient: HttpClient) { }
+
+  makeid(length) {
+     var result           = '';
+     var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+     var charactersLength = characters.length;
+     for ( var i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+     }
+     return result;
+  }
 
   ngOnInit() {
     this.haveGithub="No"
@@ -113,14 +125,19 @@ export class RegistrationFormComponent implements OnInit {
   setRadio(dom, set) {
     dom.value=set;
   }
-  checkGithubProfile(smallString){
-        this.httpClient.get("https:\/\/api.github.com/users/"+smallString.split("/")[3]).subscribe((res)=>{
-          if(res["login"]){
-            this.githubLink.badProfile=false
-          } else {
-            this.githubLink.badProfile=true
-          }
-        });
+  checkGithubProfile(gitlink){
+
+    if(!gitlink.errors){
+      console.log("got here")
+      var smallString=gitlink.value
+      gitlink.loading=true
+      this.httpClient.get("https:\/\/api.github.com/users/"+smallString.split("/")[3]).subscribe(
+        data => {gitlink.badProfile=false; gitlink.profileData=gitlink.value; gitlink.loading=false;},
+        error => {gitlink.badProfile=true; gitlink.profileData=gitlink.value; gitlink.loading=false;}
+      );
+    } else {
+      gitlink.badProfile=true
     }
+  }
 
 }
