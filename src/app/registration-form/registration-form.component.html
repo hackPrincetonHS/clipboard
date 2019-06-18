@@ -53,7 +53,7 @@
                       </div>
                       <div class="phone-dash">-</div>
                       <div class="col-4 padding-0">
-                        <input type="tel" name="inputPhone3" id="inputPhone3" placeholder="555" maxlength="4" required inputmode="numeric" (focus)="phone3.active = true" (blur)="phone3.active = false" pattern="[0-9]{4}" digitOnly class=form-control [(ngModel)]="inputPhone3" #phone3="ngModel">
+                        <input type="tel" name="inputPhone3" id="inputPhone3" placeholder="5555" maxlength="4" required inputmode="numeric" (focus)="phone3.active = true" (blur)="phone3.active = false" pattern="[0-9]{4}" digitOnly class=form-control [(ngModel)]="inputPhone3" #phone3="ngModel">
                       </div>
                     </div>
                     <div *ngIf="(phone1.errors || phone2.errors || phone3.errors) && (this.attemptSubmit || phone1.dirty || phone1.touched || phone2.dirty || phone2.touched || phone3.dirty || phone3.dirty) && !(phone1.active || phone2.active || phone3.active)">
@@ -149,7 +149,7 @@
                   </div>
                 </div>
                 <div class="form-row">
-                  <div [className]="school.value=='My school isn\'t here' ? 'col-6 full-width-dropdown' : 'col-12 full-width-dropdown'">
+                  <div [className]="school.value=='My school isn\'t here' ? 'col-md-6 full-width-dropdown' : 'col-12 full-width-dropdown'">
                     <label for="schoolInput" class="req-label-text">School</label>
                     <select class="selectpicker" data-live-search="true" id="schoolInput" name="schoolInput" data-width="100%" [(ngModel)]="schoolInput" #school=ngModel>
                       <optgroup label="Other">
@@ -160,11 +160,11 @@
                         <option *ngFor="let item of this.schoolList;" [attr.data-tokens]="item.slice(1).toString()">{{item[0]}}</option>
                       </optgroup>
                     </select>
-                    <div *ngIf="this.attemptSubmit && school.pristine" class="alert alert-danger col-6">
+                    <div *ngIf="this.attemptSubmit && school.pristine" class="alert alert-danger col-12">
                       School is required
                     </div>
                   </div>
-                  <div [className]="school.value=='My school isn\'t here' ? ' col-6 full-width-dropdown' : 'hide-completely col-6 full-width-dropdown'">
+                  <div [className]="school.value=='My school isn\'t here' ? ' col-md-6 full-width-dropdown' : 'hide-completely col-md-6 full-width-dropdown'">
                     <label for="schoolInputText" class="req-label-text">Enter your school here</label>
                     <input type="text" class="form-control" placeholder="School" id="schoolInputText" required [(ngModel)]="schoolInputText" (focus)="schoolText.active = true" (blur)="schoolText.active = false" name="schoolInputText" #schoolText="ngModel">
                   </div>
@@ -173,7 +173,7 @@
                   You must either pick or enter a school
                 </div>
                 <div class="form-row">
-                  <div class="col-6 full-width-dropdown">
+                  <div class="col-md-6 full-width-dropdown">
                     <label for="studyLevel" class="req-label-text">Current Level Of Study</label>
                     <select class="selectpicker" id="studyLevel" name="studyLevel" data-width="100%" [(ngModel)]="studyLevel" #study=ngModel>
                       <option>Below High School</option>
@@ -185,7 +185,7 @@
                       You must select a level of study
                     </div>
                   </div>
-                  <div class="col-6 full-width-dropdown">
+                  <div class="col-md-6 full-width-dropdown">
                     <label for="graduationYear" class="req-label-text">Graduation Year</label>
                     <select class="selectpicker" id="graduationYear" name="graduationYear" data-width="100%" [(ngModel)]="graduationYear" #graduation=ngModel>
                       <option>2020</option>
@@ -218,9 +218,9 @@
                   <div [className]="githubYes.value=='true' ? ' col-md-8 full-width-dropdown' : 'hide-completely col-md-8 full-width-dropdown'">
                     <label for="githubLinkInput" class="req-label-text">Paste the link to your profile here</label>
                     <div class="input-group">
-                      <input type="text" class="form-control" placeholder="https://github.com/hackPrincetonHS" id="githubLinkInput" pattern="http(s)?:\/\/(www\.)?github\.com\/[A-z0-9_-]+\/?" required [(ngModel)]="githubLinkInput" (focus)="githubLink.active = true" (blur)="githubLink.active = false" name="githubLinkInput" #githubLink="ngModel">
+                      <input type="text" class="form-control" placeholder="https://github.com/hackPrincetonHS" id="githubLinkInput" pattern="http(s)?:\/\/(www\.)?github\.com\/[A-z0-9_-]+\/?" required maxlength="200" [(ngModel)]="githubLinkInput" (focus)="githubLink.active = true" (blur)="githubLink.active = false" name="githubLinkInput" #githubLink="ngModel">
                       <!-- TODO: Add a google recaptcha -->
-                      <button type="button" class="btn btn-secondary" (click)="checkGithubProfile(githubLink)">Validate Profile <i [className]="githubLink.loading ? 'fas fa-cog fa-spin' : (githubLink.pristine || githubLink.profileData!=githubLink.value) ? 'fa fa-minus' : (githubLink.badProfile) ? 'fa fa-times rediconcolor' : 'fa fa-check greeniconcolor'" aria-hidden="true"></i></button>
+                      <button type="button" class="btn btn-secondary" (click)="checkGithubProfile(githubLink)"><u class="dotted">Validate Profile</u> <fa-icon [icon]="githubLink.loading ? ['fas', 'spinner'] : (githubLink.profileData!=githubLink.value || githubLink.pristine) ? ['fas', 'minus'] : githubLink.badProfile ? ['fas', 'times'] : ['fas', 'check']" [spin]="githubLink.loading" [styles]="!githubLink.loading && !(githubLink.profileData!=githubLink.value || githubLink.pristine) ? githubLink.badProfile ? {'color': 'red'} : {'color': '7FFF00'} : ''"></fa-icon></button>
                     </div>
                     <div *ngIf="(githubYes.value=='true' && (this.attemptSubmit || githubLink.dirty || githubLink.touched) && !githubLink.active)">
                       <div *ngIf="githubLink.errors && githubLink.errors.required" class="alert alert-danger">
@@ -230,7 +230,7 @@
                         That is not a valid github profile
                       </div>
                       <div *ngIf="!(githubLink.errors && !githubLink.errors.required) && !((githubLink.errors && githubLink.errors.pattern) || githubLink.badProfile || githubLink.loading) && githubLink.profileData!=githubLink.value" class="alert alert-danger">
-                        You must validate your profile
+                        You must click the button to validate your profile
                       </div>
                     </div>
                   </div>
@@ -252,7 +252,7 @@
                     </div>
                   </div>
                   <div [className]="resumeYes.value=='true' ? ' col-8 full-width-dropdown' : 'hide-completely col-8 full-width-dropdown'">
-                    <label for="githubLinkInput" class="req-label-text">Paste upload your resume</label>
+                    <label for="githubLinkInput" class="req-label-text">Please upload your resume</label>
 
                   </div>
                 </div>

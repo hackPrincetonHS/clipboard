@@ -9,6 +9,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { DigitOnlyModule } from '@uiowa/digit-only';
 import { HttpClientModule } from '@angular/common/http';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faSpinner, faMinus, faCheck, faTimes} from '@fortawesome/free-solid-svg-icons';
 
 @NgModule({
   declarations: [
@@ -21,9 +24,18 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     FormsModule,
     DigitOnlyModule,
-    HttpClientModule
+    HttpClientModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor() {
+    // Add an icon to the library for convenient access in other components
+    library.add(faSpinner);
+    library.add(faMinus);
+    library.add(faCheck);
+    library.add(faTimes);
+  }
+}

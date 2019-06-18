@@ -4,6 +4,7 @@ import * as moment from 'moment';
 import { catchError } from 'rxjs/operators';
 
 
+
 @Component({
   selector: 'registration-form',
   templateUrl: './registration-form.component.html',
@@ -38,6 +39,8 @@ export class RegistrationFormComponent implements OnInit {
   haveGithub;
   haveResume;
 
+  githubLink;
+
   githubLinkInput;
 
   schoolList=[
@@ -70,16 +73,6 @@ export class RegistrationFormComponent implements OnInit {
 
 
   constructor(private cdr: ChangeDetectorRef, private httpClient: HttpClient) { }
-
-  makeid(length) {
-     var result           = '';
-     var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-     var charactersLength = characters.length;
-     for ( var i = 0; i < length; i++ ) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-     }
-     return result;
-  }
 
   ngOnInit() {
     this.haveGithub="No";

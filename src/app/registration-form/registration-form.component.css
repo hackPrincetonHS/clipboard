@@ -69,12 +69,11 @@
 .half-width{
   width:30% !important;
 }
-.greeniconcolor{
-  color:#80f442;
-}
-.rediconcolor{
-  color:red;
-}
 .minheight86{
   min-height: 86px;
+}
+u.dotted{
+  border-bottom: 1px dashed #999;
+  text-decoration: none;
+  margin-right:0.625rem;
 }
