@@ -202,18 +202,22 @@
                 <div class=form-row>
                   <div class="col-4">
                     <label for="haveGithubNo" class="full-width-dropdown">Do you have a Github?</label>
-                    <div class="form-check-inline" id="haveGithub">
-                      <input class="form-check-input" type="radio" id="haveGithubNo" value="No" name="haveGithubNo" [(ngModel)]="haveGithub" #githubYes=ngModel>
-                      <label class="form-check-label" for="haveGithubYes">
+                    <div class="form-check-inline">
+                      <input class="form-check-input" type="radio" name="haveGithub" id="noHaveGithub" value="No" [(ngModel)]="haveGithub">
+                      <label class="form-check-label" for="noHaveGithub">
                         No
                       </label>
                     </div>
                     <div class="form-check-inline">
-                      <input class="form-check-input" type="radio" id="haveGithubYes" value="Yes" name="haveGithubYes" [(ngModel)]="haveGithub" #githubNo=ngModel>
-                      <label class="form-check-label" for="haveGithubYes">
+                      <input class="form-check-input" type="radio" name="haveGithub" id="yesHaveGithub" value="Yes" [(ngModel)]="haveGithub">
+                      <label class="form-check-label" for="yesHaveGithub">
                         Yes
                       </label>
                     </div>
+
+                  </div>
+                  <div *ngIf="needGithubLink" class="alert alert-danger">
+                    You must select a graduation year
                   </div>
                 </div>
               </div>

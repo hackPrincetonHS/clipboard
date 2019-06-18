@@ -11,6 +11,9 @@ export class RegistrationFormComponent implements OnInit {
   numPages=3;
   attemptSubmit=false;
 
+  needGithubLink=false;
+  needResume=false;
+
   //have to list all the properties out for AOT compiler
   inputFirstName;
   inputLastName;
@@ -63,6 +66,7 @@ export class RegistrationFormComponent implements OnInit {
   constructor(private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
+    this.haveGithub="No"
   }
 
   nextPage(){
@@ -102,6 +106,10 @@ export class RegistrationFormComponent implements OnInit {
     }
     //one of the fields is empty, so we ignore it
     return true
+  }
+  setRadio(e: string): void
+  {
+    console.log("heyyy")
   }
 
 }
