@@ -1,7 +1,9 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
+import * as lodash from 'lodash'
 import { catchError } from 'rxjs/operators';
+
 
 
 
@@ -38,10 +40,13 @@ export class RegistrationFormComponent implements OnInit {
   shirtSize;
   haveGithub;
   haveResume;
+  dietaryRestrictions;
 
   githubLink;
 
   githubLinkInput;
+
+  checkGithubProfile;
 
   schoolList=[
     ["Milburn High School"],
@@ -76,7 +81,8 @@ export class RegistrationFormComponent implements OnInit {
 
   ngOnInit() {
     this.haveGithub="No";
-    this.haveResume="No"
+    this.haveResume="No";
+    this.checkGithubProfile=lodash.throttle(this.sendCheckGithubProfile, 2000);
   }
 
   nextPage() {
@@ -88,12 +94,12 @@ export class RegistrationFormComponent implements OnInit {
   submitting() {
     this.attemptSubmit=true;
     this.cdr.detectChanges();
-    console.log(document.getElementsByClassName("alert").length)
+    console.log(document.getElementsByClassName("alert").length);
   }
   autoTab(event, nextInput) {
     const getMethods = (obj) => {
-      let properties = new Set()
-      let currentObj = obj
+      let properties = new Set();
+      let currentObj = obj;
       do {
         Object.getOwnPropertyNames(currentObj).map(item => properties.add(item))
       } while ((currentObj = Object.getPrototypeOf(currentObj)))
@@ -107,9 +113,9 @@ export class RegistrationFormComponent implements OnInit {
     }
   }
   validateDate(monthObj,dayObj,yearObj) {
-    let month=monthObj.value
-    let day=dayObj.value
-    let year=yearObj.value
+    let month=monthObj.value;
+    let day=dayObj.value;
+    let year=yearObj.value;
     if(month && day && year){
       var mom=moment(year+"-"+month+"-"+day, "YYYY-MM-DD")
       return  mom.isValid() && mom.year()>1900 && mom.isBefore(moment());
@@ -120,18 +126,17 @@ export class RegistrationFormComponent implements OnInit {
   setRadio(dom, set) {
     dom.value=set;
   }
-  checkGithubProfile(gitlink){
-
+  sendCheckGithubProfile(gitlink){
+    console.log("call");
     if(!gitlink.errors){
-      console.log("got here")
-      var smallString=gitlink.value
-      gitlink.loading=true
+      var smallString=gitlink.value;
+      gitlink.loading=true;
       this.httpClient.get("https:\/\/api.github.com/users/"+smallString.split("/")[3]).subscribe(
         data => {gitlink.badProfile=false; gitlink.profileData=gitlink.value; gitlink.loading=false;},
         error => {gitlink.badProfile=true; gitlink.profileData=gitlink.value; gitlink.loading=false;}
       );
     } else {
-      gitlink.badProfile=true
+      gitlink.badProfile=true;
     }
   }
 

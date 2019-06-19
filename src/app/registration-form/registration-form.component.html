@@ -186,7 +186,7 @@
                     </div>
                   </div>
                   <div class="col-md-6 full-width-dropdown">
-                    <label for="graduationYear" class="req-label-text">Graduation Year</label>
+                    <label for="graduationYear" class="req-label-text">Expected Graduation Year</label>
                     <select class="selectpicker" id="graduationYear" name="graduationYear" data-width="100%" [(ngModel)]="graduationYear" #graduation=ngModel>
                       <option>2020</option>
                       <option>2021</option>
@@ -253,27 +253,46 @@
                   </div>
                   <div [className]="resumeYes.value=='true' ? ' col-8 full-width-dropdown' : 'hide-completely col-8 full-width-dropdown'">
                     <label for="githubLinkInput" class="req-label-text">Please upload your resume</label>
-
                   </div>
                 </div>
               </div>
               <hr class="separator">
               <div class="containter">
                 <h3>Logistical Info</h3>
-                <div class="form-group">
-                  <div class="col-md-6">
+                <div class="form-row">
+                  <div class="col-md-6 full-width-dropdown">
                     <label for="shirtSize" class="req-label-text">T-Shirt Size</label>
-                    <div class="full-width-dropdown">
-                      <select class="selectpicker" id="shirtSize" data-width=100% name="shirtSize" title="T-Shirt Size" [(ngModel)]="shirtSize" #tshirt=ngModel>
-                        <option>S</option>
-                        <option>M</option>
-                        <option>L</option>
-                        <option>XL</option>
-                        <option>XXL</option>
-                      </select>
-                    </div>
+                    <select class="selectpicker" id="shirtSize" data-width=100% name="shirtSize" title="T-Shirt Size" [(ngModel)]="shirtSize" #tshirt=ngModel>
+                      <option>S</option>
+                      <option>M</option>
+                      <option>L</option>
+                      <option>XL</option>
+                      <option>XXL</option>
+                    </select>
                     <div *ngIf="this.attemptSubmit && tshirt.pristine" class="alert alert-danger">
                       You must select a T-Shirt size
+                    </div>
+                  </div>
+                  <div class="col-md-6 full-width-dropdown">
+                    <label for="dietaryRestrictions" class="req-label-text">Dietary Restrictions</label>
+                    <select class="selectpicker" multiple id="dietaryRestrictions" data-header="Select all that apply" name="dietaryRestrictions" data-width="100%" [(ngModel)]="dietaryRestrictions" #dietary=ngModel>
+                      <option value="None">None</option>
+                      <option data-divider="true"></option>
+                      <option value="Lactose Intolerant">Lactose intolerant or milk allergies</option>
+                      <option value="Vegetarian">Vegetarian</option>
+                      <option value="Ovo-Vegetarian">Ovo-Vegetarian</option>
+                      <option value="Lacto-Vegetarian">Lacto-Vegetarian</option>
+                      <option value="Vegan">Vegan</option>
+                      <option value="Religious">Religious dietary practices</option>
+                      <option value="Diabetic">Diabetic diet</option>
+                      <option value="Gluten Free">Gluten free</option>
+                      <option value="Other">Other</option>
+                    </select>
+                    <div *ngIf="this.attemptSubmit && (!dietary.value || dietary.value.length==0)" class="alert alert-danger">
+                      You must select an option
+                    </div>
+                    <div *ngIf="dietary.value && dietary.value.includes('None') && dietary.value.length>1" class="alert alert-danger">
+                      You cannot select both none and something else
                     </div>
                   </div>
                 </div>
