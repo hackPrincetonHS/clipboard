@@ -327,7 +327,7 @@
                           <option *ngFor="let item of this.hardwareList;" [attr.data-tokens]="item.slice(1).toString()">{{item[0]}}</option>
                         </optgroup>
                       </select>
-                      <div *ngIf="this.attemptNext && hardware.pristine" class="alert alert-danger col-12">
+                      <div *ngIf="!hardware.value && !hardware.value.includes('Other') && this.attemptNext && hardware.pristine" class="alert alert-danger col-12">
                         Please pick at least one option
                       </div>
                     </div>
