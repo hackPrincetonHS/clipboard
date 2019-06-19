@@ -15,7 +15,7 @@ import { catchError } from 'rxjs/operators';
 export class RegistrationFormComponent implements OnInit {
   page=1;
   numPages=3;
-  attemptSubmit=false;
+  attemptNext=false;
 
   needGithubLink=false;
   needResume=false;
@@ -41,6 +41,7 @@ export class RegistrationFormComponent implements OnInit {
   haveGithub;
   haveResume;
   dietaryRestrictions;
+  usingHardware;
 
   githubLink;
 
@@ -76,25 +77,39 @@ export class RegistrationFormComponent implements OnInit {
     ["John P. Stevens High School", "J.P. Stevens"]
   ];
 
+  hardwareList=[
+    ["Servos"],
+    ["Motors"],
+    ["Arduino or other microcontrollers", "ESP", "ESP-32"]
+  ]
 
   constructor(private cdr: ChangeDetectorRef, private httpClient: HttpClient) { }
 
   ngOnInit() {
     this.haveGithub="No";
     this.haveResume="No";
+    this.usingHardware="No";
     this.checkGithubProfile=lodash.throttle(this.sendCheckGithubProfile, 2000);
   }
 
   nextPage() {
-    this.page+=1;
+    if(this.checkPage()){
+      this.attemptNext=false;
+      this.page+=1;
+    }
   }
   prevPage() {
+    this.attemptNext=true;
     this.page-=1;
   }
-  submitting() {
-    this.attemptSubmit=true;
+  checkPage() {
+    this.attemptNext=true;
     this.cdr.detectChanges();
-    console.log(document.getElementsByClassName("alert").length);
+    //console.log(document.getElementsByClassName("alert").length)
+    return document.getElementsByClassName("alert").length==0;
+  }
+  submitting() {
+
   }
   autoTab(event, nextInput) {
     const getMethods = (obj) => {
