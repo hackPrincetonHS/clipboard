@@ -53,6 +53,32 @@ export class RegistrationFormComponent implements OnInit {
 
   checkGithubProfile;
 
+  valuesImInterestedIn=[
+    "inputFirstName",
+    "inputLastName",
+    "inputEmail",
+    "inputPhone1",
+    "inputPhone2",
+    "inputPhone3",
+    "inputMonth",
+    "inputDay",
+    "inputYear",
+    "pickGender",
+    "ethnicity",
+    "schoolInput",
+    "schoolInputText",
+    "studyLevel",
+    "graduationYear",
+    "specialAccomadations",
+    "shirtSize",
+    "dietaryRestrictions",
+    "githubLinkInput",
+    "hardwareInput",
+    "hardwareInputText",
+    "satisfactionRange",
+    "questionsComments"
+  ]
+
   schoolList=[
     ["Milburn High School"],
     ["Montgomery High School"],
@@ -102,6 +128,7 @@ export class RegistrationFormComponent implements OnInit {
       this.page+=1;
     }
   }
+
   prevPage() {
     this.attemptNext=true;
     this.page-=1;
@@ -109,11 +136,39 @@ export class RegistrationFormComponent implements OnInit {
   checkPage() {
     this.attemptNext=true;
     this.cdr.detectChanges();
-    console.log(document.getElementsByClassName("alert"))
+    //console.log(document.getElementsByClassName("alert"))
     return document.getElementsByClassName("alert").length==0;
   }
-  submitting() {
+  submitting(dict) {
 
+    var dataDict=Object.assign({}, dict);
+
+    for(var i=0; i<this.valuesImInterestedIn.length; i++){
+      if(dataDict[this.valuesImInterestedIn[i]]===undefined){
+        dataDict[this.valuesImInterestedIn[i]]="";
+      }
+    }
+
+    var phone=dict["inputPhone1"]+"-"+dict["inputPhone2"]+"-"+dict["inputPhone3"];
+    dataDict["phone"]=phone;
+
+    delete dataDict["inputPhone1"];
+    delete dataDict["inputPhone2"];
+    delete dataDict["inputPhone3"];
+
+    var fullName=dict["inputFirstName"]+" "+dict["inputLastName"];
+    dataDict["fullName"]=fullName;
+
+    var dobISO=dict["inputYear"]+"-"+dict["inputMonth"]+"-"+dict["inputDay"];
+    dataDict["birthDate"]=dobISO;
+    delete dataDict["inputYear"];
+    delete dataDict["inputMonth"];
+    delete dataDict["inputDay"];
+
+    if(dataDict["satisfactionRange"]==""){
+      dataDict["satisfactionRange"]=50;
+    }
+    console.log(dataDict);
   }
   autoTab(event, nextInput) {
     const getMethods = (obj) => {
@@ -146,7 +201,6 @@ export class RegistrationFormComponent implements OnInit {
     dom.value=set;
   }
   sendCheckGithubProfile(gitlink){
-    console.log("call");
     if(!gitlink.errors){
       var smallString=gitlink.value;
       gitlink.loading=true;
