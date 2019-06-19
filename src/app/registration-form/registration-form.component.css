@@ -89,3 +89,9 @@ u.dotted{
 .align-right{
   text-align: right;
 }
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+}
