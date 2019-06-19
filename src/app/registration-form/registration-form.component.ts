@@ -95,17 +95,10 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   nextPage() {
-    /*
-    if(this.page==1 || this.page==2){
-      this.checkPage();
-      this.attemptNext=false;
-      this.page+=1;
-    } else */ if(this.checkPage()){
+    if(this.checkPage()){
       this.attemptNext=false;
       this.page+=1;
     }
-
-
   }
   prevPage() {
     this.attemptNext=true;
