@@ -12,9 +12,14 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ## Build
 It's a pain in the but, but here's the full thing:
-'''
+```
 ng build --prod --aot=false --build-optimizer=false --output-path docs --base-href clipboard
-'''
+```
+Here's to test AOT compilation
+```
+ng build --prod --output-path docs --base-href clipboard
+```
+AOT compilation should be faster and smaller, but it sometimes breaks and I don't know why
 
 ## Running unit tests
 
