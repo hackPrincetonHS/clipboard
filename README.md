@@ -11,7 +11,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
 ## Build
-It's a pain in the but, but here's the full thing:
+It's a pain in the butt, but here's the full thing:
 ```
 ng build --prod --aot=false --build-optimizer=false --output-path docs --base-href clipboard
 ```
