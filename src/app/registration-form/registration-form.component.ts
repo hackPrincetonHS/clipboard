@@ -42,12 +42,14 @@ export class RegistrationFormComponent implements OnInit {
   haveResume;
   dietaryRestrictions;
   usingHardware;
-
-  codeOfConduct;
-
-  githubLink;
-
   githubLinkInput;
+  hardwareInput;
+  hardwareInputText;
+  termsDataSharing;
+  termsCodeOfConduct;
+  satisfactionRange;
+  questionsComments;
+
 
   checkGithubProfile;
 
