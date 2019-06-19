@@ -12,6 +12,21 @@ import { HttpClientModule } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faSpinner, faMinus, faCheck, faTimes} from '@fortawesome/free-solid-svg-icons';
+import { AngularFireModule } from "@angular/fire";
+import { AngularFireAuthModule } from "@angular/fire/auth";
+import { AppRoutingModule } from './app-routing.module';
+
+
+var firebaseConfig = {
+    apiKey: "AIzaSyDzlH7XeqauTFE9PYpg9FYJizcOiUqd-U4",
+    authDomain: "applications-and-checkins.firebaseapp.com",
+    databaseURL: "https://applications-and-checkins.firebaseio.com",
+    projectId: "applications-and-checkins",
+    storageBucket: "applications-and-checkins.appspot.com",
+    messagingSenderId: "911304854348",
+    appId: "1:911304854348:web:ff085a1905f7d853"
+};
+
 
 @NgModule({
   declarations: [
@@ -25,7 +40,10 @@ import { faSpinner, faMinus, faCheck, faTimes} from '@fortawesome/free-solid-svg
     FormsModule,
     DigitOnlyModule,
     HttpClientModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireAuthModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
