@@ -221,7 +221,6 @@
                       <label for="githubLinkInput" class="req-label-text">Paste the link to your profile here</label>
                       <div class="input-group">
                         <input type="text" class="form-control" placeholder="https://github.com/hackPrincetonHS" id="githubLinkInput" pattern="http(s)?:\/\/(www\.)?github\.com\/[A-z0-9_-]+\/?" required maxlength="200" [(ngModel)]="githubLinkInput" (focus)="githubLink.active = true" (blur)="githubLink.active = false" name="githubLinkInput" #githubLink="ngModel">
-                        <!-- TODO: Add a google recaptcha -->
                         <button type="button" class="btn btn-secondary" (click)="checkGithubProfile(githubLink)"><u class="dotted">Validate Profile</u> <fa-icon [icon]="githubLink.loading ? ['fas', 'spinner'] : (githubLink.profileData!=githubLink.value || githubLink.pristine) ? ['fas', 'minus'] : githubLink.badProfile ? ['fas', 'times'] : ['fas', 'check']" [spin]="githubLink.loading" [styles]="!githubLink.loading && !(githubLink.profileData!=githubLink.value || githubLink.pristine) ? githubLink.badProfile ? {'color': 'red'} : {'color': '7FFF00'} : ''"></fa-icon></button>
                       </div>
                       <div *ngIf="(githubYes.value=='true' && (this.attemptNext || githubLink.dirty || githubLink.touched) && !githubLink.active)">
@@ -327,7 +326,7 @@
                           <option *ngFor="let item of this.hardwareList;" [attr.data-tokens]="item.slice(1).toString()">{{item[0]}}</option>
                         </optgroup>
                       </select>
-                      <div *ngIf="!(hardware.value && hardware.value.includes('Other')) && this.attemptNext && hardware.pristine" class="alert alert-danger col-12">
+                      <div *ngIf="hardwareYes.value=='true' && this.attemptNext && hardware.pristine" class="alert alert-danger col-12">
                         Please pick at least one option
                       </div>
                     </div>

@@ -107,7 +107,7 @@ export class RegistrationFormComponent implements OnInit {
   checkPage() {
     this.attemptNext=true;
     this.cdr.detectChanges();
-    //console.log(document.getElementsByClassName("alert").length)
+    console.log(document.getElementsByClassName("alert"))
     return document.getElementsByClassName("alert").length==0;
   }
   submitting() {
