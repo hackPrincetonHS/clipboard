@@ -14,14 +14,14 @@
             </div>
             <div class="form-itself">
               <hr class="separator">
-              <div *ngIf="this.page==1">
+              <div [className]="this.page==1 ? '':'hide-completely'">
                 <div class=containter>
                   <h3>Demographic Info</h3>
                   <label for="inputFirstName" class="req-label-text">Name</label>
                   <div class="form-row">
                     <div class="col">
                       <input type="text" class="form-control" placeholder="First name" id="inputFirstName" required [(ngModel)]="inputFirstName" (focus)="firstName.active = true" (blur)="firstName.active = false" name="inputFirstName" #firstName="ngModel">
-                      <div *ngIf="((firstName.errors && firstName.errors.required) || (lastName.errors && lastName.errors.required)) && ((this.attemptNext || firstName.dirty || firstName.touched || lastName.dirty || lastName.touched) && !(firstName.active || lastName.active))" class="alert alert-danger">
+                      <div *ngIf="((firstName.errors && firstName.errors.required) || (lastName.errors && lastName.errors.required)) && ((this.attemptNext || firstName.dirty || firstName.touched || lastName.dirty || lastName.touched) && !(firstName.active || lastName.active)) && this.page==1" class="alert alert-danger">
                         Name is required
                       </div>
                     </div>
@@ -34,7 +34,7 @@
                     <div class="col-md">
                       <label for="inputEmail" class="req-label-text">Email</label>
                       <input placeholder="example@example.com" type="email" class="form-control" id="inputEmail" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}" [(ngModel)]="inputEmail" (focus)="email.active = true" (blur)="email.active = false" name="inputEmail" #email="ngModel">
-                      <div *ngIf="(email.errors && (this.attemptNext || email.dirty || email.touched) && !email.active)" class="alert alert-danger">
+                      <div *ngIf="(this.page==1 && email.errors && (this.attemptNext || email.dirty || email.touched) && !email.active)" class="alert alert-danger">
                         <div *ngIf="email.errors.required">
                           Email is required
                         </div>
@@ -58,7 +58,7 @@
                           <input type="tel" name="inputPhone3" id="inputPhone3" placeholder="5555" maxlength="4" required inputmode="numeric" (focus)="phone3.active = true" (blur)="phone3.active = false" pattern="[0-9]{4}" digitOnly class=form-control [(ngModel)]="inputPhone3" #phone3="ngModel">
                         </div>
                       </div>
-                      <div *ngIf="(phone1.errors || phone2.errors || phone3.errors) && (this.attemptNext || phone1.dirty || phone1.touched || phone2.dirty || phone2.touched || phone3.dirty || phone3.dirty) && !(phone1.active || phone2.active || phone3.active)">
+                      <div *ngIf="this.page==1 && (phone1.errors || phone2.errors || phone3.errors) && (this.attemptNext || phone1.dirty || phone1.touched || phone2.dirty || phone2.touched || phone3.dirty || phone3.dirty) && !(phone1.active || phone2.active || phone3.active)">
                         <div *ngIf="(phone1.errors && phone1.errors.required) || (phone2.errors && phone2.errors.required) || (phone3.errors && phone3.errors.required)" class="alert alert-danger">
                           Phone number is required
                         </div>
@@ -91,7 +91,7 @@
                           </p>
                         </div>
                       </div>
-                      <div *ngIf="(this.attemptNext || month.dirty || month.touched || day.dirty || day.touched || year.dirty || year.dirty) && !(month.active || day.active || year.active)">
+                      <div *ngIf="this.page==1 && (this.attemptNext || month.dirty || month.touched || day.dirty || day.touched || year.dirty || year.dirty) && !(month.active || day.active || year.active)">
                         <div *ngIf="(month.errors || day.errors || year.errors)">
                           <div *ngIf="(month.errors && month.errors.required) || (day.errors && day.errors.required) || (year.errors && year.errors.required); else notrequiredyear" class="alert alert-danger">
                             Date of Birth is required
@@ -131,7 +131,7 @@
                           Prefer Not to Say
                         </label>
                       </div>
-                      <div *ngIf="this.attemptNext && gender1.pristine && gender2.pristine && gender3.pristine && gender4.pristine" class="alert alert-danger">
+                      <div *ngIf="this.page==1 && this.attemptNext && gender1.pristine && gender2.pristine && gender3.pristine && gender4.pristine" class="alert alert-danger">
                         You must select an option
                       </div>
                     </div>
@@ -145,7 +145,7 @@
                         <option>Native Hawaiian or other Pacific Islander</option>
                         <option>Prefer Not To Say</option>
                       </select>
-                      <div *ngIf="this.attemptNext && (!race.value || race.value.length==0)" class="alert alert-danger">
+                      <div *ngIf="this.page==1 && this.attemptNext && (!race.value || race.value.length==0)" class="alert alert-danger">
                         You must select an option
                       </div>
                     </div>
@@ -162,7 +162,7 @@
                           <option *ngFor="let item of this.schoolList;" [attr.data-tokens]="item.slice(1).toString()">{{item[0]}}</option>
                         </optgroup>
                       </select>
-                      <div *ngIf="this.attemptNext && school.pristine" class="alert alert-danger col-12">
+                      <div *ngIf="this.page==1 && this.attemptNext && school.pristine" class="alert alert-danger col-12">
                         School is required
                       </div>
                     </div>
@@ -171,7 +171,7 @@
                       <input type="text" class="form-control" placeholder="School" id="schoolInputText" required [(ngModel)]="schoolInputText" (focus)="schoolText.active = true" (blur)="schoolText.active = false" name="schoolInputText" #schoolText="ngModel">
                     </div>
                   </div>
-                  <div *ngIf="(school.value=='My school isn\'t here' && schoolText.errors && (this.attemptNext || schoolText.dirty || schoolText.touched) && !schoolText.active)" class="alert alert-danger">
+                  <div *ngIf="this. page==1 && (school.value=='My school isn\'t here' && schoolText.errors && (this.attemptNext || schoolText.dirty || schoolText.touched) && !schoolText.active)" class="alert alert-danger">
                     You must either pick or enter a school
                   </div>
                   <div class="form-row">
@@ -183,7 +183,7 @@
                         <option>Undergraduate</option>
                         <option>Graduate</option>
                       </select>
-                      <div *ngIf="this.attemptNext && study.pristine" class="alert alert-danger">
+                      <div *ngIf="this. page==1 && this.attemptNext && study.pristine" class="alert alert-danger">
                         You must select a level of study
                       </div>
                     </div>
@@ -196,7 +196,7 @@
                         <option>2023</option>
                         <option>After 2023</option>
                       </select>
-                      <div *ngIf="this.attemptNext && graduation.pristine" class="alert alert-danger">
+                      <div *ngIf="this. page==1 && this.attemptNext && graduation.pristine" class="alert alert-danger">
                         You must select a graduation year
                       </div>
                     </div>
@@ -223,7 +223,7 @@
                         <input type="text" class="form-control" placeholder="https://github.com/hackPrincetonHS" id="githubLinkInput" pattern="http(s)?:\/\/(www\.)?github\.com\/[A-z0-9_-]+\/?" required maxlength="200" [(ngModel)]="githubLinkInput" (focus)="githubLink.active = true" (blur)="githubLink.active = false" name="githubLinkInput" #githubLink="ngModel">
                         <button type="button" class="btn btn-secondary" (click)="checkGithubProfile(githubLink)"><u class="dotted">Validate Profile</u> <fa-icon [icon]="githubLink.loading ? ['fas', 'spinner'] : (githubLink.profileData!=githubLink.value || githubLink.pristine) ? ['fas', 'minus'] : githubLink.badProfile ? ['fas', 'times'] : ['fas', 'check']" [spin]="githubLink.loading" [styles]="!githubLink.loading && !(githubLink.profileData!=githubLink.value || githubLink.pristine) ? githubLink.badProfile ? {'color': 'red'} : {'color': '7FFF00'} : ''"></fa-icon></button>
                       </div>
-                      <div *ngIf="(githubYes.value=='true' && (this.attemptNext || githubLink.dirty || githubLink.touched) && !githubLink.active)">
+                      <div *ngIf="this. page==1 && (githubYes.value=='true' && (this.attemptNext || githubLink.dirty || githubLink.touched) && !githubLink.active)">
                         <div *ngIf="githubLink.errors && githubLink.errors.required" class="alert alert-danger">
                           Please enter your profile
                         </div>
@@ -270,7 +270,7 @@
                         <option>XL</option>
                         <option>XXL</option>
                       </select>
-                      <div *ngIf="this.attemptNext && tshirt.pristine" class="alert alert-danger">
+                      <div *ngIf="this. page==1 && this.attemptNext && tshirt.pristine" class="alert alert-danger">
                         You must select a T-Shirt size
                       </div>
                     </div>
@@ -289,10 +289,10 @@
                         <option value="Gluten Free">Gluten free</option>
                         <option value="Other">Other</option>
                       </select>
-                      <div *ngIf="this.attemptNext && (!dietary.value || dietary.value.length==0)" class="alert alert-danger">
+                      <div *ngIf="this. page==1 && this.attemptNext && (!dietary.value || dietary.value.length==0)" class="alert alert-danger">
                         You must select an option
                       </div>
-                      <div *ngIf="dietary.value && dietary.value.includes('None') && dietary.value.length>1" class="alert alert-danger">
+                      <div *ngIf="this. page==1 && dietary.value && dietary.value.includes('None') && dietary.value.length>1" class="alert alert-danger">
                         You cannot select both none and something else
                       </div>
                     </div>
@@ -326,7 +326,7 @@
                           <option *ngFor="let item of this.hardwareList;" [attr.data-tokens]="item.slice(1).toString()">{{item[0]}}</option>
                         </optgroup>
                       </select>
-                      <div *ngIf="hardwareYes.value=='true' && this.attemptNext && hardware.pristine" class="alert alert-danger col-12">
+                      <div *ngIf="this. page==1 && hardwareYes.value=='true' && this.attemptNext && hardware.pristine" class="alert alert-danger col-12">
                         Please pick at least one option
                       </div>
                     </div>
@@ -343,7 +343,7 @@
               </div>
 
 
-              <div *ngIf="this.page==2">
+              <div [className]="this.page==2 ? '':'hide-completely'">
                 <p>
                   I authorize you to share my application/registration information for event administraion, ranking, MLH administration, pre- and post-event informational e-mails, and occasional messages about hackathons in-line with the MLH Privacy Policy, https://mlh.io/privacy. I further agree to the terms of both the MLH Contest Terms and Conditions, https://github.com/MLH/mlh-policies/tree/master/prize-terms-and-conditions, and the MLH Privacy Policy, https://mlh.io/privacy.
                 </p>
@@ -351,7 +351,7 @@
                   <input type="checkbox" class="custom-control-input" id="termsDataSharing" name="termsDataSharing" [(ngModel)]="termsDataSharing" #dataSharing=ngModel>
                   <label class="custom-control-label" for="termsDataSharing">Yes!</label>
                 </div>
-                <div *ngIf="this.attemptNext && !dataSharing.value" class="alert alert-danger">
+                <div *ngIf="this. page==2 && this.attemptNext && !dataSharing.value" class="alert alert-danger">
                   You must agree to the data policy
                 </div>
                 <p>
@@ -361,13 +361,13 @@
                   <input type="checkbox" class="custom-control-input" id="termsCodeOfConduct" name="termsCodeOfConduct" [(ngModel)]="termsCodeOfConduct" #codeOfConduct=ngModel>
                   <label class="custom-control-label" for="termsCodeOfConduct">Yes!</label>
                 </div>
-                <div *ngIf="this.attemptNext && !codeOfConduct.value" class="alert alert-danger">
+                <div *ngIf="this. page==2 && this.attemptNext && !codeOfConduct.value" class="alert alert-danger">
                   You must agree to follow the Code of Conduct
                 </div>
               </div>
 
 
-              <div *ngIf="this.page==3">
+              <div [className]="this.page==3 ? '':'hide-completely'">
                 <div class="container">
                   <label for="satisfactionRange">How was your experience with this survey?</label>
                   <input type="range" class="custom-range" min="0" max="100" step="1" id="satisfactionRange" name="satisfactionRange" [(ngModel)]="satisfactionRange" #satisfaction=ngModel>
