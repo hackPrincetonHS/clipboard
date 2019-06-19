@@ -342,6 +342,49 @@
                 </div>
               </div>
             </div>
+
+
+            <div *ngIf="this.page==2">
+              <p>
+                I authorize you to share my application/registration information for event administraion, ranking, MLH administration, pre- and post-event informational e-mails, and occasional messages about hackathons in-line with the MLH Privacy Policy, https://mlh.io/privacy. I further agree to the terms of both the MLH Contest Terms and Conditions, https://github.com/MLH/mlh-policies/tree/master/prize-terms-and-conditions, and the MLH Privacy Policy, https://mlh.io/privacy.
+              </p>
+              <div class="custom-control custom-switch bottom-div">
+                <input type="checkbox" class="custom-control-input" id="termsDataSharing" name="termsDataSharing" [(ngModel)]="termsDataSharing" #dataSharing=ngModel>
+                <label class="custom-control-label" for="termsDataSharing">Yes!</label>
+              </div>
+              <div *ngIf="this.attemptNext && !dataSharing.value" class="alert alert-danger">
+                You must agree to the data policy
+              </div>
+              <p>
+                By registering for hackPHS, you agree to follow the MLH Code of Conduct, and for hackPHS to use your information as described in the MLH Privacy Policy.
+              </p>
+              <div class="custom-control custom-switch bottom-div">
+                <input type="checkbox" class="custom-control-input" id="termsCodeOfConduct" name="termsCodeOfConduct" [(ngModel)]="termsCodeOfConduct" #codeOfConduct=ngModel>
+                <label class="custom-control-label" for="termsCodeOfConduct">Yes!</label>
+              </div>
+              <div *ngIf="this.attemptNext && !codeOfConduct.value" class="alert alert-danger">
+                You must agree to follow the Code of Conduct
+              </div>
+            </div>
+
+
+            <div *ngIf="this.page==3">
+              <div class="container">
+                <label for="satisfactionRange">How was your experience with this survey?</label>
+                <input type="range" class="custom-range" min="0" max="100" step="1" id="satisfactionRange" name="satisfactionRange" [(ngModel)]="satisfactionRange" #satisfaction=ngModel>
+                <div class="row bottom-div">
+                  <div class="col-4 align-left">Extremely Bad</div>
+                  <div class="col-4 align-center">Average</div>
+                  <div class="col-4 align-right">Extremely Good</div>
+                </div>
+                <div class="form-group">
+                  <label for="questionsComments">Do you have any questions/comments about this form or anything else?</label>
+                  <textarea class="form-control" id="questionsComments" name="questionsComments" rows="3" [(ngModel)]="questionsComments" #comments=ngModel></textarea>
+                </div>
+              </div>
+            </div>
+
+
           </div>
 
           </fieldset>

@@ -43,6 +43,8 @@ export class RegistrationFormComponent implements OnInit {
   dietaryRestrictions;
   usingHardware;
 
+  codeOfConduct;
+
   githubLink;
 
   githubLinkInput;
@@ -93,10 +95,17 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   nextPage() {
-    if(this.checkPage()){
+    /*
+    if(this.page==1 || this.page==2){
+      this.checkPage();
+      this.attemptNext=false;
+      this.page+=1;
+    } else */ if(this.checkPage()){
       this.attemptNext=false;
       this.page+=1;
     }
+
+
   }
   prevPage() {
     this.attemptNext=true;
