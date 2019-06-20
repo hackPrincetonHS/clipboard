@@ -1,3 +1,25 @@
-<input type="text" class="form-control mb-2" placeholder="Email" #userEmail required autofocus>
-<input type="password" class="form-control mb-2" placeholder="Password" #userPassword required>
-<button  class="btn btn-lg btn-primary btn-block mb-1"  (click)="authService.login(userEmail.value, userPassword.value)">Login</button>
+<div class="backround">
+  <div class="wrapper fadeInDown">
+    <div id="formContent">
+      <!-- Tabs Titles -->
+
+      <!-- Icon -->
+      <div class="fadeIn first">
+        <img src="./assets/img/hackphslogo2019.svg" id="icon" alt="hackPHS" />
+      </div>
+
+      <!-- Login Form -->
+      <form>
+        <input type="text" id="login" class="fadeIn second" name="login" #userEmail placeholder="login" autofocus>
+        <input type="password" id="password" class="fadeIn third" name="login" #userPassword placeholder="password">
+        <input type="submit" (click)="authService.login(userEmail.value, userPassword.value)" class="fadeIn fourth" value="Log In">
+      </form>
+
+      <!-- Remind Passowrd -->
+      <div id="formFooter">
+        <a class="underlineHover" href="#">Forgot Password?</a>
+      </div>
+
+    </div>
+  </div>
+</div>
