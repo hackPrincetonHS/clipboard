@@ -7,13 +7,13 @@
       <!-- Tabs Titles -->
 
       <!-- Icon -->
-      <div class="fadeIn first">
+      <div class="fadeIn first img-margin">
         <img src="./assets/img/hackphslogo2019.svg" id="icon" alt="hackPHS" />
       </div>
 
       <!-- Login Form -->
       <form>
-        <input type="text" id="login" class="fadeIn second" name="login" #userEmail placeholder="login" autofocus>
+        <input type="text" id="login" class="fadeIn second" name="login" #userEmail placeholder="email" autofocus>
         <input type="password" id="password" class="fadeIn third" name="login" #userPassword placeholder="password">
         <input type="submit" (click)="authService.login(userEmail.value, userPassword.value, this.badLoginAlert)" class="fadeIn fourth login" value="Log In">
         <input type="submit" class="fadeIn fifth register" value="Register">
