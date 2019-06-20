@@ -7,6 +7,7 @@ templateUrl:  './login.component.html',
 styleUrls: ['./login.component.css']
 })
 export  class  LoginComponent  implements  OnInit {
+    badLoginAlert={"value": false};
     constructor(public authService:  AuthService) { }
     ngOnInit() {}
 }

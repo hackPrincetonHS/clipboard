@@ -19,23 +19,23 @@ export  class  AuthService {
       }
     })
   }
-  async  login(email:  string, password:  string) {
+  async  login(email:  string, password:  string, alertToActivate) {
 
-try {
-    await  this.afAuth.auth.signInWithEmailAndPassword(email, password)
-    this.router.navigate(['registration']);
-} catch (e) {
-    alert("Error!"  +  e.message);
-}
-}
-get isLoggedIn(): boolean {
+    try {
+      await  this.afAuth.auth.signInWithEmailAndPassword(email, password)
+      this.router.navigate(['registration']);
+    } catch (e) {
+      alertToActivate.value=true;
+    }
+  }
+  get isLoggedIn(): boolean {
     const  user  =  JSON.parse(localStorage.getItem('user'));
     return  user  !==  null;
-}
+  }
 
-async logout(){
+  async logout(){
     await this.afAuth.auth.signOut();
     localStorage.removeItem('user');
     this.router.navigate(['/login']);
-}
+  }
 }
