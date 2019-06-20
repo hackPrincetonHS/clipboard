@@ -2,9 +2,14 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { RegistrationFormComponent } from './registration-form/registration-form.component'
+import { LoginComponent } from './login/login.component'
+
+import { LoginActivate } from './login-activate.guard'
 
 const routes: Routes = [
-  { path: 'registration', component: RegistrationFormComponent }
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'registration', component: RegistrationFormComponent, canActivate:[LoginActivate]},
+  { path: 'login', component: LoginComponent}
 ];
 
 

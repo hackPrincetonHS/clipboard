@@ -15,6 +15,8 @@ import { faSpinner, faMinus, faCheck, faTimes} from '@fortawesome/free-solid-svg
 import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { AppRoutingModule } from './app-routing.module';
+import { LoginComponent } from './login/login.component';
+import { HeaderComponent } from './header/header.component';
 
 
 var firebaseConfig = {
@@ -32,7 +34,9 @@ var firebaseConfig = {
   declarations: [
     AppComponent,
     RegistrationFormComponent,
-    OcticonDirective
+    OcticonDirective,
+    LoginComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
