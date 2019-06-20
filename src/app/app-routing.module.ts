@@ -8,7 +8,7 @@ import { LoginActivate } from './login-activate.guard'
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'registration', component: RegistrationFormComponent, canActivate:[LoginActivate]},
+  { path: 'registration-form', component: RegistrationFormComponent, canActivate:[LoginActivate]},
   { path: 'login', component: LoginComponent}
 ];
 

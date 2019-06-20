@@ -1,8 +1,5 @@
 <div class="backround">
   <div class="wrapper fadeInDown">
-    <div *ngIf="this.badLoginAlert.value" class="alert alert-danger">
-      Invalid username/password
-    </div>
     <div id="formContent">
       <!-- Tabs Titles -->
 
@@ -15,9 +12,9 @@
       <form>
         <input type="text" id="login" class="fadeIn second" name="login" #userEmail placeholder="email" autofocus>
         <input type="password" id="password" class="fadeIn third" name="login" #userPassword placeholder="password">
-        <input type="submit" (click)="authService.login(userEmail.value, userPassword.value, this.badLoginAlert)" class="fadeIn fourth login" value="Log In">
-        <input type="submit" class="fadeIn fifth register" value="Register">
-
+        <input *ngIf="this.register" [@simpleFadeAnimation]="rand" type="password" id="password2" name="login" #userPassword2 placeholder="confirm password">
+        <input type="submit" (click)="this.clickButtonLogin(userEmail, userPassword, userPassword2)" class="fadeIn fourth login" value="Log In">
+        <input type="submit" class="fadeIn fifth register" (click)="this.register=true" value="Register">
       </form>
 
       <!-- Remind Passowrd -->

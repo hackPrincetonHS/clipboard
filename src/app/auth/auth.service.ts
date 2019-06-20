@@ -23,7 +23,7 @@ export  class  AuthService {
 
     try {
       await  this.afAuth.auth.signInWithEmailAndPassword(email, password)
-      this.router.navigate(['registration']);
+      this.router.navigate(['registration-form']);
     } catch (e) {
       alertToActivate.value=true;
     }
