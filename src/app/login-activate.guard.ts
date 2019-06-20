@@ -17,6 +17,7 @@ export class LoginActivate implements CanActivate {
   ): Observable<boolean>|Promise<boolean>|boolean {
     if (!this.authService.isLoggedIn) {
       this.router.navigate(['login']);
+      return false;
     }
     return true;
   }
