@@ -25,17 +25,23 @@ export  class  AuthService {
       await  this.afAuth.auth.signInWithEmailAndPassword(email, password)
       this.router.navigate(['registration-form']);
     } catch (e) {
-      alertToActivate.value="username and password do not match";
+      alertToActivate.value=e.message;
       alertToActivate.shake=true;
     }
   }
-  async  register(email:  string, password:  string) {
+  async  register(email:  string, password:  string, alertToActivate) {
     try {
       await  this.afAuth.auth.createUserWithEmailAndPassword(email, password)
       this.router.navigate(['registration-form']);
-    } catch (e) {}
+    } catch (e) {
+      alertToActivate.value=e.message;
+    }
   }
 
+  get userEmail(): string {
+    const user = JSON.parse(localStorage.getItem('user'));
+    return user.email;
+  }
   get isLoggedIn(): boolean {
     const  user  =  JSON.parse(localStorage.getItem('user'));
     return  user  !==  null;

@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
 import * as lodash from 'lodash'
 import { catchError } from 'rxjs/operators';
+import { AuthService } from  '../auth/auth.service';
+
 
 
 
@@ -56,7 +58,6 @@ export class RegistrationFormComponent implements OnInit {
   valuesImInterestedIn=[
     "inputFirstName",
     "inputLastName",
-    "inputEmail",
     "inputPhone1",
     "inputPhone2",
     "inputPhone3",
@@ -113,7 +114,7 @@ export class RegistrationFormComponent implements OnInit {
     ["Arduino or other microcontrollers", "ESP", "ESP-32"]
   ]
 
-  constructor(private cdr: ChangeDetectorRef, private httpClient: HttpClient) { }
+  constructor(private cdr: ChangeDetectorRef, private httpClient: HttpClient, public authService:  AuthService) { }
 
   ngOnInit() {
     this.haveGithub="No";

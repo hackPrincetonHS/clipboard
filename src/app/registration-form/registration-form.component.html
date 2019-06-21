@@ -33,15 +33,7 @@
                   <div class="form-row">
                     <div class="col-md">
                       <label for="inputEmail" class="req-label-text">Email</label>
-                      <input placeholder="example@example.com" type="email" class="form-control" id="inputEmail" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}" [(ngModel)]="inputEmail" (focus)="email.active = true" (blur)="email.active = false" name="inputEmail" #email="ngModel">
-                      <div *ngIf="(this.page==1 && email.errors && (this.attemptNext || email.dirty || email.touched) && !email.active)" class="alert alert-danger">
-                        <div *ngIf="email.errors.required">
-                          Email is required
-                        </div>
-                        <div *ngIf="email.invalid && !email.errors.required">
-                          That email is invalid
-                        </div>
-                      </div>
+                      <input class="form-control" type="text" [placeholder]="this.authService.userEmail" readonly>
                     </div>
                     <div class="col-md">
                       <div class="row phone-header">
@@ -398,7 +390,7 @@
                 <button type="button" class="btn btn-primary .navbar-right" (click)="nextPage()">Next</button>
               </div>
               <ng-template #submit>
-                <button type="button" class="btn btn-primary .navbar-right" (click)="submitting({'shirtSize': shirtSize, 'inputFirstName': inputFirstName, 'inputLastName': inputLastName, 'inputEmail': inputEmail, 'inputPhone1':inputPhone1, 'inputPhone2': inputPhone2, 'inputPhone3': inputPhone3, 'inputMonth': inputMonth, 'inputDay': inputDay, 'inputYear': inputYear, 'pickGender': pickGender, 'ethnicity': ethnicity, 'schoolInput': schoolInput,'schoolInputText': schoolInputText, 'studyLevel': studyLevel, 'graduationYear': graduationYear, 'specialAccomadations': specialAccomadations, 'dietaryRestrictions': dietaryRestrictions, 'githubLinkInput': githubLinkInput, 'hardwareInput': hardwareInput, 'hardwareInputText': hardwareInputText, 'satisfactionRange': satisfactionRange, 'questionsComments': questionsComments});">Submit</button>
+                <button type="button" class="btn btn-primary .navbar-right" (click)="submitting({'shirtSize': shirtSize, 'inputFirstName': inputFirstName, 'inputLastName': inputLastName, 'inputPhone1':inputPhone1, 'inputPhone2': inputPhone2, 'inputPhone3': inputPhone3, 'inputMonth': inputMonth, 'inputDay': inputDay, 'inputYear': inputYear, 'pickGender': pickGender, 'ethnicity': ethnicity, 'schoolInput': schoolInput,'schoolInputText': schoolInputText, 'studyLevel': studyLevel, 'graduationYear': graduationYear, 'specialAccomadations': specialAccomadations, 'dietaryRestrictions': dietaryRestrictions, 'githubLinkInput': githubLinkInput, 'hardwareInput': hardwareInput, 'hardwareInputText': hardwareInputText, 'satisfactionRange': satisfactionRange, 'questionsComments': questionsComments});">Submit</button>
               </ng-template>
             </div>
           </div>

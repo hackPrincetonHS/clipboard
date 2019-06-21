@@ -82,7 +82,7 @@ export  class  LoginComponent  implements  OnInit {
           this.badLoginAlert.shake=true;
         } else {
           this.badLoginAlert.value="false";
-          this.authService.register(userEmail.value, userPassword.value);
+          this.authService.register(userEmail.value, userPassword.value, this.badLoginAlert);
         }
       } else {
         this.badLoginAlert.value="false";
