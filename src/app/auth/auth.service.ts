@@ -25,11 +25,11 @@ export  class  AuthService {
       await  this.afAuth.auth.signInWithEmailAndPassword(email, password)
       this.router.navigate(['registration-form']);
     } catch (e) {
-      alertToActivate.value=true;
+      alertToActivate.value="username and password do not match";
       alertToActivate.shake=true;
     }
   }
-  async  register(email:  string, password:  string, alertToActivate) {
+  async  register(email:  string, password:  string) {
     try {
       await  this.afAuth.auth.createUserWithEmailAndPassword(email, password)
       this.router.navigate(['registration-form']);

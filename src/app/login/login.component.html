@@ -12,12 +12,16 @@
       <form>
         <input type="text" id="login" class="fadeIn second" name="login" #userEmail placeholder="email" autofocus>
         <input type="password" [@shakeit]="this.badLoginAlert.shake" (@shakeit.done)="this.badLoginAlert.shake=false" id="password" [className]="this.badLoginAlert.shake ? 'fadeIn third erroredText' : 'fadeIn third'" name="login" #userPassword [placeholder]="this.register ? 'create password' : 'password'">
-        <input *ngIf="this.register" [@simpleFadeAnimation]="" type="password" id="password2" name="login" #userConfirm placeholder="confirm password">
-        <div *ngIf="this.badLoginAlert.value" class="alert-login">
+        <input [hidden]="!this.registerShown" #userConfirm [@simpleFadeAnimation]="this.register" (@simpleFadeAnimation.done)="this.toggleRegisterShown()" [@shakeit]="this.badLoginAlert.shake" type="password" id="password2" name="login" placeholder="confirm password" [className]="this.badLoginAlert.shake ? 'erroredText' : ''">
+        <div *ngIf="this.badLoginAlert.value!='false'" class="alert-login">
           <div class="alert alert-danger fade show low-alert-margin" role="alert">
-            Username and password do not match
+            {{this.badLoginAlert.value}}
           </div>
         </div>
+        <!-- This button makes it so that when you click enter, it goes to the right thing. You can't use display:none because then it is hidden by user interactions
+        I then also need to set the tabindexes manually so that people don't tab over to this button accidently-->
+        <button *ngIf="this.register" class="hidden-in-plain-site" (click)="this.clickRegister(userEmail, userPassword, userConfirm)" tabindex="-1" type="submit"></button>
+
         <input type="submit" (click)="this.clickButtonLogin(userEmail, userPassword)" class="fadeIn fourth login" value="Log In">
         <input type="submit" class="fadeIn fifth register" (click)="this.clickRegister(userEmail, userPassword, userConfirm)" value="Sign Up">
       </form>

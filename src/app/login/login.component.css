@@ -377,3 +377,16 @@ input[type=password]:placeholder {
 .low-alert-margin {
   margin-bottom: 5px !important;
 }
+
+/*
+no one will ever beat this pun
+*/
+.hidden-in-plain-site {
+  overflow: visible !important;
+  height: 0 !important;
+  width: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  padding: 0 !important;
+  display: block !important;
+}

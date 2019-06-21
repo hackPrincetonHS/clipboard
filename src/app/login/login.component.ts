@@ -22,13 +22,13 @@ animations: [
       state('in', style({opacity: 1})),
 
       //when created
-      transition(':enter', [
+      transition('false=>true', [
         style({opacity: 0}),
         animate(300 )
       ]),
 
       // fade out when destroyed. this could also be written as transition('void => *')
-      transition(':leave',
+      transition('true=>false',
         animate(200, style({opacity: 0})))
     ]),
 
@@ -54,26 +54,45 @@ animations: [
 
 
 export  class  LoginComponent  implements  OnInit {
-    badLoginAlert={"value": false, "shake":false};
+    badLoginAlert={"value": "false", "shake":false};
     register;
-
-    userEmail;
-    userPassword;
-    userConfirm;
+    registerShown;
 
     constructor(public authService:  AuthService) { }
     ngOnInit() {
       this.register=false;
+      this.registerShown=false;
     }
     clickButtonLogin(userEmail, userPassword) {
-      this.badLoginAlert.value=false;
+      this.badLoginAlert.value="false";
       if(this.register) {
         this.register=false;
+        var authService=this.authService;
+        var badLoginAlert=this.badLoginAlert
+        //so that the alert doesn't go off before the animation is done
+        setTimeout(function(){authService.login(userEmail.value, userPassword.value, badLoginAlert);}, 300);
+      } else {
+        this.authService.login(userEmail.value, userPassword.value, this.badLoginAlert);
       }
-      this.authService.login(userEmail.value, userPassword.value, this.badLoginAlert);
     }
-    clickRegister(userEmail, userPassword, userPassword2){
+    clickRegister(userEmail, userPassword, userConfirm){
+      if(this.register) {
+        if(userPassword.value!=userConfirm.value) {
+          this.badLoginAlert.value="the passwords must match";
+          this.badLoginAlert.shake=true;
+        } else {
+          this.badLoginAlert.value="false";
+          this.authService.register(userEmail.value, userPassword.value);
+        }
+      } else {
+        this.badLoginAlert.value="false";
+      }
       this.register=true;
-      this.badLoginAlert.value=false;
+      this.registerShown=true;
+    }
+    toggleRegisterShown(){
+      if(!this.register){
+        this.registerShown=false;
+      }
     }
 }
