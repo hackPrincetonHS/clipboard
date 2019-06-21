@@ -56,6 +56,11 @@ animations: [
 export  class  LoginComponent  implements  OnInit {
     badLoginAlert={"value": false, "shake":false};
     register;
+
+    userEmail;
+    userPassword;
+    userConfirm;
+
     constructor(public authService:  AuthService) { }
     ngOnInit() {
       this.register=false;

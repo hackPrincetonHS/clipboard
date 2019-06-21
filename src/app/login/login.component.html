@@ -12,14 +12,14 @@
       <form>
         <input type="text" id="login" class="fadeIn second" name="login" #userEmail placeholder="email" autofocus>
         <input type="password" [@shakeit]="this.badLoginAlert.shake" (@shakeit.done)="this.badLoginAlert.shake=false" id="password" [className]="this.badLoginAlert.shake ? 'fadeIn third erroredText' : 'fadeIn third'" name="login" #userPassword [placeholder]="this.register ? 'create password' : 'password'">
-        <input *ngIf="this.register" [@simpleFadeAnimation]="" type="password" id="password2" name="login" #userPassword2 placeholder="confirm password">
+        <input *ngIf="this.register" [@simpleFadeAnimation]="" type="password" id="password2" name="login" #userConfirm placeholder="confirm password">
         <div *ngIf="this.badLoginAlert.value" class="alert-login">
           <div class="alert alert-danger fade show low-alert-margin" role="alert">
             Username and password do not match
           </div>
         </div>
         <input type="submit" (click)="this.clickButtonLogin(userEmail, userPassword)" class="fadeIn fourth login" value="Log In">
-        <input type="submit" class="fadeIn fifth register" (click)="this.clickRegister(userEmail, userPassword, userPassword2)" value="Sign Up">
+        <input type="submit" class="fadeIn fifth register" (click)="this.clickRegister(userEmail, userPassword, userConfirm)" value="Sign Up">
       </form>
 
       <!-- Remind Passowrd -->
