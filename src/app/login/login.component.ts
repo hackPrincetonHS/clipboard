@@ -5,7 +5,8 @@ import {
   state,
   style,
   animate,
-  transition
+  transition,
+  keyframes
 } from '@angular/animations';
 
 
@@ -29,24 +30,41 @@ animations: [
       // fade out when destroyed. this could also be written as transition('void => *')
       transition(':leave',
         animate(200, style({opacity: 0})))
-    ])
+    ]),
+
+    trigger('shakeit', [
+        state('in', style({
+            transform: 'scale(1)',
+        })),
+        transition('false => true', animate('1000ms ease-in',     keyframes([
+          style({transform: 'translate3d(-1px, 0, 0)', offset: 0.1}),
+          style({transform: 'translate3d(2px, 0, 0)', offset: 0.2}),
+          style({transform: 'translate3d(-4px, 0, 0)', offset: 0.3}),
+          style({transform: 'translate3d(4px, 0, 0)', offset: 0.4}),
+          style({transform: 'translate3d(-4px, 0, 0)', offset: 0.5}),
+          style({transform: 'translate3d(4px, 0, 0)', offset: 0.6}),
+          style({transform: 'translate3d(-4px, 0, 0)', offset: 0.7}),
+          style({transform: 'translate3d(2px, 0, 0)', offset: 0.8}),
+          style({transform: 'translate3d(-1px, 0, 0)', offset: 0.9}),
+        ]))),
+  ])
   ]
 })
 
 
 
 export  class  LoginComponent  implements  OnInit {
-    badLoginAlert={"value": false};
+    badLoginAlert={"value": false, "shake":false};
     register;
     constructor(public authService:  AuthService) { }
     ngOnInit() {
       this.register=false;
     }
     clickButtonLogin(userEmail, userPassword) {
+      this.badLoginAlert.value=false;
       if(this.register) {
         this.register=false;
-      } else{
-        this.authService.login(userEmail.value, userPassword.value, this.badLoginAlert);
       }
+      this.authService.login(userEmail.value, userPassword.value, this.badLoginAlert);
     }
 }

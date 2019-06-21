@@ -86,7 +86,12 @@ h2.active {
   border-bottom: 2px solid #5fbae9;
 }
 
-
+.alert-login{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 35px;
+  margin-right: 35px;
+}
 
 /* FORM TYPOGRAPHY*/
 
@@ -104,7 +109,7 @@ h2.active {
   box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
   -webkit-border-radius: 5px 5px 5px 5px;
   border-radius: 5px 5px 5px 5px;
-  margin: 20px 20px 20px 20px;
+  margin: 10px 20px 20px 20px;
   -webkit-transition: all 0.3s ease-in-out;
   -moz-transition: all 0.3s ease-in-out;
   -ms-transition: all 0.3s ease-in-out;
@@ -216,6 +221,13 @@ input[type=password]:focus {
   border-bottom: 2px solid #5fbae9;
 }
 
+.erroredText {
+  background-color: #fff;
+  border-width: 2.5px !important;
+  border-style: solid !important;
+  border-color: #f8d7Da !important;
+}
+
 input[type=password]:placeholder {
   color: #cccccc;
 }
@@ -278,18 +290,6 @@ input[type=password]:placeholder {
   -moz-animation-duration:0.6s;
   animation-duration:0.6s;
 }
-
-.greydout {
--webkit-opacity: 0;
--moz-opacity: 0;
-opacity: 0;
--webkit-transition: all 3s ease;
--moz-transition: all 3s ease;
--ms-transition: all 3s ease;
--o-transition: all 3s ease;
-transition: all 3s ease;
-}
-
 .fadeIn {
   opacity:0;
   -webkit-animation:fadeIn ease-in 1;

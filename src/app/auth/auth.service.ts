@@ -26,6 +26,7 @@ export  class  AuthService {
       this.router.navigate(['registration-form']);
     } catch (e) {
       alertToActivate.value=true;
+      alertToActivate.shake=true;
     }
   }
   get isLoggedIn(): boolean {
