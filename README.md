@@ -13,11 +13,11 @@ Run `ng generate component component-name` to generate a new component. You can 
 ## Build
 It's a pain in the butt, but here's the full thing:
 ```
-ng build --prod --aot=false --build-optimizer=false --output-path docs --base-href /clipboard/
+ng build --prod --output-path docs --base-href "https://hackprincetonhs.github.io/clipboard/"
 ```
 Here's to test AOT compilation
 ```
-ng build --prod --output-path docs --base-href /clipboard/
+ng build --prod --output-path docs --base-href "https://hackprincetonhs.github.io/clipboard/"
 ```
 AOT compilation should be faster and smaller, but it sometimes breaks and I don't know why
 
