@@ -29,6 +29,13 @@ export  class  AuthService {
       alertToActivate.shake=true;
     }
   }
+  async  register(email:  string, password:  string, alertToActivate) {
+    try {
+      await  this.afAuth.auth.createUserWithEmailAndPassword(email, password)
+      this.router.navigate(['registration-form']);
+    } catch (e) {}
+  }
+
   get isLoggedIn(): boolean {
     const  user  =  JSON.parse(localStorage.getItem('user'));
     return  user  !==  null;

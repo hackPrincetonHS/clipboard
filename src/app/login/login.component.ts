@@ -67,4 +67,8 @@ export  class  LoginComponent  implements  OnInit {
       }
       this.authService.login(userEmail.value, userPassword.value, this.badLoginAlert);
     }
+    clickRegister(userEmail, userPassword, userPassword2){
+      this.register=true;
+      this.badLoginAlert.value=false;
+    }
 }
