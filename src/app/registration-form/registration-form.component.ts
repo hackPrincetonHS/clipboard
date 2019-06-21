@@ -169,6 +169,7 @@ export class RegistrationFormComponent implements OnInit {
     if(dataDict["satisfactionRange"]==""){
       dataDict["satisfactionRange"]=50;
     }
+    dataDict["isFullyLoggedIn"]=true;
     console.log(dataDict);
   }
   autoTab(event, nextInput) {

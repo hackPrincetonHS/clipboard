@@ -17,6 +17,7 @@ import { AngularFireAuthModule } from "@angular/fire/auth";
 import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './login/login.component';
 import { HeaderComponent } from './header/header.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 var firebaseConfig = {
@@ -36,7 +37,8 @@ var firebaseConfig = {
     RegistrationFormComponent,
     OcticonDirective,
     LoginComponent,
-    HeaderComponent
+    HeaderComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

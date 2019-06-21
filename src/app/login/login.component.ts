@@ -1,5 +1,7 @@
 import { Component, OnInit } from  '@angular/core';
 import { AuthService } from  '../auth/auth.service';
+import { Router } from  "@angular/router";
+
 import {
   trigger,
   state,
@@ -58,8 +60,11 @@ export  class  LoginComponent  implements  OnInit {
     register;
     registerShown;
 
-    constructor(public authService:  AuthService) { }
+    constructor(public authService:  AuthService, public router: Router) { }
     ngOnInit() {
+      if(this.authService.isLoggedIn){
+        this.router.navigate(['dashboard']);
+      }
       this.register=false;
       this.registerShown=false;
     }
