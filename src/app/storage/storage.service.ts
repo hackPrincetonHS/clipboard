@@ -1,15 +1,22 @@
 import { Injectable } from '@angular/core';
 import {firestore} from 'firebase/app';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { AuthService } from  '../auth/auth.service';
+import { Observable } from 'rxjs';
+
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class StorageService {
-  constructor(public fs: AngularFirestore) { }
+  constructor(public authService:  AuthService, public fs: AngularFirestore) { }
 
   async createUser(userData: UserData){
-    await this.fs.collection("users").add({...userData});
+    await this.fs.collection("users").doc(this.authService.userUid).set({...userData});
+  }
+  get userInfoObservable() : Observable<UserData>{
+    return this.fs.collection("users").doc<UserData>(this.authService.userUid).valueChanges();
   }
 }
 
