@@ -19,7 +19,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './login/login.component';
 import { HeaderComponent } from './header/header.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { StorageService } from './storage/storage.service';
+import { StorageService, UserData } from './storage/storage.service';
 
 
 var firebaseConfig = {
@@ -54,7 +54,7 @@ var firebaseConfig = {
     AppRoutingModule,
     AngularFirestoreModule
   ],
-  providers: [StorageService],
+  providers: [StorageService, UserData],
   bootstrap: [AppComponent]
 })
 export class AppModule {

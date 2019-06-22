@@ -9,7 +9,6 @@ import {firestore} from 'firebase/app';
 
 
 
-
 @Component({
   selector: 'registration-form',
   templateUrl: './registration-form.component.html',

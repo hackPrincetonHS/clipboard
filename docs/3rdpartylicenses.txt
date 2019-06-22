@@ -12,6 +12,8 @@ MIT
 
 @angular/fire/auth
 
+@angular/fire/firestore
+
 @angular/forms
 MIT
 
@@ -230,10 +232,16 @@ Apache-2.0
    limitations under the License.
 
 
+@firebase/firestore
+Apache-2.0
+
 @firebase/logger
 Apache-2.0
 
 @firebase/util
+Apache-2.0
+
+@firebase/webchannel-wrapper
 Apache-2.0
 
 @fortawesome/angular-fontawesome
@@ -321,6 +329,8 @@ MIT
 firebase/app
 
 firebase/auth
+
+firebase/firestore
 
 lodash
 MIT

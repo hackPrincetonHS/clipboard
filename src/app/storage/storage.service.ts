@@ -5,6 +5,14 @@ import { AngularFirestore } from '@angular/fire/firestore';
 @Injectable({
   providedIn: 'root'
 })
+export class StorageService {
+  constructor(public fs: AngularFirestore) { }
+
+  async createUser(userData: UserData){
+    await this.fs.collection("users").add(userData);
+  }
+}
+
 export class UserData {
   uid : string;
   firstName : string;
@@ -27,12 +35,4 @@ export class UserData {
   questionsComments : string;
   isFullyLoggedIn : boolean;
   dateCreated : firestore.Timestamp;
-}
-
-export class StorageService {
-  constructor(public fs: AngularFirestore) { }
-
-  createUser(userData: UserData){
-    this.fs.collection("users").add(userData);
-  }
 }
