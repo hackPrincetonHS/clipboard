@@ -173,11 +173,9 @@ export class RegistrationFormComponent implements OnInit {
     this.userData.dietaryRestrictions=dataDict["dietaryRestrictions"];
     this.userData.githubLink=dataDict["githubLinkInput"];
     this.userData.hardware=dataDict["hardwareInput"];
-    if(dataDict["hardwareInputText"].includes("Other")) {
-      this.userData.hardware+=", "+dataDict["hardwareInputText"];
-    }
+    this.userData.hardwareOther=dataDict["hardwareInputText"];
     if(dataDict["satisfactionRange"]==""){
-      this.userData.satisfaction=dataDict["satisfactionRange"];
+      this.userData.satisfaction=50;
     } else {
       this.userData.satisfaction=dataDict["satisfactionRange"];
     }

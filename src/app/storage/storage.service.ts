@@ -9,7 +9,7 @@ export class StorageService {
   constructor(public fs: AngularFirestore) { }
 
   async createUser(userData: UserData){
-    await this.fs.collection("users").add(userData);
+    await this.fs.collection("users").add({...userData});
   }
 }
 
@@ -31,6 +31,7 @@ export class UserData {
   dietaryRestrictions : string;
   githubLink : string;
   hardware : string;
+  hardwareOther : string;
   satisfaction : number;
   questionsComments : string;
   isFullyLoggedIn : boolean;
