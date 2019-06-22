@@ -14,10 +14,12 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faSpinner, faMinus, faCheck, faTimes} from '@fortawesome/free-solid-svg-icons';
 import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
+import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './login/login.component';
 import { HeaderComponent } from './header/header.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { StorageService } from './storage/storage.service';
 
 
 var firebaseConfig = {
@@ -49,9 +51,10 @@ var firebaseConfig = {
     FontAwesomeModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AngularFirestoreModule
   ],
-  providers: [],
+  providers: [StorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

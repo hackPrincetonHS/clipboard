@@ -46,6 +46,10 @@ export  class  AuthService {
     const  user  =  JSON.parse(localStorage.getItem('user'));
     return  user  !==  null;
   }
+  get userUid(){
+    const  user  =  JSON.parse(localStorage.getItem('user'));
+    return user.uid;
+  }
 
   async logout(){
     await this.afAuth.auth.signOut();
