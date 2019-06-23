@@ -100,6 +100,10 @@ export class RegistrationFormComponent implements OnInit {
     this.checkGithubProfile=lodash.throttle(this.sendCheckGithubProfile, 2000);
   }
 
+  ngAfterContentChecked() {
+    (<any>$('select')).selectpicker();
+  }
+
   nextPage() {
     if(this.checkPage()){
       this.attemptNext=false;
