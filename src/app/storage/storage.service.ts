@@ -3,6 +3,7 @@ import {firestore} from 'firebase/app';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthService } from  '../auth/auth.service';
 import { Observable } from 'rxjs';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 
 
@@ -10,13 +11,20 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class StorageService {
-  constructor(public authService:  AuthService, public fs: AngularFirestore) { }
+  constructor(public authService:  AuthService, public fs: AngularFirestore, public fireStorage: AngularFireStorage) { }
 
   async createUser(userData: UserData){
     await this.fs.collection("users").doc(this.authService.userUid).set({...userData});
   }
   get userInfoObservable() : Observable<UserData>{
     return this.fs.collection("users").doc<UserData>(this.authService.userUid).valueChanges();
+  }
+  uploadFile(upload: Upload) {
+    const file = upload.file;
+    const filePath = "resumes/"+this.authService.userUid;
+    const ref = this.fireStorage.ref(filePath);
+    const task = ref.put(file);
+    upload.progress=task.percentageChanges();
   }
 }
 
@@ -43,4 +51,9 @@ export class UserData {
   questionsComments : string;
   isFullyLoggedIn : boolean;
   dateCreated : firestore.Timestamp;
+}
+
+export class Upload {
+  progress: Observable<number>;
+  file;
 }

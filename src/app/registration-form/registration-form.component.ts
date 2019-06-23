@@ -4,7 +4,7 @@ import * as moment from 'moment';
 import * as lodash from 'lodash'
 import { catchError } from 'rxjs/operators';
 import { AuthService } from  '../auth/auth.service';
-import { StorageService, UserData } from '../storage/storage.service';
+import { StorageService, UserData, Upload } from '../storage/storage.service';
 import {firestore} from 'firebase/app';
 
 
@@ -52,6 +52,9 @@ export class RegistrationFormComponent implements OnInit {
   satisfactionRange;
   questionsComments;
 
+  resumeFile;
+
+  uploadPercentage;
 
   checkGithubProfile;
 
@@ -114,7 +117,7 @@ export class RegistrationFormComponent implements OnInit {
     ["Arduino or other microcontrollers", "ESP", "ESP-32"]
   ]
 
-  constructor(private cdr: ChangeDetectorRef, private httpClient: HttpClient, public authService:  AuthService, public userData: UserData, public storageService: StorageService) { }
+  constructor(private cdr: ChangeDetectorRef, private httpClient: HttpClient, public authService:  AuthService, public userData: UserData, public storageService: StorageService, public upload: Upload) { }
 
   ngOnInit() {
     this.haveGithub="No";
@@ -184,6 +187,20 @@ export class RegistrationFormComponent implements OnInit {
     console.log(this.userData);
     this.storageService.createUser(this.userData);
 
+  }
+  submittingWithFile(modal, dict){
+    this.upload.file=this.resumeFile
+    this.storageService.uploadFile(this.upload);
+    this.upload.progress.subscribe((x: number) => {
+      this.uploadPercentage=x;
+      if(this.uploadPercentage==100){
+        console.log(this);
+        //my attempt to close the modal
+        //$("#modal").modal('toggle');
+        this.submitting(dict);
+      }
+    });
+    //this.submitting(dict);
   }
   autoTab(event, nextInput) {
     const getMethods = (obj) => {

@@ -37,7 +37,11 @@ export  class  AuthService {
       alertToActivate.value=e.message;
     }
   }
-
+/*
+  async resetPassword(email: string) {
+    await this.afAuth.sendPasswordResetEmail(email);
+  }
+*/
   get userEmail(): string {
     const user = JSON.parse(localStorage.getItem('user'));
     return user.email;

@@ -246,7 +246,11 @@
                     </div>
                     <div [className]="resumeYes.value=='true' ? ' col-md-8 full-width-dropdown' : 'hide-completely col-md-8 full-width-dropdown'">
                       <label for="githubLinkInput" class="req-label-text">Please upload your resume</label>
+                      <input type="file" class="form-control-file" id="resumeFile" (change)="this.resumeFile=$event.target.files[0]">
                     </div>
+                  </div>
+                  <div *ngIf="this.page==1 && resumeYes.value=='true' && this.attemptNext && !this.resumeFile" class="alert alert-danger">
+                    Please pick a file
                   </div>
                 </div>
                 <hr class="separator">
@@ -390,7 +394,26 @@
                 <button type="button" class="btn btn-primary .navbar-right" (click)="nextPage()">Next</button>
               </div>
               <ng-template #submit>
-                <button type="button" class="btn btn-primary .navbar-right" (click)="submitting({'shirtSize': shirtSize, 'inputFirstName': inputFirstName, 'inputLastName': inputLastName, 'inputPhone1':inputPhone1, 'inputPhone2': inputPhone2, 'inputPhone3': inputPhone3, 'inputMonth': inputMonth, 'inputDay': inputDay, 'inputYear': inputYear, 'pickGender': pickGender, 'ethnicity': ethnicity, 'schoolInput': schoolInput,'schoolInputText': schoolInputText, 'studyLevel': studyLevel, 'graduationYear': graduationYear, 'specialAccomadations': specialAccomadations, 'dietaryRestrictions': dietaryRestrictions, 'githubLinkInput': githubLinkInput, 'hardwareInput': hardwareInput, 'hardwareInputText': hardwareInputText, 'satisfactionRange': satisfactionRange, 'questionsComments': questionsComments});">Submit</button>
+                <button *ngIf="resumeYes.value!='true'" type="button" class="btn btn-primary .navbar-right" (click)="submitting({'shirtSize': shirtSize, 'inputFirstName': inputFirstName, 'inputLastName': inputLastName, 'inputPhone1':inputPhone1, 'inputPhone2': inputPhone2, 'inputPhone3': inputPhone3, 'inputMonth': inputMonth, 'inputDay': inputDay, 'inputYear': inputYear, 'pickGender': pickGender, 'ethnicity': ethnicity, 'schoolInput': schoolInput,'schoolInputText': schoolInputText, 'studyLevel': studyLevel, 'graduationYear': graduationYear, 'specialAccomadations': specialAccomadations, 'dietaryRestrictions': dietaryRestrictions, 'githubLinkInput': githubLinkInput, 'hardwareInput': hardwareInput, 'hardwareInputText': hardwareInputText, 'satisfactionRange': satisfactionRange, 'questionsComments': questionsComments});">Submit</button>
+                <button *ngIf="resumeYes.value=='true'" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" (click)="submittingWithFile(modal, {'shirtSize': shirtSize, 'inputFirstName': inputFirstName, 'inputLastName': inputLastName, 'inputPhone1':inputPhone1, 'inputPhone2': inputPhone2, 'inputPhone3': inputPhone3, 'inputMonth': inputMonth, 'inputDay': inputDay, 'inputYear': inputYear, 'pickGender': pickGender, 'ethnicity': ethnicity, 'schoolInput': schoolInput,'schoolInputText': schoolInputText, 'studyLevel': studyLevel, 'graduationYear': graduationYear, 'specialAccomadations': specialAccomadations, 'dietaryRestrictions': dietaryRestrictions, 'githubLinkInput': githubLinkInput, 'hardwareInput': hardwareInput, 'hardwareInputText': hardwareInputText, 'satisfactionRange': satisfactionRange, 'questionsComments': questionsComments});">
+                  Submit
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" #modal id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Uploading resume...</h5>
+                      </div>
+                      <div class="modal-body">
+                        <div class="progress">
+                          <div class="progress-bar progress-bar progress-bar-striped" role="progressbar" [style.width]="this.uploadPercentage+'%'" aria-valuenow="this.uploadPercentage" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </ng-template>
             </div>
           </div>
