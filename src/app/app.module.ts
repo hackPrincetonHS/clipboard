@@ -56,7 +56,7 @@ var firebaseConfig = {
     AppRoutingModule,
     AngularFirestoreModule
   ],
-  providers: [StorageService, UserData, AngularFireStorage, Upload],
+  providers: [ UserData, AngularFireStorage, Upload],
   bootstrap: [AppComponent]
 })
 export class AppModule {
