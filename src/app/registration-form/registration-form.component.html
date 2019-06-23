@@ -251,6 +251,10 @@
                   </div>
                   <div *ngIf="this.page==1 && resumeYes.value=='true' && this.attemptNext && !this.resumeFile" class="alert alert-danger">
                     Please pick a file
+
+                  </div>
+                  <div *ngIf="this.resumeFile && this.resumeFile.size>2000000" class="alert alert-danger">
+                    The size limit is 2MB
                   </div>
                 </div>
                 <hr class="separator">
@@ -394,13 +398,13 @@
                 <button type="button" class="btn btn-primary .navbar-right" (click)="nextPage()">Next</button>
               </div>
               <ng-template #submit>
-                <button *ngIf="resumeYes.value!='true'" type="button" class="btn btn-primary .navbar-right" (click)="submitting({'shirtSize': shirtSize, 'inputFirstName': inputFirstName, 'inputLastName': inputLastName, 'inputPhone1':inputPhone1, 'inputPhone2': inputPhone2, 'inputPhone3': inputPhone3, 'inputMonth': inputMonth, 'inputDay': inputDay, 'inputYear': inputYear, 'pickGender': pickGender, 'ethnicity': ethnicity, 'schoolInput': schoolInput,'schoolInputText': schoolInputText, 'studyLevel': studyLevel, 'graduationYear': graduationYear, 'specialAccomadations': specialAccomadations, 'dietaryRestrictions': dietaryRestrictions, 'githubLinkInput': githubLinkInput, 'hardwareInput': hardwareInput, 'hardwareInputText': hardwareInputText, 'satisfactionRange': satisfactionRange, 'questionsComments': questionsComments});">Submit</button>
-                <button *ngIf="resumeYes.value=='true'" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" (click)="submittingWithFile(modal, {'shirtSize': shirtSize, 'inputFirstName': inputFirstName, 'inputLastName': inputLastName, 'inputPhone1':inputPhone1, 'inputPhone2': inputPhone2, 'inputPhone3': inputPhone3, 'inputMonth': inputMonth, 'inputDay': inputDay, 'inputYear': inputYear, 'pickGender': pickGender, 'ethnicity': ethnicity, 'schoolInput': schoolInput,'schoolInputText': schoolInputText, 'studyLevel': studyLevel, 'graduationYear': graduationYear, 'specialAccomadations': specialAccomadations, 'dietaryRestrictions': dietaryRestrictions, 'githubLinkInput': githubLinkInput, 'hardwareInput': hardwareInput, 'hardwareInputText': hardwareInputText, 'satisfactionRange': satisfactionRange, 'questionsComments': questionsComments});">
+                <button *ngIf="resumeYes.value!='true'" type="button" class="btn btn-primary .navbar-right" (click)="submitting();">Submit</button>
+                <button  *ngIf="resumeYes.value=='true'" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal" (click)="submittingWithFile();">
                   Submit
                 </button>
 
                 <!-- Modal -->
-                <div class="modal fade" #modal id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header">

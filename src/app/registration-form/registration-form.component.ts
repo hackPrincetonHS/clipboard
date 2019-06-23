@@ -2,11 +2,11 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
 import * as lodash from 'lodash'
+ import * as bootstrap from "bootstrap";
 import { catchError } from 'rxjs/operators';
 import { AuthService } from  '../auth/auth.service';
 import { StorageService, UserData, Upload } from '../storage/storage.service';
 import {firestore} from 'firebase/app';
-
 
 
 @Component({
@@ -57,32 +57,6 @@ export class RegistrationFormComponent implements OnInit {
   uploadPercentage;
 
   checkGithubProfile;
-
-  valuesImInterestedIn=[
-    "inputFirstName",
-    "inputLastName",
-    "inputPhone1",
-    "inputPhone2",
-    "inputPhone3",
-    "inputMonth",
-    "inputDay",
-    "inputYear",
-    "pickGender",
-    "ethnicity",
-    "schoolInput",
-    "schoolInputText",
-    "studyLevel",
-    "graduationYear",
-    "specialAccomadations",
-    "shirtSize",
-    "dietaryRestrictions",
-    "githubLinkInput",
-    "hardwareInput",
-    "hardwareInputText",
-    "satisfactionRange",
-    "questionsComments"
-  ]
-
   schoolList=[
     ["Milburn High School"],
     ["Montgomery High School"],
@@ -143,64 +117,73 @@ export class RegistrationFormComponent implements OnInit {
     //console.log(document.getElementsByClassName("alert"))
     return document.getElementsByClassName("alert").length==0;
   }
-  submitting(dict) {
+  submitting(maybe) {
+    var schtuff;
+    if(this){
+      schtuff=this;
+    } else {
+      schtuff=maybe;
+    }
+    //convert to truthy/falsy (not not)
+    schtuff.userData.hasResume=!!schtuff.resumeFile;
 
-    var dataDict=Object.assign({}, dict);
-
-    for(var i=0; i<this.valuesImInterestedIn.length; i++){
-      if(dataDict[this.valuesImInterestedIn[i]]===undefined){
-        dataDict[this.valuesImInterestedIn[i]]="";
+    schtuff.userData.isFullyLoggedIn=true;
+    schtuff.userData.uid=schtuff.authService.userUid;
+    schtuff.userData.firstName=schtuff.inputFirstName;
+    schtuff.userData.lastName=schtuff.inputLastName;
+    schtuff.userData.fullName=schtuff.inputFirstName+" "+schtuff.inputLastName;
+    schtuff.userData.phone=schtuff.inputPhone1+"-"+schtuff.inputPhone2+"-"+schtuff.inputPhone3;
+    schtuff.userData.dateOfBirth=schtuff.inputYear+"-"+schtuff.inputMonth+"-"+schtuff.inputDay;
+    schtuff.userData.gender=schtuff.pickGender;
+    schtuff.userData.ethnicity=schtuff.ethnicity;
+    if(schtuff.schoolInputText) {
+      schtuff.userData.school=schtuff.schoolInputText;
+      schtuff.userData.schoolNotInList=true;
+    } else {
+      schtuff.userData.school=schtuff.schoolInput;
+      schtuff.userData.schoolNotInList=false;
+    }
+    schtuff.userData.studyLevel=schtuff.studyLevel;
+    schtuff.userData.graduationYear=schtuff.graduationYear;
+    schtuff.userData.specialAccomadations=schtuff.specialAccomadations;
+    schtuff.userData.shirtSize=schtuff.shirtSize;
+    schtuff.userData.dietaryRestrictions=schtuff.dietaryRestrictions;
+    schtuff.userData.githubLink=schtuff.githubLinkInput;
+    schtuff.userData.hardware=schtuff.hardwareInput;
+    schtuff.userData.hardwareOther=schtuff.hardwareInputText;
+    if(schtuff.satisfactionRange===undefined){
+      schtuff.userData.satisfaction=50;
+    } else {
+      schtuff.userData.satisfaction=schtuff.satisfactionRange;
+    }
+    schtuff.userData.questionsComments=schtuff.questionsComments;
+    schtuff.userData.dateCreated=firestore.Timestamp.fromDate(new Date());
+    for (var property in schtuff.userData) {
+      if (schtuff.userData.hasOwnProperty(property)) {
+        if(schtuff.userData[property]===undefined){
+          schtuff.userData[property]="";
+        }
       }
     }
-
-    this.userData.isFullyLoggedIn=true;
-    this.userData.uid=this.authService.userUid;
-    this.userData.firstName=dataDict["inputFirstName"];
-    this.userData.lastName=dataDict["inputLastName"];
-    this.userData.fullName=dict["inputFirstName"]+" "+dict["inputLastName"];
-    this.userData.phone=dict["inputPhone1"]+"-"+dict["inputPhone2"]+"-"+dict["inputPhone3"];
-    this.userData.dateOfBirth=dict["inputYear"]+"-"+dict["inputMonth"]+"-"+dict["inputDay"];
-    this.userData.gender=dataDict["pickGender"];
-    this.userData.ethnicity=dataDict["ethnicity"];
-    if(dataDict["schoolInputText"]) {
-      this.userData.school=dataDict["schoolInputText"];
-      this.userData.schoolNotInList=true;
-    } else {
-      this.userData.school=dataDict["schoolInput"];
-      this.userData.schoolNotInList=false;
-    }
-    this.userData.studyLevel=dataDict["studyLevel"];
-    this.userData.graduationYear=dataDict["graduationYear"];
-    this.userData.specialAccomadations=dataDict["specialAccomadations"];
-    this.userData.shirtSize=dataDict["shirtSize"];
-    this.userData.dietaryRestrictions=dataDict["dietaryRestrictions"];
-    this.userData.githubLink=dataDict["githubLinkInput"];
-    this.userData.hardware=dataDict["hardwareInput"];
-    this.userData.hardwareOther=dataDict["hardwareInputText"];
-    if(dataDict["satisfactionRange"]==""){
-      this.userData.satisfaction=50;
-    } else {
-      this.userData.satisfaction=dataDict["satisfactionRange"];
-    }
-    this.userData.questionsComments=dataDict["questionsComments"];
-    this.userData.dateCreated=firestore.Timestamp.fromDate(new Date());
-    console.log(this.userData);
-    this.storageService.createUser(this.userData);
-
+    //console.log(schtuff.userData);
+    schtuff.storageService.createUser(schtuff.userData);
   }
-  submittingWithFile(modal, dict){
+  submittingWithFile(){
     this.upload.file=this.resumeFile
     this.storageService.uploadFile(this.upload);
     this.upload.progress.subscribe((x: number) => {
       this.uploadPercentage=x;
       if(this.uploadPercentage==100){
-        console.log(this);
-        //my attempt to close the modal
-        //$("#modal").modal('toggle');
-        this.submitting(dict);
+        //you want it to complete before moving on, otherwise it calls too quickly and the bar is only half full when it stops.
+        //looks better, feels better
+        lodash.delay(this.restOfSubmitting, 1000,this);
       }
     });
     //this.submitting(dict);
+  }
+  restOfSubmitting(maybe){
+    $('#modal').modal('toggle');
+    maybe.submitting(maybe);
   }
   autoTab(event, nextInput) {
     const getMethods = (obj) => {
@@ -233,6 +216,7 @@ export class RegistrationFormComponent implements OnInit {
     dom.value=set;
   }
   sendCheckGithubProfile(gitlink){
+    //console.log(this.resumeFile);
     if(!gitlink.errors){
       var smallString=gitlink.value;
       gitlink.loading=true;

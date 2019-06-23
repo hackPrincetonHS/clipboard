@@ -1,4 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core'
+import { Router } from  "@angular/router";
+
 import {firestore} from 'firebase/app';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthService } from  '../auth/auth.service';
@@ -11,10 +13,11 @@ import { AngularFireStorage } from '@angular/fire/storage';
   providedIn: 'root'
 })
 export class StorageService {
-  constructor(public authService:  AuthService, public fs: AngularFirestore, public fireStorage: AngularFireStorage) { }
+  constructor(public authService:  AuthService, public fs: AngularFirestore, public fireStorage: AngularFireStorage, public router: Router) { }
 
   async createUser(userData: UserData){
     await this.fs.collection("users").doc(this.authService.userUid).set({...userData});
+    this.router.navigate(['dashboard']);
   }
   get userInfoObservable() : Observable<UserData>{
     return this.fs.collection("users").doc<UserData>(this.authService.userUid).valueChanges();
@@ -50,6 +53,7 @@ export class UserData {
   satisfaction : number;
   questionsComments : string;
   isFullyLoggedIn : boolean;
+  hasResume : boolean;
   dateCreated : firestore.Timestamp;
 }
 
