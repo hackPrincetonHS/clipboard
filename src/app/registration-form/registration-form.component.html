@@ -145,7 +145,7 @@
                   <div class="form-row">
                     <div [className]="school.value=='My school isn\'t here' ? 'col-md-6 full-width-dropdown' : 'col-12 full-width-dropdown'">
                       <label for="schoolInput" class="req-label-text">School</label>
-                      <select class="selectpicker" data-live-search="true" id="schoolInput" name="schoolInput" data-width="100%" [(ngModel)]="schoolInput" #school=ngModel>
+                      <select class="selectpicker" data-live-search="true" id="schoolInput" title="Nothing Selected" name="schoolInput" data-width="100%" [(ngModel)]="schoolInput" #school=ngModel>
                         <optgroup label="Other">
                           <!-- I add all the attributes to this so that it doesn't go away during search-->
                           <option [attr.data-tokens]="this.schoolList.toString()">My school isn't here</option>
@@ -169,7 +169,7 @@
                   <div class="form-row">
                     <div class="col-md-6 full-width-dropdown">
                       <label for="studyLevel" class="req-label-text">Current Level Of Study</label>
-                      <select class="selectpicker" id="studyLevel" name="studyLevel" data-width="100%" [(ngModel)]="studyLevel" #study=ngModel>
+                      <select class="selectpicker" id="studyLevel" title="Nothing Selected" name="studyLevel" data-width="100%" [(ngModel)]="studyLevel" #study=ngModel>
                         <option>Below High School</option>
                         <option>High School</option>
                         <option>Undergraduate</option>
@@ -181,7 +181,7 @@
                     </div>
                     <div class="col-md-6 full-width-dropdown">
                       <label for="graduationYear" class="req-label-text">Expected Graduation Year</label>
-                      <select class="selectpicker" id="graduationYear" name="graduationYear" data-width="100%" [(ngModel)]="graduationYear" #graduation=ngModel>
+                      <select class="selectpicker" id="graduationYear" name="graduationYear" title="Nothing Selected" data-width="100%" [(ngModel)]="graduationYear" #graduation=ngModel>
                         <option>2020</option>
                         <option>2021</option>
                         <option>2022</option>
@@ -263,7 +263,7 @@
                   <div class="form-row">
                     <div class="col-md-6 full-width-dropdown">
                       <label for="shirtSize" class="req-label-text">T-Shirt Size</label>
-                      <select class="selectpicker" id="shirtSize" data-width=100% name="shirtSize" title="T-Shirt Size" [(ngModel)]="shirtSize" #tshirt=ngModel>
+                      <select class="selectpicker" id="shirtSize" title="Nothing Selected" data-width=100% name="shirtSize" title="T-Shirt Size" [(ngModel)]="shirtSize" #tshirt=ngModel>
                         <option>S</option>
                         <option>M</option>
                         <option>L</option>
