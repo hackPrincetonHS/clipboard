@@ -1,0 +1,34 @@
+.page-wrap {
+     padding-top: 50px;
+     padding-bottom: 100px;
+     max-width: 800px;
+     margin: 0 auto;
+}
+
+.backround {
+  overflow-y: auto;
+  min-height: 100vh;
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: repeat;
+  background-color: rgba(204,204,204,1);
+}
+.page {
+  background-color: rgb(255, 255, 255);
+  -webkit-box-shadow: -1px 1px 5px 3px rgba(0,0,0,0.2);
+  -moz-box-shadow: -1px 1px 5px 3px rgba(0,0,0,0.2);
+  box-shadow: -1px 1px 5px 3px rgba(0,0,0,0.2);
+
+}
+.page-content {
+  padding: 25px 25px;
+}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+}
+.form-title {
+  padding-top: 10px
+}

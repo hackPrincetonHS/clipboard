@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/r
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CanActivate, Router, Route } from '@angular/router';
-import { AuthService } from  './auth/auth.service';
+import { AuthService } from  '../auth/auth.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 @Injectable({

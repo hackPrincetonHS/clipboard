@@ -16,6 +16,7 @@ export class StorageService {
   constructor(public authService:  AuthService, public fs: AngularFirestore, public fireStorage: AngularFireStorage, public router: Router) { }
 
   async createUser(userData: UserData){
+    //the ... is to unpack user data into a dictionary. It's an angular thing, don't ask me.
     await this.fs.collection("users").doc(this.authService.userUid).set({...userData});
     this.router.navigate(['dashboard']);
   }

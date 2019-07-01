@@ -2,7 +2,6 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
 import * as lodash from 'lodash'
- import * as bootstrap from "bootstrap";
 import { catchError } from 'rxjs/operators';
 import { AuthService } from  '../auth/auth.service';
 import { StorageService, UserData, Upload } from '../storage/storage.service';
@@ -101,7 +100,9 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   ngAfterContentChecked() {
-    (<any>$('select')).selectpicker();
+    //have to cast to any or it won't compile
+    //this is the only working way to do it on stackoverflow, so it's the only solution
+    (<any>document.getElementsByClassName('select')).selectpicker();
   }
 
   nextPage() {
@@ -121,56 +122,56 @@ export class RegistrationFormComponent implements OnInit {
     //console.log(document.getElementsByClassName("alert"))
     return document.getElementsByClassName("alert").length==0;
   }
-  submitting(maybe) {
-    var schtuff;
+  submitting(optional) {
+    var self;
     if(this){
-      schtuff=this;
+      self=this;
     } else {
-      schtuff=maybe;
+      self=optional;
     }
     //convert to truthy/falsy (not not)
-    schtuff.userData.hasResume=!!schtuff.resumeFile;
+    self.userData.hasResume=!!self.resumeFile;
 
-    schtuff.userData.isFullyLoggedIn=true;
-    schtuff.userData.uid=schtuff.authService.userUid;
-    schtuff.userData.firstName=schtuff.inputFirstName;
-    schtuff.userData.lastName=schtuff.inputLastName;
-    schtuff.userData.fullName=schtuff.inputFirstName+" "+schtuff.inputLastName;
-    schtuff.userData.phone=schtuff.inputPhone1+"-"+schtuff.inputPhone2+"-"+schtuff.inputPhone3;
-    schtuff.userData.dateOfBirth=schtuff.inputYear+"-"+schtuff.inputMonth+"-"+schtuff.inputDay;
-    schtuff.userData.gender=schtuff.pickGender;
-    schtuff.userData.ethnicity=schtuff.ethnicity;
-    if(schtuff.schoolInputText) {
-      schtuff.userData.school=schtuff.schoolInputText;
-      schtuff.userData.schoolNotInList=true;
+    self.userData.isFullyLoggedIn=true;
+    self.userData.uid=self.authService.userUid;
+    self.userData.firstName=self.inputFirstName;
+    self.userData.lastName=self.inputLastName;
+    self.userData.fullName=self.inputFirstName+" "+self.inputLastName;
+    self.userData.phone=self.inputPhone1+"-"+self.inputPhone2+"-"+self.inputPhone3;
+    self.userData.dateOfBirth=self.inputYear+"-"+self.inputMonth+"-"+self.inputDay;
+    self.userData.gender=self.pickGender;
+    self.userData.ethnicity=self.ethnicity;
+    if(self.schoolInputText) {
+      self.userData.school=self.schoolInputText;
+      self.userData.schoolNotInList=true;
     } else {
-      schtuff.userData.school=schtuff.schoolInput;
-      schtuff.userData.schoolNotInList=false;
+      self.userData.school=self.schoolInput;
+      self.userData.schoolNotInList=false;
     }
-    schtuff.userData.studyLevel=schtuff.studyLevel;
-    schtuff.userData.graduationYear=schtuff.graduationYear;
-    schtuff.userData.specialAccomadations=schtuff.specialAccomadations;
-    schtuff.userData.shirtSize=schtuff.shirtSize;
-    schtuff.userData.dietaryRestrictions=schtuff.dietaryRestrictions;
-    schtuff.userData.githubLink=schtuff.githubLinkInput;
-    schtuff.userData.hardware=schtuff.hardwareInput;
-    schtuff.userData.hardwareOther=schtuff.hardwareInputText;
-    if(schtuff.satisfactionRange===undefined){
-      schtuff.userData.satisfaction=50;
+    self.userData.studyLevel=self.studyLevel;
+    self.userData.graduationYear=self.graduationYear;
+    self.userData.specialAccomadations=self.specialAccomadations;
+    self.userData.shirtSize=self.shirtSize;
+    self.userData.dietaryRestrictions=self.dietaryRestrictions;
+    self.userData.githubLink=self.githubLinkInput;
+    self.userData.hardware=self.hardwareInput;
+    self.userData.hardwareOther=self.hardwareInputText;
+    if(self.satisfactionRange===undefined){
+      self.userData.satisfaction=50;
     } else {
-      schtuff.userData.satisfaction=schtuff.satisfactionRange;
+      self.userData.satisfaction=self.satisfactionRange;
     }
-    schtuff.userData.questionsComments=schtuff.questionsComments;
-    schtuff.userData.dateCreated=firestore.Timestamp.fromDate(new Date());
-    for (var property in schtuff.userData) {
-      if (schtuff.userData.hasOwnProperty(property)) {
-        if(schtuff.userData[property]===undefined){
-          schtuff.userData[property]="";
+    self.userData.questionsComments=self.questionsComments;
+    self.userData.dateCreated=firestore.Timestamp.fromDate(new Date());
+    for (var property in self.userData) {
+      if (self.userData.hasOwnProperty(property)) {
+        if(self.userData[property]===undefined){
+          self.userData[property]="";
         }
       }
     }
-    //console.log(schtuff.userData);
-    schtuff.storageService.createUser(schtuff.userData);
+    //console.log(self.userData);
+    self.storageService.createUser(self.userData);
   }
   submittingWithFile(){
     this.upload.file=this.resumeFile
@@ -179,15 +180,16 @@ export class RegistrationFormComponent implements OnInit {
       this.uploadPercentage=x;
       if(this.uploadPercentage==100){
         //you want it to complete before moving on, otherwise it calls too quickly and the bar is only half full when it stops.
-        //looks better, feels better
+        //looks better, feels better. I use lodash instead of settimeout because I already use lodash in another part of the class so like...
+        //this has to be passed  because it becomes an anon function. This is delt with later in the submitting funciton
         lodash.delay(this.restOfSubmitting, 1000,this);
       }
     });
     //this.submitting(dict);
   }
-  restOfSubmitting(maybe){
-    $('#modal').modal('toggle');
-    maybe.submitting(maybe);
+  restOfSubmitting(optional){
+    (<any>document.getElementById('modal')).modal('toggle');
+    optional.submitting(optional);
   }
   autoTab(event, nextInput) {
     const getMethods = (obj) => {

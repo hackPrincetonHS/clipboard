@@ -20,6 +20,15 @@
   box-shadow: -1px 1px 5px 3px rgba(0,0,0,0.2);
 
 }
+.page-content {
+  padding: 25px 25px;
+}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+}
 .form-title {
   padding-top: 10px
 }
@@ -31,9 +40,6 @@
 }
 .rightJustified {
   margin-left:auto; margin-right:0;
-}
-.page-content {
-  padding: 25px 25px;
 }
 .phone-header {
   display: flex;
@@ -88,10 +94,4 @@ u.dotted{
 }
 .align-right{
   text-align: right;
-}
-.center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 40%;
 }

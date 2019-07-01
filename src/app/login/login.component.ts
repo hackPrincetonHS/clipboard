@@ -1,6 +1,8 @@
 import { Component, OnInit } from  '@angular/core';
 import { AuthService } from  '../auth/auth.service';
 import { Router } from  "@angular/router";
+import * as lodash from 'lodash'
+
 
 import {
   trigger,
@@ -75,7 +77,8 @@ export  class  LoginComponent  implements  OnInit {
         var authService=this.authService;
         var badLoginAlert=this.badLoginAlert
         //so that the alert doesn't go off before the animation is done
-        setTimeout(function(){authService.login(userEmail.value, userPassword.value, badLoginAlert);}, 300);
+        //I use lodash because I want to be consistent
+        lodash.delay(function(){authService.login(userEmail.value, userPassword.value, badLoginAlert);}, 300);
       } else {
         this.authService.login(userEmail.value, userPassword.value, this.badLoginAlert);
       }
