@@ -102,7 +102,7 @@ export class RegistrationFormComponent implements OnInit {
   ngAfterContentChecked() {
     //have to cast to any or it won't compile
     //this is the only working way to do it on stackoverflow, so it's the only solution
-    (<any>document.getElementsByTagName('select')).selectpicker();
+    (<any>$('select')).selectpicker();
   }
 
   nextPage() {
@@ -188,7 +188,7 @@ export class RegistrationFormComponent implements OnInit {
     //this.submitting(dict);
   }
   restOfSubmitting(optional){
-    (<any>document.getElementById('modal')).modal('toggle');
+    (<any>$('#modal')).modal('toggle');
     optional.submitting(optional);
   }
   autoTab(event, nextInput) {
