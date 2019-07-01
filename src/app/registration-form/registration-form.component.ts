@@ -102,7 +102,7 @@ export class RegistrationFormComponent implements OnInit {
   ngAfterContentChecked() {
     //have to cast to any or it won't compile
     //this is the only working way to do it on stackoverflow, so it's the only solution
-    (<any>document.getElementsByClassName('select')).selectpicker();
+    (<any>document.getElementsByTagName('select')).selectpicker();
   }
 
   nextPage() {
