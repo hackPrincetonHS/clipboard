@@ -1,3 +1,120 @@
-<p>
-  {{this.userData.fullName}}
-</p>
+<div class="content">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Profile</h4>
+          </div>
+          <div class="card-body">
+            <form>
+              <div class="form-row">
+                <div class="col">
+                  <div class="form-group">
+                    <label>First Name</label>
+                    <fa-icon class='ng-fa-icon right-icon' [icon]="['fas', 'pen']"></fa-icon>
+                    <input type="text" class="form-control" disabled [placeholder]="this.userData.firstName ? 'First' : ''" [value]="this.userData.firstName ? this.userData.firstName : ''">
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-group">
+                    <label class="req-label-text">Last Name</label>
+                    <fa-icon class='ng-fa-icon right-icon' [icon]="['fas', 'pen']"></fa-icon>
+                    <input type="text" class="form-control" disabled [placeholder]="this.userData.lastName ? 'Last' : ''" [value]="this.userData.lastName ? this.userData.lastName : ''">
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-sm">
+                  <div class="form-group">
+                    <label>Email</label>
+                    <fa-icon class='ng-fa-icon right-icon' [icon]="['fas', 'pen']"></fa-icon>
+                    <input type="text" class="form-control" disabled [placeholder]="this.authService.userEmail ? 'Email' : ''" [value]="this.authService.userEmail ? this.authService.userEmail : ''">
+                  </div>
+                </div>
+                <div class="col-sm">
+                  <div class="form-group">
+                    <label>Phone</label>
+                    <fa-icon class='ng-fa-icon right-icon' [icon]="['fas', 'pen']"></fa-icon>
+                    <input type="text" class="form-control" disabled [placeholder]="this.userData.phone ? 'Phone' : ''" [value]="this.userData.phone ? this.userData.phone : ''">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label>Date of Birth</label>
+                    <fa-icon class='ng-fa-icon right-icon' [icon]="['fas', 'pen']"></fa-icon>
+                    <input type="text" class="form-control" disabled [placeholder]="this.userData.dateOfBirth ? 'D.O.B' : ''" [value]="this.userData.dateOfBirth ? formatDate() : ''">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm">
+                  <div class="form-group">
+                    <label>Gender</label>
+                    <fa-icon class='ng-fa-icon right-icon' [icon]="['fas', 'pen']"></fa-icon>
+                    <input type="text" class="form-control" disabled [placeholder]="this.userData.dateOfBirth ? 'Gender' : ''" [value]="this.userData.gender ? this.userData.gender : ''">
+                  </div>
+                </div>
+                <div class="col-sm">
+                  <div class="form-group">
+                    <label>Race/Ethnicity</label>
+                    <fa-icon class='ng-fa-icon right-icon' [icon]="['fas', 'pen']"></fa-icon>
+                    <input type="text" class="form-control" disabled [placeholder]="this.userData.dateOfBirth ? 'Ethnicity' : ''" [value]="this.userData.ethnicity ? this.arrayAsString(this.userData.ethnicity) : ''">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm">
+                  <div class="form-group">
+                    <label>School</label>
+                    <fa-icon class='ng-fa-icon right-icon' [icon]="['fas', 'pen']"></fa-icon>
+                    <input type="text" class="form-control" disabled [placeholder]="this.userData.school ? 'School' : ''" [value]="this.userData.school ? this.userData.school : ''">
+                  </div>
+                </div>
+                <div *ngIf="userData.schoolNotInList" class="col-sm align-to-text">
+                  We will contact you by email to confirm your school
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-sm">
+                  <div class="form-group">
+                    <label>Level Of Study</label>
+                    <fa-icon class='ng-fa-icon right-icon' [icon]="['fas', 'pen']"></fa-icon>
+                    <input type="text" class="form-control" disabled [placeholder]="this.userData.studyLevel ? 'Level of Study' : ''" [value]="this.userData.studyLevel ? this.userData.studyLevel : ''">
+                  </div>
+                </div>
+                <div class="col-sm">
+                  <div class="form-group">
+                    <label>Expected Graduation Year</label>
+                    <fa-icon class='ng-fa-icon right-icon' [icon]="['fas', 'pen']"></fa-icon>
+                    <input type="text" class="form-control" disabled [placeholder]="this.userData.graduationYear ? 'Graduation Year' : ''" [value]="this.userData.graduationYear ? this.userData.graduationYear : ''">
+                  </div>
+                </div>
+              </div>
+              <!--TODO: add copy button to github link-->
+              <div *ngIf="!this.userData.isFullyLoggedIn || this.userData.githubLink || this.userData.hasResume" class="form-row">
+                <div *ngIf="!this.userData.isFullyLoggedIn || this.userData.githubLink" class="col-md">
+                  <div class="form-group">
+                    <label>Github Link</label>
+                    <fa-icon class='ng-fa-icon right-icon' [icon]="['fas', 'pen']"></fa-icon>
+                    <input type="text" class="form-control" disabled [placeholder]="this.userData.githubLink ? 'Github Link' : ''" [value]="this.userData.githubLink ? this.userData.githubLink : ''">
+                  </div>
+                </div>
+                <div class="col-md" *ngIf="!this.userData.isFullyLoggedIn || this.userData.hasResume">
+                  <div class="form-group">
+                    <label>Resume Link</label>
+                    <fa-icon class='ng-fa-icon right-icon' [icon]="['fas', 'pen']"></fa-icon>
+                    <input type="text" class="form-control" disabled [placeholder]="this.showingResumeLink ? 'Resume Link' : ''" [value]="this.showingResumeLink ? this.resumeLink : ''">
+                  </div>
+                </div>
+              </div>
+              <!--<button type="submit" class="btn btn-info btn-fill pull-right">Update Profile</button> -->
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

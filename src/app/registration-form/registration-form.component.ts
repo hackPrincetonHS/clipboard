@@ -192,14 +192,6 @@ export class RegistrationFormComponent implements OnInit {
     optional.submitting(optional);
   }
   autoTab(event, nextInput) {
-    const getMethods = (obj) => {
-      let properties = new Set();
-      let currentObj = obj;
-      do {
-        Object.getOwnPropertyNames(currentObj).map(item => properties.add(item))
-      } while ((currentObj = Object.getPrototypeOf(currentObj)))
-      return [...properties.keys()].filter(item => typeof obj[item] === 'function')
-    }
     let input = event.target;
     let length = input.value.length;
     let maxLength = input.attributes.maxlength.value;
@@ -212,7 +204,7 @@ export class RegistrationFormComponent implements OnInit {
     let day=dayObj.value;
     let year=yearObj.value;
     if(month && day && year){
-      var mom=moment(year+"-"+month+"-"+day, "YYYY-MM-DD")
+      var mom=moment(year+"-"+month+"-"+day, "YYYY-MM-DD");
       return  mom.isValid() && mom.year()>1900 && mom.isBefore(moment());
     }
     //one of the fields is empty, so we ignore it
