@@ -5,6 +5,9 @@
   float: right;
   padding-right: 1rem;
 }
+.mouse-hover{
+  cursor: pointer;
+}
 .left-icon{
   padding-left: 1rem;
 }

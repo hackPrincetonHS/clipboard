@@ -30,6 +30,33 @@ export class DashboardComponent implements OnInit {
     return moment(this.userData.dateOfBirth, 'YYYY-MM-DD').format('MMMM Do YYYY');
   }
   arrayAsString(a){
-  return (<any>a).join(", ");
+    return (<any>a).join(", ");
   }
+  toFullSizeWord(size){
+    var ret;
+    switch (size) {
+      case 'S':
+        ret='Small';
+        break;
+      case 'M':
+        ret='Medium';
+        break;
+      case 'L':
+        ret='Large';
+        break;
+      case 'XL':
+        ret='Extra Large';
+        break;
+      case 'XXL':
+        ret='XXL';
+        break;
+      default:
+        ret="Error, if you see this, please email us";
+    }
+    return ret;
+  }
+  edit(event){
+    console.log(event);
+  }
+
 }
