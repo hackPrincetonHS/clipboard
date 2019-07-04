@@ -33,7 +33,7 @@
                   <div class="form-row">
                     <div class="col-md">
                       <label for="inputEmail" class="req-label-text">Email</label>
-                      <input class="form-control" type="text" [placeholder]="this.authService.userEmail" readonly>
+                      <input class="form-control" type="text" [placeholder]="this.authService.userEmail" disabled>
                     </div>
                     <div class="col-md">
                       <div class="row phone-header">
@@ -53,9 +53,6 @@
                       <div *ngIf="this.page==1 && (phone1.errors || phone2.errors || phone3.errors) && (this.attemptNext || phone1.dirty || phone1.touched || phone2.dirty || phone2.touched || phone3.dirty || phone3.dirty) && !(phone1.active || phone2.active || phone3.active)">
                         <div *ngIf="(phone1.errors && phone1.errors.required) || (phone2.errors && phone2.errors.required) || (phone3.errors && phone3.errors.required)" class="alert alert-danger">
                           Phone number is required
-                        </div>
-                        <div *ngIf="!((phone1.errors && phone1.errors.required) || (phone2.errors && phone2.errors.required) || (phone3.errors && phone3.errors.required)) && (phone1.invalid || phone2.invalid || phone3.invalid)" class="alert alert-danger">
-                          That phone number is invalid
                         </div>
                       </div>
                     </div>
@@ -163,7 +160,7 @@
                       <input type="text" class="form-control" placeholder="School" id="schoolInputText" required [(ngModel)]="schoolInputText" (focus)="schoolText.active = true" (blur)="schoolText.active = false" name="schoolInputText" #schoolText="ngModel">
                     </div>
                   </div>
-                  <div *ngIf="this. page==1 && (school.value=='My school isn\'t here' && schoolText.errors && (this.attemptNext || schoolText.dirty || schoolText.touched) && !schoolText.active)" class="alert alert-danger">
+                  <div *ngIf="this.page==1 && (school.value=='My school isn\'t here' && schoolText.errors && (this.attemptNext || schoolText.dirty || schoolText.touched) && !schoolText.active)" class="alert alert-danger">
                     You must either pick or enter a school
                   </div>
                   <div class="form-row">
@@ -175,7 +172,7 @@
                         <option>Undergraduate</option>
                         <option>Graduate</option>
                       </select>
-                      <div *ngIf="this. page==1 && this.attemptNext && study.pristine" class="alert alert-danger">
+                      <div *ngIf="this.page==1 && this.attemptNext && study.pristine" class="alert alert-danger">
                         You must select a level of study
                       </div>
                     </div>
@@ -188,7 +185,7 @@
                         <option>2023</option>
                         <option>After 2023</option>
                       </select>
-                      <div *ngIf="this. page==1 && this.attemptNext && graduation.pristine" class="alert alert-danger">
+                      <div *ngIf="this.page==1 && this.attemptNext && graduation.pristine" class="alert alert-danger">
                         You must select a graduation year
                       </div>
                     </div>
@@ -197,29 +194,29 @@
                     <div class="col-md-4 minheight86">
                       <label for="haveGithubNo" class="full-width-dropdown">Do you have a Github?</label>
                       <div class="form-check-inline">
-                        <input class="form-check-input" type="radio" name="haveGithub" id="noHaveGithub" (click)="setRadio(githubYes, 'false')" value="No" [(ngModel)]="haveGithub">
+                        <input class="form-check-input" type="radio" name="haveGithub" id="noHaveGithub" value="No" [(ngModel)]="haveGithub">
                         <label class="form-check-label" for="noHaveGithub">
                           No
                         </label>
                       </div>
                       <div class="form-check-inline">
-                        <input class="form-check-input" type="radio" name="haveGithub" id="yesHaveGithub" (click)="setRadio(githubYes, 'true')" value="Yes" #githubYes [(ngModel)]="haveGithub">
+                        <input class="form-check-input" type="radio" name="haveGithub" id="yesHaveGithub" value="Yes" [(ngModel)]="haveGithub">
                         <label class="form-check-label" for="yesHaveGithub">
                           Yes
                         </label>
                       </div>
                     </div>
-                    <div [className]="githubYes.value=='true' ? ' col-md-8 full-width-dropdown' : 'hide-completely col-md-8 full-width-dropdown'">
+                    <div [className]="this.haveGithub=='Yes' ? ' col-md-8 full-width-dropdown' : 'hide-completely col-md-8 full-width-dropdown'">
                       <label for="githubLinkInput" class="req-label-text">Paste the link to your profile here</label>
                       <div class="input-group">
                         <input type="text" class="form-control" placeholder="https://github.com/hackPrincetonHS" id="githubLinkInput" pattern="http(s)?:\/\/(www\.)?github\.com\/[A-z0-9_-]+\/?" required maxlength="200" [(ngModel)]="githubLinkInput" (focus)="githubLink.active = true" (blur)="githubLink.active = false" name="githubLinkInput" #githubLink="ngModel">
                         <button type="button" class="btn btn-secondary" (click)="checkGithubProfile(githubLink)"><u class="dotted">Validate Profile</u> <fa-icon [icon]="githubLink.loading ? ['fas', 'spinner'] : (githubLink.profileData!=githubLink.value || githubLink.pristine) ? ['fas', 'minus'] : githubLink.badProfile ? ['fas', 'times'] : ['fas', 'check']" [spin]="githubLink.loading" [styles]="!githubLink.loading && !(githubLink.profileData!=githubLink.value || githubLink.pristine) ? githubLink.badProfile ? {'color': 'red'} : {'color': '7FFF00'} : ''"></fa-icon></button>
                       </div>
-                      <div *ngIf="this. page==1 && (githubYes.value=='true' && (this.attemptNext || githubLink.dirty || githubLink.touched) && !githubLink.active)">
+                      <div *ngIf="this.page==1 && (this.haveGithub=='Yes' && (this.attemptNext || githubLink.dirty || githubLink.touched || this.validateClicked) && !githubLink.active)">
                         <div *ngIf="githubLink.errors && githubLink.errors.required" class="alert alert-danger">
                           Please enter your profile
                         </div>
-                        <div *ngIf=" ((githubLink.errors && githubLink.errors.pattern && !githubLink.errors.required) || githubLink.badProfile)" class="alert alert-danger">
+                        <div *ngIf="!(githubLink.errors && githubLink.errors.required) && ((githubLink.errors && githubLink.errors.pattern && !githubLink.errors.required) || githubLink.badProfile)" class="alert alert-danger">
                           That is not a valid github profile
                         </div>
                         <div *ngIf="!(githubLink.errors && !githubLink.errors.required) && !((githubLink.errors && githubLink.errors.pattern) || githubLink.badProfile || githubLink.loading) && githubLink.profileData!=githubLink.value" class="alert alert-danger">
@@ -232,26 +229,25 @@
                     <div class="col-md-4 minheight86">
                       <label for="haveResumeNo" class="full-width-dropdown">Do you have a Resume?</label>
                       <div class="form-check-inline">
-                        <input class="form-check-input" type="radio" name="haveResume" id="noHaveResume" (click)="setRadio(resumeYes, 'false')" value="No" [(ngModel)]="haveResume">
+                        <input class="form-check-input" type="radio" name="haveResume" id="noHaveResume" value="No" [(ngModel)]="haveResume">
                         <label class="form-check-label" for="noHaveResume">
                           No
                         </label>
                       </div>
                       <div class="form-check-inline">
-                        <input class="form-check-input" type="radio" name="haveResume" id="yesHaveResume" (click)="setRadio(resumeYes, 'true')" value="Yes" #resumeYes [(ngModel)]="haveResume">
+                        <input class="form-check-input" type="radio" name="haveResume" id="yesHaveResume" value="Yes" [(ngModel)]="haveResume">
                         <label class="form-check-label" for="yesHaveResume">
                           Yes
                         </label>
                       </div>
                     </div>
-                    <div [className]="resumeYes.value=='true' ? ' col-md-8 full-width-dropdown' : 'hide-completely col-md-8 full-width-dropdown'">
+                    <div [className]="haveResume=='Yes' ? ' col-md-8 full-width-dropdown' : 'hide-completely col-md-8 full-width-dropdown'">
                       <label for="githubLinkInput" class="req-label-text">Please upload your resume</label>
                       <input type="file" class="form-control-file" id="resumeFile" (change)="this.resumeFile=$event.target.files[0]">
                     </div>
                   </div>
-                  <div *ngIf="this.page==1 && resumeYes.value=='true' && this.attemptNext && !this.resumeFile" class="alert alert-danger">
+                  <div *ngIf="this.page==1 && haveResume=='Yes' && this.attemptNext && !this.resumeFile" class="alert alert-danger">
                     Please pick a file
-
                   </div>
                   <div *ngIf="this.resumeFile && this.resumeFile.size>2000000" class="alert alert-danger">
                     The size limit is 2MB
@@ -270,30 +266,33 @@
                         <option>XL</option>
                         <option>XXL</option>
                       </select>
-                      <div *ngIf="this. page==1 && this.attemptNext && tshirt.pristine" class="alert alert-danger">
+                      <div *ngIf="this.page==1 && this.attemptNext && tshirt.pristine" class="alert alert-danger">
                         You must select a T-Shirt size
                       </div>
                     </div>
                     <div class="col-md-6 full-width-dropdown">
                       <label for="dietaryRestrictions" class="req-label-text">Dietary Restrictions</label>
                       <select class="selectpicker" multiple id="dietaryRestrictions" data-header="Select all that apply" name="dietaryRestrictions" data-width="100%" [(ngModel)]="dietaryRestrictions" #dietary=ngModel>
-                        <option value="None">None</option>
+                        <option>None</option>
                         <option data-divider="true"></option>
-                        <option value="Lactose Intolerant">Lactose intolerant or milk allergies</option>
-                        <option value="Vegetarian">Vegetarian</option>
-                        <option value="Ovo-Vegetarian">Ovo-Vegetarian</option>
-                        <option value="Lacto-Vegetarian">Lacto-Vegetarian</option>
-                        <option value="Vegan">Vegan</option>
-                        <option value="Religious">Religious dietary practices</option>
-                        <option value="Diabetic">Diabetic diet</option>
-                        <option value="Gluten Free">Gluten free</option>
-                        <option value="Other">Other</option>
+                        <option>Lactose intolerant or milk allergies</option>
+                        <option>Vegetarian</option>
+                        <option>Ovo-Vegetarian</option>
+                        <option>Lacto-Vegetarian</option>
+                        <option>Vegan</option>
+                        <option>Religious dietary practices</option>
+                        <option>Diabetic diet</option>
+                        <option>Gluten Free</option>
+                        <option>Other</option>
                       </select>
-                      <div *ngIf="this. page==1 && this.attemptNext && (!dietary.value || dietary.value.length==0)" class="alert alert-danger">
+                      <div *ngIf="this.page==1 && this.attemptNext && (!dietary.value || dietary.value.length==0)" class="alert alert-danger">
                         You must select an option
                       </div>
-                      <div *ngIf="this. page==1 && dietary.value && dietary.value.includes('None') && dietary.value.length>1" class="alert alert-danger">
+                      <div *ngIf="this.page==1 && dietary.value && dietary.value.includes('None') && dietary.value.length>1" class="alert alert-danger">
                         You cannot select both none and something else
+                      </div>
+                      <div *ngIf="this.page==1 && dietary.value && dietary.value.includes('Other')" class="alert alert-info">
+                        Please Explain in the special accomadations box below
                       </div>
                     </div>
                   </div>
@@ -301,20 +300,20 @@
                     <div class="col-md-4">
                       <label for="usingHardwareNo" class="full-width-dropdown">Do you expect to be using hardware for your hack?</label>
                       <div class="form-check-inline">
-                        <input class="form-check-input" type="radio" name="usingHardware" id="usingHardwareNo" (click)="setRadio(hardwareYes, 'false')" value="No" [(ngModel)]="usingHardware">
+                        <input class="form-check-input" type="radio" name="usingHardware" id="usingHardwareNo" value="No" [(ngModel)]="usingHardware">
                         <label class="form-check-label" for="usingHardwareNo">
                           No
                         </label>
                       </div>
                       <div class="form-check-inline">
-                        <input class="form-check-input" type="radio" name="usingHardware" id="usingHardwareYes" (click)="setRadio(hardwareYes, 'true')" value="Yes" #hardwareYes [(ngModel)]="usingHardware">
+                        <input class="form-check-input" type="radio" name="usingHardware" id="usingHardwareYes" value="Yes" [(ngModel)]="usingHardware">
                         <label class="form-check-label" for="usingHardwareYes">
                           Yes
                         </label>
                       </div>
                     </div>
                   </div>
-                  <div [className]="hardwareYes.value=='true' ? 'form-row' : 'form-row hide-completely'">
+                  <div [className]="usingHardware=='Yes' ? 'form-row' : 'form-row hide-completely'">
                     <div [className]="hardware.value && hardware.value.includes('Other') ? 'col-md-6 full-width-dropdown' : 'col-12 full-width-dropdown'">
                       <label for="hardwareInput" class="req-label-text">Hardware</label>
                       <select class="selectpicker" multiple data-live-search="true" id="hardwareInput" name="hardwareInput" data-width="100%" [(ngModel)]="hardwareInput" #hardware=ngModel>
@@ -326,7 +325,7 @@
                           <option *ngFor="let item of this.hardwareList;" [attr.data-tokens]="item.slice(1).toString()">{{item[0]}}</option>
                         </optgroup>
                       </select>
-                      <div *ngIf="this. page==1 && hardwareYes.value=='true' && this.attemptNext && hardware.pristine" class="alert alert-danger col-12">
+                      <div *ngIf="this.page==1 && usingHardware=='Yes' && this.attemptNext && hardware.pristine" class="alert alert-danger col-12">
                         Please pick at least one option
                       </div>
                     </div>
@@ -351,7 +350,7 @@
                   <input type="checkbox" class="custom-control-input" id="termsDataSharing" name="termsDataSharing" [(ngModel)]="termsDataSharing" #dataSharing=ngModel>
                   <label class="custom-control-label" for="termsDataSharing">Yes!</label>
                 </div>
-                <div *ngIf="this. page==2 && this.attemptNext && !dataSharing.value" class="alert alert-danger">
+                <div *ngIf="this.page==2 && this.attemptNext && !dataSharing.value" class="alert alert-danger">
                   You must agree to the data policy
                 </div>
                 <p>
@@ -361,7 +360,7 @@
                   <input type="checkbox" class="custom-control-input" id="termsCodeOfConduct" name="termsCodeOfConduct" [(ngModel)]="termsCodeOfConduct" #codeOfConduct=ngModel>
                   <label class="custom-control-label" for="termsCodeOfConduct">Yes!</label>
                 </div>
-                <div *ngIf="this. page==2 && this.attemptNext && !codeOfConduct.value" class="alert alert-danger">
+                <div *ngIf="this.page==2 && this.attemptNext && !codeOfConduct.value" class="alert alert-danger">
                   You must agree to follow the Code of Conduct
                 </div>
               </div>
@@ -398,8 +397,8 @@
                 <button type="button" class="btn btn-primary .navbar-right" (click)="nextPage()">Next</button>
               </div>
               <ng-template #submit>
-                <button *ngIf="resumeYes.value!='true'" type="button" class="btn btn-primary .navbar-right" (click)="submitting();">Submit</button>
-                <button  *ngIf="resumeYes.value=='true'" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal" (click)="submittingWithFile();">
+                <button *ngIf="haveResume!='Yes'" type="button" class="btn btn-primary .navbar-right" (click)="submitting();">Submit</button>
+                <button  *ngIf="haveResume=='Yes'" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal" (click)="submittingWithFile();">
                   Submit
                 </button>
 

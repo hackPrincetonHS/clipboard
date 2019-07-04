@@ -6,6 +6,7 @@ import { catchError } from 'rxjs/operators';
 import { AuthService } from  '../auth/auth.service';
 import { StorageService, UserData, Upload } from '../storage/storage.service';
 import {firestore} from 'firebase/app';
+import Utils from '../utils/utils';
 
 
 @Component({
@@ -56,39 +57,9 @@ export class RegistrationFormComponent implements OnInit {
   uploadPercentage;
 
   checkGithubProfile;
-  schoolList=[
-    ["Milburn High School"],
-    ["Montgomery High School"],
-    ["Bergen County Academies"],
-    ["Princeton High School", "PHS"],
-    ["Freehold High School"],
-    ["Robbinsville High School"],
-    ["HightsTown High School"],
-    ["Stuyvesant High School"],
-    ["East Stroudsburg High School"],
-    ["Livingston High School"],
-    ["Princeton Day School", "PDS"],
-    ["Noor-ul-Iman", "Noor ul Iman"],
-    ["Wardlaw + Hartridge School"],
-    ["South Brunswick High School"],
-    ["Ridge High School"],
-    ["West Windsor Plainsborough High North", "WWP", "North"],
-    ["West Windsor Plainsborough High South", "WWP", "South"],
-    ["Middlesex County Academy"],
-    ["Perth Amboy Vocational Technical School"],
-    ["Raritan High School"],
-    ["Pennington School"],
-    ["Manav Rachna International"],
-    ["Edison Academy"],
-    ["Port Credit Secondary School"],
-    ["John P. Stevens High School", "J.P. Stevens"]
-  ];
+  schoolList=Utils.schoolList;
 
-  hardwareList=[
-    ["Servos"],
-    ["Motors"],
-    ["Arduino or other microcontrollers", "ESP", "ESP-32"]
-  ]
+  hardwareList=Utils.hardwareList;
 
   constructor(private cdr: ChangeDetectorRef, private httpClient: HttpClient, public authService:  AuthService, public userData: UserData, public storageService: StorageService, public upload: Upload) { }
 
@@ -120,7 +91,7 @@ export class RegistrationFormComponent implements OnInit {
     this.attemptNext=true;
     this.cdr.detectChanges();
     //console.log(document.getElementsByClassName("alert"))
-    return document.getElementsByClassName("alert").length==0;
+    return document.getElementsByClassName("alert-danger").length==0;
   }
   submitting(optional) {
     var self;
@@ -197,6 +168,7 @@ export class RegistrationFormComponent implements OnInit {
     let maxLength = input.attributes.maxlength.value;
     if (length >= maxLength) {
       document.getElementById(nextInput).focus();
+      (<any>document.getElementById(nextInput)).select();
     }
   }
   validateDate(monthObj,dayObj,yearObj) {
@@ -209,9 +181,6 @@ export class RegistrationFormComponent implements OnInit {
     }
     //one of the fields is empty, so we ignore it
     return true
-  }
-  setRadio(dom, set) {
-    dom.value=set;
   }
   sendCheckGithubProfile(gitlink){
     //console.log(this.resumeFile);
