@@ -6,6 +6,8 @@ import * as moment from 'moment';
 import * as lodash from 'lodash';
 import Utils from '../utils/utils';
 import { HttpClient } from '@angular/common/http';
+import {firestore} from 'firebase/app';
+
 
 
 @Component({
@@ -130,63 +132,42 @@ export class EditInfoComponent implements OnInit {
     return document.getElementsByClassName("alert-danger").length==0;
   }
 
-  submitting(optional) {
-    this.dietaryRestrictions=this.userData.dietaryRestrictions;
+  submitting() {
     if(this.checkPage()){
-      console.log("passed");
-      return;
-    }
-    /*
-    var self;
-    if(this){
-      self=this;
-    } else {
-      self=optional;
-    }
-    //convert to truthy/falsy (not not)
-    self.userData.hasResume=!!self.resumeFile;
-
-    self.userData.isFullyLoggedIn=true;
-    self.userData.uid=self.authService.userUid;
-    self.userData.firstName=self.inputFirstName;
-    self.userData.lastName=self.inputLastName;
-    self.userData.fullName=self.inputFirstName+" "+self.inputLastName;
-    self.userData.phone=self.inputPhone1+"-"+self.inputPhone2+"-"+self.inputPhone3;
-    self.userData.dateOfBirth=self.inputYear+"-"+self.inputMonth+"-"+self.inputDay;
-    self.userData.gender=self.pickGender;
-    self.userData.ethnicity=self.ethnicity;
-    if(self.schoolInputText) {
-      self.userData.school=self.schoolInputText;
-      self.userData.schoolNotInList=true;
-    } else {
-      self.userData.school=self.schoolInput;
-      self.userData.schoolNotInList=false;
-    }
-    self.userData.studyLevel=self.studyLevel;
-    self.userData.graduationYear=self.graduationYear;
-    self.userData.specialAccomadations=self.specialAccomadations;
-    self.userData.shirtSize=self.shirtSize;
-    self.userData.dietaryRestrictions=self.dietaryRestrictions;
-    self.userData.githubLink=self.githubLinkInput;
-    self.userData.hardware=self.hardwareInput;
-    self.userData.hardwareOther=self.hardwareInputText;
-    if(self.satisfactionRange===undefined){
-      self.userData.satisfaction=50;
-    } else {
-      self.userData.satisfaction=self.satisfactionRange;
-    }
-    self.userData.questionsComments=self.questionsComments;
-    self.userData.dateCreated=firestore.Timestamp.fromDate(new Date());
-    for (var property in self.userData) {
-      if (self.userData.hasOwnProperty(property)) {
-        if(self.userData[property]===undefined){
-          self.userData[property]="";
+      //convert to truthy/falsy (not not)
+      this.userData.isFullyLoggedIn=true;
+      this.userData.uid=this.authService.userUid;
+      this.userData.firstName=this.inputFirstName;
+      this.userData.lastName=this.inputLastName;
+      this.userData.fullName=this.inputFirstName+" "+this.inputLastName;
+      this.userData.phone=this.inputPhone1+"-"+this.inputPhone2+"-"+this.inputPhone3;
+      this.userData.dateOfBirth=this.inputYear+"-"+this.inputMonth+"-"+this.inputDay;
+      this.userData.gender=this.pickGender;
+      this.userData.ethnicity=this.ethnicity;
+      if(this.schoolInputText) {
+        this.userData.school=this.schoolInputText;
+        this.userData.schoolNotInList=true;
+      } else {
+        this.userData.school=this.schoolInput;
+        this.userData.schoolNotInList=false;
+      }
+      this.userData.studyLevel=this.studyLevel;
+      this.userData.graduationYear=this.graduationYear;
+      this.userData.specialAccomadations=this.specialAccomadations;
+      this.userData.shirtSize=this.shirtSize;
+      this.userData.dietaryRestrictions=this.dietaryRestrictions;
+      this.userData.githubLink=this.githubLinkInput;
+      this.userData.dateCreated=firestore.Timestamp.fromDate(new Date());
+      for (var property in this.userData) {
+        if (this.userData.hasOwnProperty(property)) {
+          if(this.userData[property]===undefined){
+            this.userData[property]=this.userData;
+          }
         }
       }
+      //console.log(this.userData);
+      this.storageService.createUser(this.userData);
     }
-    //console.log(self.userData);
-    self.storageService.createUser(self.userData);
-    */
   }
 
   sendCheckGithubProfile(gitlink){

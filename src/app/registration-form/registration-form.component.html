@@ -212,7 +212,7 @@
                         <input type="text" class="form-control" placeholder="https://github.com/hackPrincetonHS" id="githubLinkInput" pattern="http(s)?:\/\/(www\.)?github\.com\/[A-z0-9_-]+\/?" required maxlength="200" [(ngModel)]="githubLinkInput" (focus)="githubLink.active = true" (blur)="githubLink.active = false" name="githubLinkInput" #githubLink="ngModel">
                         <button type="button" class="btn btn-secondary" (click)="checkGithubProfile(githubLink)"><u class="dotted">Validate Profile</u> <fa-icon [icon]="githubLink.loading ? ['fas', 'spinner'] : (githubLink.profileData!=githubLink.value || githubLink.pristine) ? ['fas', 'minus'] : githubLink.badProfile ? ['fas', 'times'] : ['fas', 'check']" [spin]="githubLink.loading" [styles]="!githubLink.loading && !(githubLink.profileData!=githubLink.value || githubLink.pristine) ? githubLink.badProfile ? {'color': 'red'} : {'color': '7FFF00'} : ''"></fa-icon></button>
                       </div>
-                      <div *ngIf="this.page==1 && (this.haveGithub=='Yes' && (this.attemptNext || githubLink.dirty || githubLink.touched || this.validateClicked) && !githubLink.active)">
+                      <div *ngIf="this.page==1 && (this.haveGithub=='Yes' && (this.attemptNext || githubLink.dirty || githubLink.touched) && !githubLink.active)">
                         <div *ngIf="githubLink.errors && githubLink.errors.required" class="alert alert-danger">
                           Please enter your profile
                         </div>
