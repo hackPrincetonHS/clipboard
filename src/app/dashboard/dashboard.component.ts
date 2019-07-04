@@ -13,6 +13,8 @@ import * as moment from 'moment';
 })
 export class DashboardComponent implements OnInit {
 
+  loaded=false;
+
   showingResumeLink=true;
   resumeLink="TODO"
   constructor(public authService:  AuthService, public storageService: StorageService, public userData: UserData, public router: Router) { }
@@ -23,6 +25,8 @@ export class DashboardComponent implements OnInit {
       this.userData=userDataTemp;
       if(!this.userData.isFullyLoggedIn) {
         this.router.navigate(['registration-form']);
+      } else {
+        this.loaded=true;
       }
     });
   }

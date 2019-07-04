@@ -13,14 +13,14 @@
                   <div class="form-group">
                     <label>First Name</label>
                     <fa-icon (click)="edit($event)" class='ng-fa-icon right-icon mouse-hover' [icon]="['fas', 'pen']"></fa-icon>
-                    <input type="text" class="form-control" disabled [placeholder]="this.userData.firstName ? 'First' : ''" [value]="this.userData.firstName ? this.userData.firstName : ''">
+                    <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'First' : ''" [value]="this.loaded ? this.userData.firstName : ''">
                   </div>
                 </div>
                 <div class="col">
                   <div class="form-group">
                     <label class="req-label-text">Last Name</label>
                     <fa-icon (click)="edit($event)" class='ng-fa-icon right-icon mouse-hover' [icon]="['fas', 'pen']"></fa-icon>
-                    <input type="text" class="form-control" disabled [placeholder]="this.userData.lastName ? 'Last' : ''" [value]="this.userData.lastName ? this.userData.lastName : ''">
+                    <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Last' : ''" [value]="this.loaded ? this.userData.lastName : ''">
                   </div>
                 </div>
               </div>
@@ -29,14 +29,14 @@
                   <div class="form-group">
                     <label>Email</label>
                     <fa-icon (click)="edit($event)" class='ng-fa-icon right-icon mouse-hover' [icon]="['fas', 'pen']"></fa-icon>
-                    <input type="text" class="form-control" disabled [placeholder]="this.authService.userEmail ? 'Email' : ''" [value]="this.authService.userEmail ? this.authService.userEmail : ''">
+                    <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Email' : ''" [value]="this.loaded ? this.authService.userEmail : ''">
                   </div>
                 </div>
                 <div class="col-sm">
                   <div class="form-group">
                     <label>Phone</label>
                     <fa-icon (click)="edit($event)" class='ng-fa-icon right-icon mouse-hover' [icon]="['fas', 'pen']"></fa-icon>
-                    <input type="text" class="form-control" disabled [placeholder]="this.userData.phone ? 'Phone' : ''" [value]="this.userData.phone ? this.userData.phone : ''">
+                    <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Phone' : ''" [value]="this.loaded ? this.userData.phone : ''">
                   </div>
                 </div>
               </div>
@@ -45,7 +45,7 @@
                   <div class="form-group">
                     <label>Date of Birth</label>
                     <fa-icon (click)="edit($event)" class='ng-fa-icon right-icon mouse-hover' [icon]="['fas', 'pen']"></fa-icon>
-                    <input type="text" class="form-control" disabled [placeholder]="this.userData.dateOfBirth ? 'D.O.B' : ''" [value]="this.userData.dateOfBirth ? formatDate() : ''">
+                    <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'D.O.B' : ''" [value]="this.loaded ? formatDate() : ''">
                   </div>
                 </div>
               </div>
@@ -54,14 +54,14 @@
                   <div class="form-group">
                     <label>Gender</label>
                     <fa-icon (click)="edit($event)" class='ng-fa-icon right-icon mouse-hover' [icon]="['fas', 'pen']"></fa-icon>
-                    <input type="text" class="form-control" disabled [placeholder]="this.userData.dateOfBirth ? 'Gender' : ''" [value]="this.userData.gender ? this.userData.gender : ''">
+                    <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Gender' : ''" [value]="this.loaded ? this.userData.gender : ''">
                   </div>
                 </div>
                 <div class="col-sm">
                   <div class="form-group">
                     <label>Race/Ethnicity</label>
                     <fa-icon (click)="edit($event)" class='ng-fa-icon right-icon mouse-hover' [icon]="['fas', 'pen']"></fa-icon>
-                    <input type="text" class="form-control" disabled [placeholder]="this.userData.dateOfBirth ? 'Ethnicity' : ''" [value]="this.userData.ethnicity ? this.arrayAsString(this.userData.ethnicity) : ''">
+                    <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Ethnicity' : ''" [value]="this.loaded ? this.arrayAsString(this.userData.ethnicity) : ''">
                   </div>
                 </div>
               </div>
@@ -70,7 +70,7 @@
                   <div class="form-group">
                     <label>School</label>
                     <fa-icon (click)="edit($event)" class='ng-fa-icon right-icon mouse-hover' [icon]="['fas', 'pen']"></fa-icon>
-                    <input type="text" class="form-control" disabled [placeholder]="this.userData.school ? 'School' : ''" [value]="this.userData.school ? this.userData.school : ''">
+                    <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'School' : ''" [value]="this.loaded ? this.userData.school : ''">
                   </div>
                 </div>
                 <div *ngIf="userData.schoolNotInList" class="col-sm align-to-text">
@@ -82,25 +82,25 @@
                   <div class="form-group">
                     <label>Level Of Study</label>
                     <fa-icon (click)="edit($event)" class='ng-fa-icon right-icon mouse-hover' [icon]="['fas', 'pen']"></fa-icon>
-                    <input type="text" class="form-control" disabled [placeholder]="this.userData.studyLevel ? 'Level of Study' : ''" [value]="this.userData.studyLevel ? this.userData.studyLevel : ''">
+                    <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Level of Study' : ''" [value]="this.loaded ? this.userData.studyLevel : ''">
                   </div>
                 </div>
                 <div class="col-sm">
                   <div class="form-group">
                     <label>Expected Graduation Year</label>
                     <fa-icon (click)="edit($event)" class='ng-fa-icon right-icon mouse-hover' [icon]="['fas', 'pen']"></fa-icon>
-                    <input type="text" class="form-control" disabled [placeholder]="this.userData.graduationYear ? 'Graduation Year' : ''" [value]="this.userData.graduationYear ? this.userData.graduationYear : ''">
+                    <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Graduation Year' : ''" [value]="this.loaded ? this.userData.graduationYear : ''">
                   </div>
                 </div>
               </div>
               <!--TODO: add copy button to github link-->
-              <div *ngIf="!this.userData.isFullyLoggedIn || this.userData.githubLink || this.userData.hasResume" class="form-row">
+              <div *ngIf="!this.loaded || this.userData.githubLink || this.userData.hasResume" class="form-row">
                 <div *ngIf="!this.userData.isFullyLoggedIn || this.userData.githubLink" class="col-md">
                   <div class="form-group">
                     <label>Github Profile</label>
                     <fa-icon (click)="edit($event)" class='ng-fa-icon right-icon mouse-hover' [icon]="['fas', 'pen']"></fa-icon>
                     <div class="input-group">
-                      <input type="text" class="form-control" disabled [placeholder]="this.userData.githubLink ? 'Github Link' : ''" [value]="this.userData.githubLink ? this.userData.githubLink : ''">
+                      <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Github Link' : ''" [value]="this.loaded ? this.userData.githubLink : ''">
                       <a [href]="this.userData.githubLink" target="_blank">
                         <div class="input-group-append">
                           <span class="input-group-text" id="basic-addon2"><fa-icon class='ng-fa-icon' [icon]="['fas', 'external-link-alt']"></fa-icon></span>
@@ -109,7 +109,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md" *ngIf="!this.userData.isFullyLoggedIn || this.userData.hasResume">
+                <div class="col-md" *ngIf="!this.userData.loaded || this.userData.hasResume">
                   <div class="form-group">
                     <label>View Resume</label>
                     <fa-icon id="resume-icon" class='ng-fa-icon right-icon' [icon]="['fas', 'pen']"></fa-icon>
@@ -123,14 +123,14 @@
                   <div class="form-group">
                     <label>T-Shirt Size</label>
                     <fa-icon (click)="edit($event)" class='ng-fa-icon right-icon mouse-hover' [icon]="['fas', 'pen']"></fa-icon>
-                    <input type="text" class="form-control" disabled [placeholder]="this.userData.shirtSize ? 'Shirt Size' : ''" [value]="this.userData.shirtSize ? toFullSizeWord(this.userData.shirtSize) : ''">
+                    <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Shirt Size' : ''" [value]="this.loaded ? toFullSizeWord(this.userData.shirtSize) : ''">
                   </div>
                 </div>
                 <div class="col-sm">
                   <div class="form-group">
                     <label>Dietary Restrictions</label>
                     <fa-icon (click)="edit($event)" class='ng-fa-icon right-icon mouse-hover' [icon]="['fas', 'pen']"></fa-icon>
-                    <input type="text" class="form-control" disabled [placeholder]="this.userData.dietaryRestrictions ? 'Restriction' : ''" [value]="this.userData.dietaryRestrictions ? this.arrayAsString(this.userData.dietaryRestrictions) : ''">
+                    <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Restriction' : ''" [value]="this.loaded ? this.arrayAsString(this.userData.dietaryRestrictions) : ''">
                   </div>
                 </div>
               </div>
@@ -139,14 +139,14 @@
                   <div class="form-group">
                     <label>Listed Hardware:</label>
                     <fa-icon (click)="edit($event)" class='ng-fa-icon right-icon mouse-hover' [icon]="['fas', 'pen']"></fa-icon>
-                    <input type="text" class="form-control" disabled [placeholder]="this.userData.hardware ? 'Hardware' : ''" [value]="this.userData.hardware ? arrayAsString(this.userData.hardware) : ''">
+                    <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Hardware' : ''" [value]="this.loaded ? arrayAsString(this.userData.hardware) : ''">
                   </div>
                 </div>
                 <div class="col-sm">
                   <div class="form-group">
                     <label>Extra Hardware:</label>
                     <fa-icon (click)="edit($event)" class='ng-fa-icon right-icon mouse-hover' [icon]="['fas', 'pen']"></fa-icon>
-                    <input type="text" class="form-control" disabled [placeholder]="this.userData.hardwareOther ? 'Other Hardware' : 'None'" [value]="this.userData.hardwareOther ? this.userData.hardwareOther : ''">
+                    <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Other Hardware' : 'None'" [value]="this.loaded ? this.userData.hardwareOther : ''">
                   </div>
                 </div>
               </div>
@@ -155,7 +155,7 @@
                   <div class="form-group">
                     <label>Special Accomdations</label>
                     <fa-icon (click)="edit($event)" class='ng-fa-icon right-icon mouse-hover' [icon]="['fas', 'pen']"></fa-icon>
-                    <textarea disabled [placeholder]="this.userData.specialAccomadations ? 'Special Accomadations' : 'None'" [value]="this.userData.specialAccomadations ? this.userData.specialAccomadations : ''" class="form-control" rows="3"></textarea>
+                    <textarea disabled [placeholder]="this.loaded ? 'Special Accomadations' : 'None'" [value]="this.loaded ? this.userData.specialAccomadations : ''" class="form-control" rows="3"></textarea>
                   </div>
                 </div>
               </div>
