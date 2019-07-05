@@ -74,7 +74,7 @@
                     <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'School' : ''" [value]="this.loaded ? this.userData.school : ''">
                   </div>
                 </div>
-                <div *ngIf="userData.schoolNotInList" class="col-sm align-to-text">
+                <div *ngIf="userData.schoolNotInList" class="col-sm align-sm-to-text">
                   We will contact you by email to confirm your school
                 </div>
               </div>
@@ -95,13 +95,13 @@
                 </div>
               </div>
               <!--TODO: add copy button to github link-->
-              <div *ngIf="!this.loaded || this.userData.githubLink || this.userData.hasResume" class="form-row">
-                <div *ngIf="!this.userData.isFullyLoggedIn || this.userData.githubLink" class="col-md">
+              <div class="form-row">
+                <div class="col-md">
                   <div class="form-group">
                     <label>Github Profile</label>
                     <fa-icon (click)="edit($event)" class='ng-fa-icon right-icon mouse-hover' [icon]="['fas', 'pen']"></fa-icon>
                     <div class="input-group">
-                      <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Github Link' : ''" [value]="this.loaded ? this.userData.githubLink : ''">
+                      <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Github Link' : ''" [value]="this.loaded ? this.userData.githubLink ? this.userData.githubLink : 'None' : ''">
                       <a [href]="this.userData.githubLink" target="_blank">
                         <div class="input-group-append">
                           <span class="input-group-text" id="basic-addon2"><fa-icon class='ng-fa-icon' [icon]="['fas', 'external-link-alt']"></fa-icon></span>
@@ -110,14 +110,73 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md" *ngIf="!this.userData.loaded || this.userData.hasResume">
-                  <div class="form-group">
+                <div class="col-md">
+                  <div *ngIf="this.userData.hasResume" class="form-group">
                     <label>View Resume</label>
-                    <fa-icon id="resume-icon" class='ng-fa-icon right-icon' [icon]="['fas', 'pen']"></fa-icon>
-                    <input type="text" class="form-control" disabled [placeholder]="this.showingResumeLink ? 'Resume Link' : ''" [value]="this.showingResumeLink ? this.resumeLink : ''">
+                    <fa-icon data-toggle="modal" data-target="#changeResumeModal" id="resume-icon" class='ng-fa-icon right-icon' [icon]="['fas', 'pen']"></fa-icon>
+                    <div class="input-group">
+                      <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Resume Link' : ''" [value]="this.loaded ? (this.resumeLink | async) : ''">
+                      <a [href]="this.resumeLink | async" target="_blank">
+                        <div class="input-group-append">
+                          <span class="input-group-text" id="basic-addon2"><fa-icon class='ng-fa-icon' [icon]="['fas', 'external-link-alt']"></fa-icon></span>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                  <div *ngIf="!this.userData.hasResume" data-toggle="modal" data-target="#changeResumeModal" class="align-md-to-text d-flex justify-content-center">
+                    <button type="button" class="btn btn-outline-primary">Add Resume</button>
                   </div>
                 </div>
               </div>
+
+              <div class="modal fade" tabindex="-1" role="dialog" id="changeResumeModal">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">{{this.resumeModal.uploading ? "Uploading Resume..." : this.userData.hasResume ? "Update Resume" : "Upload Resume"}}</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form>
+                        <div class="form-row">
+                          <div class="col-md">
+                            <div class="form-group">
+                              <label>Please upload your resume</label>
+                              <input type="file" class="form-control-file" (change)="this.resumeModal.file=$event.target.files[0]">
+                            </div>
+                          </div>
+                          <div class="col-md">
+                            <div *ngIf="this.userData.hasResume && !this.resumeModal.uploading" class="form-group">
+                              <label>Old Resume</label>
+                              <div class="input-group">
+                                <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Resume Link' : ''" [value]="this.loaded ? (this.resumeLink | async) : ''">
+                                <a [href]="this.resumeLink | async" target="_blank">
+                                  <div class="input-group-append">
+                                    <span class="input-group-text" id="basic-addon2"><fa-icon class='ng-fa-icon' [icon]="['fas', 'external-link-alt']"></fa-icon></span>
+                                  </div>
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div *ngIf="this.resumeModal.attemptSubmit && !this.resumeModal.file" class="alert alert-danger">
+                          Please pick a file
+                        </div>
+                      </form>
+                      <div *ngIf="this.resumeModal.uploading" class="progress">
+                        <div class="progress-bar progress-bar progress-bar-striped" role="progressbar" [style.width]="this.resumeModal.uploadPercentage+'%'"></div>
+                      </div>
+                    </div>
+                    <div *ngIf="!this.resumeModal.uploading" class="modal-footer">
+                      <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary" (click)="this.resumeModal.saveChanges(this)">Save changes</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <hr class="seperator">
               <div class="form-row">
                 <div class="col-sm">

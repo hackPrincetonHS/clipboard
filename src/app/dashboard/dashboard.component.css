@@ -25,7 +25,13 @@
   margin-bottom: 1rem;
 }
 @media (min-width: 576px) {
-  .align-to-text{
+  .align-sm-to-text{
+    margin-top: 0.5rem;
+    padding-top: 1.5rem;
+  }
+}
+@media (min-width: 768px) {
+  .align-md-to-text{
     margin-top: 0.5rem;
     padding-top: 1.5rem;
   }
