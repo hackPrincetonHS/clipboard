@@ -60,7 +60,7 @@ export class DashboardComponent implements OnInit {
     return ret;
   }
   edit(event){
-    console.log(event);
+    this.router.navigate(['profile-edit']);
   }
 
 }

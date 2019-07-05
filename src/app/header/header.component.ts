@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { AuthService } from  '../auth/auth.service';
+import { Router } from  "@angular/router";
 
 
 
@@ -10,6 +11,9 @@ import { AuthService } from  '../auth/auth.service';
   styleUrls: ['./header.component.css']
 })
 export  class  HeaderComponent  implements  OnInit {
-    constructor(public  authService:  AuthService) { }
+    constructor(public  authService:  AuthService, public router: Router) { }
     ngOnInit() {}
+    dashboard(){
+      this.router.navigate(['dashboard']);
+    }
 }

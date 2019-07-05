@@ -1,3 +1,4 @@
+<div *ngIf="!this.loaded" class="overlay"></div>
 <div class=backround>
   <div class="page-wrap">
     <div class="page">
@@ -191,13 +192,13 @@
                     <label for="githubLinkInput" class="req-label-text">Paste the link to your profile here</label>
                     <div class="input-group">
                       <input [value]="this.loaded ? this.userData.githubLink : ''" type="text" class="form-control" placeholder="https://github.com/hackPrincetonHS" id="githubLinkInput" pattern="http(s)?:\/\/(www\.)?github\.com\/[A-z0-9_-]+\/?" required maxlength="200" [(ngModel)]="githubLinkInput" (focus)="githubLink.active = true" (blur)="githubLink.active = false" name="githubLinkInput" #githubLink="ngModel">
-                      <button type="button" class="btn btn-secondary" (click)="checkGithubProfile(githubLink)"><u class="dotted">Validate Profile</u> <fa-icon [icon]="githubLink.loading ? ['fas', 'spinner'] : (githubLink.profileData!=githubLink.value) ? ['fas', 'minus'] : githubLink.badProfile ? ['fas', 'times'] : ['fas', 'check']" [spin]="githubLink.loading" [styles]="!githubLink.loading && !(githubLink.profileData!=githubLink.value || githubLink.pristine) ? githubLink.badProfile ? {'color': 'red'} : {'color': '7FFF00'} : ''"></fa-icon></button>
+                      <button type="button" class="btn btn-secondary" (click)="checkGithubProfile(githubLink)"><u class="dotted">Validate Profile</u> <fa-icon [icon]="githubLink.loading ? ['fas', 'spinner'] : (githubLink.profileData!=githubLink.value || (githubLink.pristine && !this.userData.githubLink)) ? ['fas', 'minus'] : githubLink.badProfile ? ['fas', 'times'] : ['fas', 'check']" [spin]="githubLink.loading" [styles]="!githubLink.loading && !(githubLink.profileData!=githubLink.value || (githubLink.pristine && !this.userData.githubLink)) ? githubLink.badProfile ? {'color': 'red'} : {'color': '7FFF00'} : ''"></fa-icon></button>
                     </div>
                     <div *ngIf="this.haveGithub=='Yes' && (githubLink.dirty || githubLink.touched || this.validateClicked) && !githubLink.active && !githubLink.pristine">
                       <div *ngIf="githubLink.errors && githubLink.errors.required" class="alert alert-danger">
                         Please enter your profile
                       </div>
-                      <div *ngIf="!githubLink.errors.required && ((githubLink.errors && githubLink.errors.pattern && !githubLink.errors.required) || githubLink.badProfile)" class="alert alert-danger">
+                      <div *ngIf="!(this.githubLink.errors && githubLink.errors.required) && ((githubLink.errors && githubLink.errors.pattern && !githubLink.errors.required) || githubLink.badProfile)" class="alert alert-danger">
                         That is not a valid github profile
                       </div>
                       <div *ngIf="!(githubLink.errors && !githubLink.errors.required) && !((githubLink.errors && githubLink.errors.pattern) || githubLink.badProfile || githubLink.loading) && githubLink.profileData!=githubLink.value" class="alert alert-danger">
@@ -265,7 +266,10 @@
             </div>
           </fieldset>
           <div class="row">
-            <div class="col-md-6 offset-6 text-right">
+            <div class="col">
+              <button type="button" class="btn btn-secondary" (click)="back()">Back</button>
+            </div>
+            <div class="col text-right">
               <button type="button" class="btn btn-primary .navbar-right" (click)="submitting();">Submit</button>
             </div>
           </div>

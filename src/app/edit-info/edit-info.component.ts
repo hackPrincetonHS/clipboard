@@ -52,7 +52,7 @@ export class EditInfoComponent implements OnInit {
 
   attemptNext=false;
 
-  constructor(private cdr: ChangeDetectorRef, private httpClient: HttpClient, public authService:  AuthService, public userData: UserData, public storageService: StorageService) { }
+  constructor(private cdr: ChangeDetectorRef, private httpClient: HttpClient, public authService:  AuthService, public userData: UserData, public storageService: StorageService, public router: Router) { }
 
   ngOnInit() {
     this.storageService.userInfoObservable.subscribe((userDataTemp: UserData) => {
@@ -131,20 +131,44 @@ export class EditInfoComponent implements OnInit {
     //console.log(document.getElementsByClassName("alert"))
     return document.getElementsByClassName("alert-danger").length==0;
   }
+  back(){
+    this.router.navigate(['dashboard']);
+  }
 
   submitting() {
     if(this.checkPage()){
-      //convert to truthy/falsy (not not)
+      var oldUserData=lodash.cloneDeep(this.userData);
+
+      var phoneArr=oldUserData.phone.split("-");
+      if(!this.inputPhone1){
+        this.inputPhone1=phoneArr[0];
+      }
+      if(!this.inputPhone2){
+        this.inputPhone2=phoneArr[1];
+      }
+      if(!this.inputPhone3){
+        this.inputPhone3=phoneArr[2];
+      }
+      var dobArr=oldUserData.dateOfBirth.split("-");
+      if(!this.inputYear){
+        this.inputYear=dobArr[0];
+      }
+      if(!this.inputMonth){
+        this.inputMonth=dobArr[1];
+      }
+      if(!this.inputDay){
+        this.inputDay=dobArr[2];
+      }
+
       this.userData.isFullyLoggedIn=true;
       this.userData.uid=this.authService.userUid;
       this.userData.firstName=this.inputFirstName;
       this.userData.lastName=this.inputLastName;
-      this.userData.fullName=this.inputFirstName+" "+this.inputLastName;
       this.userData.phone=this.inputPhone1+"-"+this.inputPhone2+"-"+this.inputPhone3;
       this.userData.dateOfBirth=this.inputYear+"-"+this.inputMonth+"-"+this.inputDay;
       this.userData.gender=this.pickGender;
       this.userData.ethnicity=this.ethnicity;
-      if(this.schoolInputText) {
+      if(this.schoolInput=="My school isn't here") {
         this.userData.school=this.schoolInputText;
         this.userData.schoolNotInList=true;
       } else {
@@ -156,16 +180,21 @@ export class EditInfoComponent implements OnInit {
       this.userData.specialAccomadations=this.specialAccomadations;
       this.userData.shirtSize=this.shirtSize;
       this.userData.dietaryRestrictions=this.dietaryRestrictions;
-      this.userData.githubLink=this.githubLinkInput;
+      if(this.haveGithub=="Yes"){
+        this.userData.githubLink=this.githubLinkInput;
+      } else {
+        this.userData.githubLink="";
+      }
       this.userData.dateCreated=firestore.Timestamp.fromDate(new Date());
       for (var property in this.userData) {
         if (this.userData.hasOwnProperty(property)) {
           if(this.userData[property]===undefined){
-            this.userData[property]=this.userData;
+            this.userData[property]=oldUserData[property];
           }
         }
       }
-      //console.log(this.userData);
+      this.userData.fullName=this.userData.firstName+" "+this.userData.lastName;
+
       this.storageService.createUser(this.userData);
     }
   }
@@ -184,5 +213,6 @@ export class EditInfoComponent implements OnInit {
       gitlink.badProfile=true;
     }
   }
+
 
 }

@@ -1,3 +1,4 @@
+<div *ngIf="!this.loaded" class="overlay"></div>
 <div class="content">
   <div class="container">
     <div class="row">
@@ -138,16 +139,17 @@
                 <div class="col-sm">
                   <div class="form-group">
                     <label>Listed Hardware:</label>
-                    <fa-icon (click)="edit($event)" class='ng-fa-icon right-icon mouse-hover' [icon]="['fas', 'pen']"></fa-icon>
                     <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Hardware' : ''" [value]="this.loaded ? arrayAsString(this.userData.hardware) : ''">
                   </div>
                 </div>
                 <div class="col-sm">
                   <div class="form-group">
                     <label>Extra Hardware:</label>
-                    <fa-icon (click)="edit($event)" class='ng-fa-icon right-icon mouse-hover' [icon]="['fas', 'pen']"></fa-icon>
                     <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Other Hardware' : 'None'" [value]="this.loaded ? this.userData.hardwareOther : ''">
                   </div>
+                </div>
+                <div class="alert alert-info">
+                  Hardware is for estimation purposes, if you really need a piece of hardware and you didn't put it in your registration, email us at team@hackphs.tech with subject "hardware"
                 </div>
               </div>
               <div class="form-row">

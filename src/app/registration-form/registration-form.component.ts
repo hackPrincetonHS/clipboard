@@ -61,6 +61,8 @@ export class RegistrationFormComponent implements OnInit {
 
   hardwareList=Utils.hardwareList;
 
+  validateClicked=false;
+
   constructor(private cdr: ChangeDetectorRef, private httpClient: HttpClient, public authService:  AuthService, public userData: UserData, public storageService: StorageService, public upload: Upload) { }
 
   ngOnInit() {
@@ -112,7 +114,7 @@ export class RegistrationFormComponent implements OnInit {
     self.userData.dateOfBirth=self.inputYear+"-"+self.inputMonth+"-"+self.inputDay;
     self.userData.gender=self.pickGender;
     self.userData.ethnicity=self.ethnicity;
-    if(self.schoolInputText) {
+    if(self.schoolInput=="My school isn't here") {
       self.userData.school=self.schoolInputText;
       self.userData.schoolNotInList=true;
     } else {
@@ -124,9 +126,13 @@ export class RegistrationFormComponent implements OnInit {
     self.userData.specialAccomadations=self.specialAccomadations;
     self.userData.shirtSize=self.shirtSize;
     self.userData.dietaryRestrictions=self.dietaryRestrictions;
-    self.userData.githubLink=self.githubLinkInput;
-    self.userData.hardware=self.hardwareInput;
-    self.userData.hardwareOther=self.hardwareInputText;
+    if(self.haveGithub=="Yes"){
+      self.userData.githubLink=this.githubLinkInput;
+    }
+    if(self.usingHardware=="Yes"){
+      self.userData.hardware=self.hardwareInput;
+      self.userData.hardwareOther=self.hardwareInputText;
+    }
     if(self.satisfactionRange===undefined){
       self.userData.satisfaction=50;
     } else {
@@ -183,6 +189,7 @@ export class RegistrationFormComponent implements OnInit {
     return true
   }
   sendCheckGithubProfile(gitlink){
+    this.validateClicked=true;
     //console.log(this.resumeFile);
     if(!gitlink.errors){
       var smallString=gitlink.value;
