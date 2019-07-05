@@ -30,6 +30,9 @@ export class StorageService {
     const task = ref.put(file);
     upload.progress=task.percentageChanges();
   }
+  deleteResume() {
+    return this.fireStorage.ref("resumes/"+this.authService.userUid).delete();
+  }
   get resumeLink() : Observable<String>{
     return this.fireStorage.ref("resumes/"+this.authService.userUid).getDownloadURL();
   }

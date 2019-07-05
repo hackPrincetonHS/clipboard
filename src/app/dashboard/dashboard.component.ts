@@ -15,8 +15,9 @@ import { Observable } from 'rxjs';
 })
 export class DashboardComponent implements OnInit {
 
-  loaded=false;
+  inputEmailConfirm;
 
+  loaded=false;
   resumeModal={
     file:undefined,
     attemptSubmit:false,
@@ -30,6 +31,8 @@ export class DashboardComponent implements OnInit {
   constructor(public authService:  AuthService, public storageService: StorageService, public userData: UserData, public router: Router, public upload: Upload) { }
 
   ngOnInit() {
+    console.log(this.authService.userEmail);
+
     this.resumeModal.saveChanges=function(self){
       console.log("stupid");
       self.resumeModal.attemptSubmit=true;
@@ -46,11 +49,12 @@ export class DashboardComponent implements OnInit {
             //you want it to complete before moving on, otherwise it calls too quickly and the bar is only half full when it stops.
             //looks better, feels better. I use lodash instead of settimeout because I already use lodash in another part of the class so like...
             //this has to be passed  because it becomes an anon function. This is delt with later in the submitting funciton
-            self.storageService.createUser(self.userData).then(lodash.delay(self.closeModal, 900));
+            self.storageService.createUser(self.userData).then(lodash.delay(self.closeModal, 900, "#changeResumeModal"));
           }
         });
       }
     }
+
     this.storageService.userInfoObservable.subscribe((userDataTemp: UserData) => {
       console.log(userDataTemp);
       this.userData=userDataTemp;
@@ -66,6 +70,16 @@ export class DashboardComponent implements OnInit {
       }
     });
   }
+
+  //I kinda forgot I could do arrow functions (which keep the "this") in es6, and tried a bunch of crappy workarounds
+  deleteResume() {
+    this.userData.hasResume=false;
+    this.storageService.createUser(this.userData).then(() => {
+      this.storageService.deleteResume();
+      this.closeModal("#delete-resume-modal", true);
+    });
+  }
+
   formatDate(){
     return moment(this.userData.dateOfBirth, 'YYYY-MM-DD').format('MMMM Do YYYY');
   }
@@ -98,9 +112,11 @@ export class DashboardComponent implements OnInit {
   edit(event){
     this.router.navigate(['profile-edit']);
   }
-  closeModal(){
-    (<any>$('#changeResumeModal')).modal('toggle');
-    location.reload();
+  closeModal(id, reload){
+    (<any>$(id)).modal('toggle');
+    if(reload===undefined || reload){
+      location.reload();
+    }
   }
 
 }

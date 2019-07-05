@@ -125,7 +125,7 @@
                       <option>Native Hawaiian or other Pacific Islander</option>
                       <option>Prefer Not To Say</option>
                     </select>
-                    <div *ngIf="this.loaded && this.ethnicity.length==0" class="alert alert-danger">
+                    <div *ngIf="this.loaded && this.ethnicity && this.ethnicity.length==0" class="alert alert-danger">
                       You must select an option
                     </div>
                   </div>
@@ -191,7 +191,7 @@
                   <div [className]="this.haveGithub=='Yes' ? ' col-md-8 full-width-dropdown' : 'hide-completely col-md-8 full-width-dropdown'">
                     <label for="githubLinkInput" class="req-label-text">Paste the link to your profile here</label>
                     <div class="input-group">
-                      <input [value]="this.loaded ? this.userData.githubLink : ''" type="text" class="form-control" placeholder="https://github.com/hackPrincetonHS" id="githubLinkInput" pattern="http(s)?:\/\/(www\.)?github\.com\/[A-z0-9_-]+\/?" required maxlength="200" [(ngModel)]="githubLinkInput" (focus)="githubLink.active = true" (blur)="githubLink.active = false" name="githubLinkInput" #githubLink="ngModel">
+                      <input [value]="(this.userData.githubLink && this.loaded) ? this.userData.githubLink : ''" type="text" class="form-control" placeholder="https://github.com/hackPrincetonHS" id="githubLinkInput" pattern="http(s)?:\/\/(www\.)?github\.com\/[A-z0-9_-]+\/?" required maxlength="200" [(ngModel)]="githubLinkInput" (focus)="githubLink.active = true" (blur)="githubLink.active = false" name="githubLinkInput" #githubLink="ngModel">
                       <button type="button" class="btn btn-secondary" (click)="checkGithubProfile(githubLink)"><u class="dotted">Validate Profile</u> <fa-icon [icon]="githubLink.loading ? ['fas', 'spinner'] : (githubLink.profileData!=githubLink.value || (githubLink.pristine && !this.userData.githubLink)) ? ['fas', 'minus'] : githubLink.badProfile ? ['fas', 'times'] : ['fas', 'check']" [spin]="githubLink.loading" [styles]="!githubLink.loading && !(githubLink.profileData!=githubLink.value || (githubLink.pristine && !this.userData.githubLink)) ? githubLink.badProfile ? {'color': 'red'} : {'color': '7FFF00'} : ''"></fa-icon></button>
                     </div>
                     <div *ngIf="this.haveGithub=='Yes' && (githubLink.dirty || githubLink.touched || this.validateClicked) && !githubLink.active && !githubLink.pristine">
