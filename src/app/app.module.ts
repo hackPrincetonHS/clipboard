@@ -17,7 +17,6 @@ import { AngularFireAuthModule } from "@angular/fire/auth";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './login/login.component';
-import { HeaderComponent } from './header/header.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { StorageService, UserData, Upload } from './storage/storage.service';
@@ -42,7 +41,6 @@ var firebaseConfig = {
     RegistrationFormComponent,
     OcticonDirective,
     LoginComponent,
-    HeaderComponent,
     DashboardComponent,
     EditInfoComponent
   ],
