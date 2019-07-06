@@ -21,6 +21,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { StorageService, UserData, Upload } from './storage/storage.service';
 import { EditInfoComponent } from './edit-info/edit-info.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 
 
@@ -42,7 +43,8 @@ var firebaseConfig = {
     OcticonDirective,
     LoginComponent,
     DashboardComponent,
-    EditInfoComponent
+    EditInfoComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,

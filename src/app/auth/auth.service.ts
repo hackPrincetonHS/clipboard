@@ -37,6 +37,18 @@ export  class  AuthService {
       alertToActivate.value=e.message;
     }
   }
+  async sendPasswordResetEmail(email : string, response) {
+    try {
+      await this.afAuth.auth.sendPasswordResetEmail(email);
+      response.success=true;
+      response.message="An email has been sent to "+email;
+    } catch {
+      response.success=false;
+      response.message="There is no user with that email";
+    }
+    response.waiting=false;
+
+  }
 /*
   async resetPassword(email: string) {
     await this.afAuth.sendPasswordResetEmail(email);

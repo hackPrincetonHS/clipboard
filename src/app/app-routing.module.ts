@@ -5,6 +5,7 @@ import { RegistrationFormComponent } from './registration-form/registration-form
 import { LoginComponent } from './login/login.component'
 import { DashboardComponent } from './dashboard/dashboard.component'
 import { EditInfoComponent } from './edit-info/edit-info.component'
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 
 import { LoginActivate } from './guards/login-activate.guard'
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: 'registration-form', component: RegistrationFormComponent, canActivate:[LoginActivate] },
   { path: 'login', component: LoginComponent, canActivate:[NotLoggedIn] },
   { path: 'dashboard', component: DashboardComponent, canActivate:[LoginActivate, FullyLoggedIn] },
-  { path: 'profile-edit', component: EditInfoComponent }
+  { path: 'profile-edit', component: EditInfoComponent },
+  { path: 'reset-password', component: ResetPasswordComponent }
 ];
 
 
