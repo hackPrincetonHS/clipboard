@@ -1,7 +1,3 @@
----
-permalink: /index.html
----
-
 ## Dependencies
 
 You just need to install the angular cli and it should roughly work
