@@ -272,7 +272,7 @@
                   <div *ngIf="this.page==1 && haveResume=='Yes' && this.attemptNext && !this.resumeFile" class="alert alert-danger">
                     Please pick a file
                   </div>
-                  <div *ngIf="this.resumeFile && this.resumeFile.size>2000000" class="alert alert-danger">
+                  <div *ngIf="this.resumeFile && this.resumeFile.type=='application/pdf' && this.resumeFile.size>2000000" class="alert alert-danger">
                     The size limit is 2MB
                   </div>
                   <div *ngIf="this.resumeFile && this.resumeFile.type!='application/pdf'" class="alert alert-danger">

@@ -171,6 +171,12 @@
                         <div *ngIf="this.resumeModal.attemptSubmit && !this.resumeModal.file" class="alert alert-danger">
                           Please pick a file
                         </div>
+                        <div *ngIf="this.resumeModal.file && this.resumeModal.file.type=='application/pdf' && this.resumeModal.file.size>2000000" class="alert alert-danger">
+                          The size limit is 2MB
+                        </div>
+                        <div *ngIf="this.resumeModal.file && this.resumeModal.file.type!='application/pdf'" class="alert alert-danger">
+                          The file must be PDF
+                        </div>
                       </form>
                       <div *ngIf="this.resumeModal.uploading" class="progress">
                         <div class="progress-bar progress-bar progress-bar-striped" role="progressbar" [style.width]="this.resumeModal.uploadPercentage+'%'"></div>

@@ -36,7 +36,7 @@ export class DashboardComponent implements OnInit {
     this.resumeModal.saveChanges=function(self){
       console.log("stupid");
       self.resumeModal.attemptSubmit=true;
-      if(self.resumeModal.file){
+      if(document.getElementsByClassName("alert-danger").length==0){
         self.userData.hasResume=true;
         self.resumeModal.uploading=true;
         self.upload.file=self.resumeModal.file;
