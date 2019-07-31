@@ -49,6 +49,13 @@
                     <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'D.O.B' : ''" [value]="this.loaded ? formatDate() : ''">
                   </div>
                 </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label>Spanish/Hispanic/Latino</label>
+                    <fa-icon (click)="edit($event)" class='ng-fa-icon right-icon mouse-hover' [icon]="['fas', 'pen']"></fa-icon>
+                    <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Ethnicity' : ''" [value]="this.loaded ? this.userData.latino ? 'Yes' : 'No' : ''">
+                  </div>
+                </div>
               </div>
               <div class="form-row">
                 <div class="col-sm">

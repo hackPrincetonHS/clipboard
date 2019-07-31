@@ -22,13 +22,14 @@
         I then also need to set the tabindexes manually so that people don't tab over to this button accidently-->
         <button *ngIf="this.register" class="hidden-in-plain-site" (click)="this.clickRegister(userEmail, userPassword, userConfirm)" tabindex="-1" type="submit"></button>
 
-        <input type="submit" (click)="this.clickButtonLogin(userEmail, userPassword)" class="fadeIn fourth login" value="Log In">
-        <input type="submit" class="fadeIn fifth register" (click)="this.clickRegister(userEmail, userPassword, userConfirm)" value="Sign Up">
+        <input [hidden]="this.register" type="submit" (click)="this.clickButtonLogin(userEmail, userPassword)" [class]="!this.firstClickRegister ? 'fadeIn fourth login' : 'fadeIn login'" value="Log In">
+        <input [ngStyle]="{'margin-top': this.register ? '20px': '5px'}" type="submit" class="fadeIn fifth register" (click)="this.clickRegister(userEmail, userPassword, userConfirm)" value="Sign Up">
       </form>
 
       <!-- Remind Passowrd -->
       <div id="formFooter">
-        <a class="underlineHover cursor-pointer" (click)="this.router.navigate(['reset-password']);">Forgot Password?</a>
+        <a *ngIf="!this.register" class="underlineHover cursor-pointer" (click)="this.router.navigate(['reset-password']);">Forgot Password?</a>
+        <a *ngIf="this.register" class="underlineHover cursor-pointer" (click)="this.clickButtonLogin('','')">Back to Login</a>
       </div>
 
     </div>

@@ -10,32 +10,31 @@
               <legend><div style="text-align: center;"><h2><b>Registration Form</b></h2></div></legend><br>
             </div>
             <div class="progress">
-              <div class="progress-bar progress-bar progress-bar-striped" role="progressbar" [style.width]="((this.page-1)/this.numPages)*100+'%'" aria-valuenow="((this.page-1)/this.numPages)*100" aria-valuemin="0" aria-valuemax="100"></div>
+              <div class="progress-bar progress-bar progress-bar-striped" role="progressbar" [style.width]="((this.page)/this.numPages)*100+'%'" aria-valuenow="((this.page)/this.numPages)*100" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
             <div class="form-itself">
-              <hr class="separator">
               <div [className]="this.page==1 ? '':'hide-completely'">
                 <div class=containter>
                   <h3>Demographic Info</h3>
                   <label for="inputFirstName" class="req-label-text">Name</label>
                   <div class="form-row">
                     <div class="col">
-                      <input type="text" class="form-control" placeholder="First name" id="inputFirstName" required [(ngModel)]="inputFirstName" (focus)="firstName.active = true" (blur)="firstName.active = false" name="inputFirstName" #firstName="ngModel">
+                      <input type="text" class="form-control capitalize" placeholder="First Name" id="inputFirstName" required [(ngModel)]="inputFirstName" (focus)="firstName.active = true" (blur)="firstName.active = false" name="inputFirstName" #firstName="ngModel">
                       <div *ngIf="((firstName.errors && firstName.errors.required) || (lastName.errors && lastName.errors.required)) && ((this.attemptNext || firstName.dirty || firstName.touched || lastName.dirty || lastName.touched) && !(firstName.active || lastName.active)) && this.page==1" class="alert alert-danger">
                         Name is required
                       </div>
                     </div>
                     <div class="col">
-                      <input type="text" class="form-control" placeholder="Last name" id="inputLastName" required [(ngModel)]="inputLastName" (focus)="lastName.active = true" (blur)="lastName.active = false" name="inputLastName" #lastName="ngModel">
+                      <input type="text" class="form-control capitalize" placeholder="Last Name" id="inputLastName" required [(ngModel)]="inputLastName" (focus)="lastName.active = true" (blur)="lastName.active = false" name="inputLastName" #lastName="ngModel">
                     </div>
                   </div>
 
                   <div class="form-row">
-                    <div class="col-md">
+                    <div class="col-md full-width-dropdown">
                       <label for="inputEmail" class="req-label-text">Email</label>
                       <input class="form-control" type="text" [placeholder]="this.authService.userEmail" disabled>
                     </div>
-                    <div class="col-md">
+                    <div class="col-md full-width-dropdown">
                       <div class="row phone-header">
                         <div class="col-3 padding-right-0">
                           <label for="inputPhone1" class="req-label-text">Phone</label>
@@ -62,19 +61,19 @@
                       <label for="inputPhone1" class="req-label-text">Date of Birth</label>
                       <div class="row phone-header">
                         <div class="col-3">
-                          <input type="text" name="inputMonth" id="inputMonth" aria-described-by="month-help" placeholder="3" maxlength="12" required pattern="([1-9]|1[0-2])" inputmode="numeric" (focus)="month.active = true" (blur)="month.active = false" digitOnly class=form-control [(ngModel)]="inputMonth" #month="ngModel">
+                          <input type="tel" name="inputMonth" id="inputMonth" aria-described-by="month-help" placeholder="3" maxlength="12" required pattern="([1-9]|1[0-2])" inputmode="numeric" (focus)="month.active = true" (blur)="month.active = false" digitOnly class=form-control [(ngModel)]="inputMonth" #month="ngModel">
                           <p id="month-help" class="form-text text-muted">
                             Month
                           </p>
                         </div>
                         <div class="col-3">
-                          <input type="text" name="inputDay" id="inputDay" aria-described-by="day-help" placeholder="25" maxlength="2" required pattern="([1-9]|[12][0-9]|3[01])" inputmode="numeric" (focus)="day.active = true" (blur)="day.active = false" digitOnly class=form-control [(ngModel)]="inputDay" #day="ngModel">
+                          <input type="tel" name="inputDay" id="inputDay" aria-described-by="day-help" placeholder="25" maxlength="2" required pattern="([1-9]|[12][0-9]|3[01])" inputmode="numeric" (focus)="day.active = true" (blur)="day.active = false" digitOnly class=form-control [(ngModel)]="inputDay" #day="ngModel">
                           <p id="day-help" class="form-text text-muted">
                             Day
                           </p>
                         </div>
                         <div class="col-4">
-                          <input type="text" name="inputYear" id="inputYear" aria-described-by="year-help" placeholder="2003" maxlength="4" required pattern="(19[4-8][0-9]|199[0-9]|200[0-9]|201[0-9])" inputmode="numeric" (focus)="year.active = true" (blur)="year.active = false" digitOnly class=form-control [(ngModel)]="inputYear" #year="ngModel">
+                          <input type="tel" name="inputYear" id="inputYear" aria-described-by="year-help" placeholder="2003" maxlength="4" required pattern="(19[4-8][0-9]|199[0-9]|200[0-9]|201[0-9])" inputmode="numeric" (focus)="year.active = true" (blur)="year.active = false" digitOnly class=form-control [(ngModel)]="inputYear" #year="ngModel">
                           <p id="day-help" class="form-text text-muted">
                             Year
                           </p>
@@ -91,6 +90,27 @@
                         </div>
                       </div>
                     </div>
+                    <div class="col-md-6">
+                          <label for="latinoNo" class="req-label-text full-width-dropdown">Are you Spanish/Hispanic/Latino in origin?</label>
+                          <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" name="latino" id="latinoNo" value="No" [(ngModel)]="latino">
+                            <label class="form-check-label" for="latinoNo">
+                              No
+                            </label>
+                          </div>
+                          <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" name="latino" id="latinoYes" value="Yes" [(ngModel)]="latino">
+                            <label class="form-check-label" for="latinoYes">
+                              Yes
+                            </label>
+                          </div>
+                          <div *ngIf="this.attemptNext && this.page==1 && !this.latino" class="alert alert-danger">
+                            You must select an option
+                          </div>
+                    </div>
+                  </div>
+                  <div class="form-row">
+
                   </div>
                   <div class="form-row">
                     <div class="col-md-6 full-width-dropdown">
@@ -125,7 +145,7 @@
                       </div>
                     </div>
                     <div div class="col-md-6 full-width-dropdown">
-                      <label for="race-ethnicity" class="req-label-text">Race/Ethnicity</label>
+                      <label for="race-ethnicity" class="req-label-text">Race/Ethnicity (Select all that apply)</label>
                       <select class="selectpicker" data-live-search="true" id="race-ethnicity" name="race-ethnicity" multiple data-width="100%" [(ngModel)]="race-ethnicity" #race=ngModel>
                         <option>White</option>
                         <option>Black or African American</option>
@@ -136,6 +156,9 @@
                       </select>
                       <div *ngIf="this.page==1 && this.attemptNext && (!race.value || race.value.length==0)" class="alert alert-danger">
                         You must select an option
+                      </div>
+                      <div *ngIf="this.page==1 && race.value && race.value.includes('Prefer Not To Say') && race.value.length>1" class="alert alert-danger">
+                        You cannot select both Prefer Not to Say and something else
                       </div>
                     </div>
                   </div>
@@ -252,6 +275,9 @@
                   <div *ngIf="this.resumeFile && this.resumeFile.size>2000000" class="alert alert-danger">
                     The size limit is 2MB
                   </div>
+                  <div *ngIf="this.resumeFile && this.resumeFile.type!='application/pdf'" class="alert alert-danger">
+                    The file must be PDF
+                  </div>
                 </div>
                 <hr class="separator">
                 <div class="containter">
@@ -292,12 +318,12 @@
                         You cannot select both none and something else
                       </div>
                       <div *ngIf="this.page==1 && dietary.value && dietary.value.includes('Other')" class="alert alert-info">
-                        Please Explain in the special accomadations box below
+                        Please explain in the special accomadations box below
                       </div>
                     </div>
                   </div>
-                  <div class="form-group">
-                    <div class="col-md-4">
+                  <div class="form-row">
+                    <div class="col-md-4 minheight110">
                       <label for="usingHardwareNo" class="full-width-dropdown">Do you expect to be using hardware for your hack?</label>
                       <div class="form-check-inline">
                         <input class="form-check-input" type="radio" name="usingHardware" id="usingHardwareNo" value="No" [(ngModel)]="usingHardware">
@@ -312,9 +338,7 @@
                         </label>
                       </div>
                     </div>
-                  </div>
-                  <div [className]="usingHardware=='Yes' ? 'form-row' : 'form-row hide-completely'">
-                    <div [className]="hardware.value && hardware.value.includes('Other') ? 'col-md-6 full-width-dropdown' : 'col-12 full-width-dropdown'">
+                    <div [className]="usingHardware=='Yes' ? 'col-md-8 full-width-dropdown' : 'hide-completely'">
                       <label for="hardwareInput" class="req-label-text">Hardware</label>
                       <select class="selectpicker" multiple data-live-search="true" id="hardwareInput" name="hardwareInput" data-width="100%" [(ngModel)]="hardwareInput" #hardware=ngModel>
                         <optgroup label="Other">
@@ -329,7 +353,9 @@
                         Please pick at least one option
                       </div>
                     </div>
-                    <div [className]="hardware.value && hardware.value.includes('Other') ? ' col-md-6 full-width-dropdown' : 'hide-completely col-md-6 full-width-dropdown'">
+                  </div>
+                  <div [className]="usingHardware=='Yes' ? 'form-row' : 'form-row hide-completely'">
+                    <div [className]="hardware.value && hardware.value.includes('Other') ? ' col-md-12 full-width-dropdown' : 'hide-completely col-md-12 full-width-dropdown'">
                       <label for="hardwareInputText">List everything else here</label>
                       <input type="text" class="form-control" placeholder="FPGA" id="hardwareInputText" required [(ngModel)]="hardwareInputText" (focus)="hardwareText.active = true" (blur)="hardwareText.active = false" name="hardwareInputText" #hardwareText="ngModel">
                     </div>
@@ -344,7 +370,7 @@
 
               <div [className]="this.page==2 ? '':'hide-completely'">
                 <p>
-                  I authorize you to share my application/registration information for event administraion, ranking, MLH administration, pre- and post-event informational e-mails, and occasional messages about hackathons in-line with the MLH Privacy Policy, https://mlh.io/privacy. I further agree to the terms of both the MLH Contest Terms and Conditions, https://github.com/MLH/mlh-policies/tree/master/prize-terms-and-conditions, and the MLH Privacy Policy, https://mlh.io/privacy.
+                  I authorize you to share my application/registration information for event administraion, ranking, MLH administration, pre- and post-event informational e-mails, and occasional messages about hackathons in-line with the MLH Privacy Policy, <a target="_blank" href="https://mlh.io/privacy">https://mlh.io/privacy</a>. I further agree to the terms of both the MLH Contest Terms and Conditions, <a target="_blank" href="https://github.com/MLH/mlh-policies/tree/master/prize-terms-and-conditions">https://github.com/MLH/mlh-policies/tree/master/prize-terms-and-conditions</a>, and the MLH Privacy Policy, <a target="_blank" href="https://mlh.io/privacy">https://mlh.io/privacy</a>.
                 </p>
                 <div class="custom-control custom-switch bottom-div">
                   <input type="checkbox" class="custom-control-input" id="termsDataSharing" name="termsDataSharing" [(ngModel)]="termsDataSharing" #dataSharing=ngModel>

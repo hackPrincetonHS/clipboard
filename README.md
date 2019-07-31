@@ -17,11 +17,11 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
 ## Build
-I do this before I commit and push so others can see my changes
-YOU MUST DUPLICATE index.html into 404.html in the docs folder if you want reload to work
-Here's to test AOT compilation
+This will build and immediately publish whatever changes you have
+Your code, however, won't be commited and pushed automatically
 ```
-ng build --prod --output-path docs --base-href "https://hackprincetonhs.github.io/clipboard/"
+ng build --prod --base-href "https://clipboard.hackphs.tech/"
+npx angular-cli-ghpages --dir=dist/userSignInSystem --cname=clipboard.hackphs.tech
 ```
 AOT compilation should be faster and smaller, but it sometimes breaks and I don't know why
 

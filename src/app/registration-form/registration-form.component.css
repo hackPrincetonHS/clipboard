@@ -33,7 +33,7 @@
   padding-top: 10px
 }
 .form-itself {
-  padding-top: 10px
+  margin-top: 20px
 }
 .buttons {
   padding-top:30px
@@ -78,6 +78,9 @@
 .minheight86{
   min-height: 86px;
 }
+.minheight110{
+  min-height: 110px;
+}
 u.dotted{
   border-bottom: 1px dashed #999;
   text-decoration: none;
@@ -94,4 +97,7 @@ u.dotted{
 }
 .align-right{
   text-align: right;
+}
+.capitalize{
+  text-transform: capitalize;
 }

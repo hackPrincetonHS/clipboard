@@ -51,6 +51,7 @@ export class RegistrationFormComponent implements OnInit {
   termsCodeOfConduct;
   satisfactionRange;
   questionsComments;
+  latino;
 
   resumeFile;
 
@@ -107,13 +108,14 @@ export class RegistrationFormComponent implements OnInit {
 
     self.userData.isFullyLoggedIn=true;
     self.userData.uid=self.authService.userUid;
-    self.userData.firstName=self.inputFirstName;
-    self.userData.lastName=self.inputLastName;
-    self.userData.fullName=self.inputFirstName+" "+self.inputLastName;
+    self.userData.firstName=self.inputFirstName.capitalize();
+    self.userData.lastName=self.inputLastName.capitalize();
+    self.userData.fullName=self.inputFirstName.capitalize()+" "+self.inputLastName.capitalize();
     self.userData.phone=self.inputPhone1+"-"+self.inputPhone2+"-"+self.inputPhone3;
     self.userData.dateOfBirth=self.inputYear+"-"+self.inputMonth+"-"+self.inputDay;
     self.userData.gender=self.pickGender;
     self.userData.ethnicity=self.ethnicity;
+    self.userData.latino=self.latino=="Yes";
     if(self.schoolInput=="My school isn't here") {
       self.userData.school=self.schoolInputText;
       self.userData.schoolNotInList=true;

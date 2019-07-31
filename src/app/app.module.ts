@@ -22,7 +22,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { StorageService, UserData, Upload } from './storage/storage.service';
 import { EditInfoComponent } from './edit-info/edit-info.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
-
+import './utils/string.extensions'
 
 
 var firebaseConfig = {

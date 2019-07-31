@@ -58,6 +58,7 @@ export class UserData {
   hardware : string;
   hardwareOther : string;
   satisfaction : number;
+  latino: boolean;
   questionsComments : string;
   isFullyLoggedIn : boolean;
   hasResume : boolean;

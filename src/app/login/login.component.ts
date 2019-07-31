@@ -61,6 +61,7 @@ export  class  LoginComponent  implements  OnInit {
     badLoginAlert={"value": "false", "shake":false};
     register;
     registerShown;
+    firstClickRegister=false;
 
     constructor(public authService:  AuthService, public router: Router) { }
     ngOnInit() {
@@ -74,16 +75,12 @@ export  class  LoginComponent  implements  OnInit {
       this.badLoginAlert.value="false";
       if(this.register) {
         this.register=false;
-        var authService=this.authService;
-        var badLoginAlert=this.badLoginAlert
-        //so that the alert doesn't go off before the animation is done
-        //I use lodash because I want to be consistent
-        lodash.delay(function(){authService.login(userEmail.value, userPassword.value, badLoginAlert);}, 300);
       } else {
         this.authService.login(userEmail.value, userPassword.value, this.badLoginAlert);
       }
     }
     clickRegister(userEmail, userPassword, userConfirm){
+      this.firstClickRegister=true;
       if(this.register) {
         if(userPassword.value!=userConfirm.value) {
           this.badLoginAlert.value="the passwords must match";
