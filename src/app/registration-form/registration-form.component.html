@@ -1,4 +1,4 @@
-<div class=backround>
+<div class="backround">
   <div class="page-wrap">
     <div class="page">
       <div class="page-content">
@@ -14,7 +14,7 @@
             </div>
             <div class="form-itself">
               <div [className]="this.page==1 ? '':'hide-completely'">
-                <div class=containter>
+                <div class="containter">
                   <div class="d-flex align-items-center">
                     <h3>Demographic Info</h3><fa-icon [icon]="['fas', 'info-circle']" data-toggle="tooltip" title="These questions are purely for statistical purposes and will not influence our admissions process" class="info-circle"></fa-icon>
                   </div>
@@ -30,7 +30,6 @@
                       <input type="text" class="form-control capitalize" placeholder="Last Name" id="inputLastName" required [(ngModel)]="inputLastName" (focus)="lastName.active = true" (blur)="lastName.active = false" name="inputLastName" #lastName="ngModel">
                     </div>
                   </div>
-
                   <div class="form-row">
                     <div class="col-md full-width-dropdown">
                       <label for="inputEmail" class="req-label-text">Email</label>
@@ -40,15 +39,15 @@
                       <div class="row phone-header">
                         <div class="col-3 padding-right-0">
                           <label for="inputPhone1" class="req-label-text">Phone</label>
-                          <input (input)="autoTab($event,'inputPhone2')" type="tel" name="inputPhone1" id="inputPhone1" placeholder="555" maxlength="3" required inputmode="numeric" (focus)="phone1.active = true" (blur)="phone1.active = false" pattern="[0-9]{3}" digitOnly class=form-control [(ngModel)]="inputPhone1" #phone1="ngModel">
+                          <input (input)="autoTab($event,'inputPhone2')" type="tel" name="inputPhone1" id="inputPhone1" placeholder="555" maxlength="3" required inputmode="numeric" (focus)="phone1.active = true" (blur)="phone1.active = false" pattern="[0-9]{3}" digitOnly class="form-control" [(ngModel)]="inputPhone1" #phone1="ngModel">
                         </div>
                         <div class="phone-dash">-</div>
                         <div class="col-3 padding-0">
-                          <input (input)="autoTab($event,'inputPhone3')" type="tel" name="inputPhone2" id="inputPhone2" placeholder="555" maxlength="3" required inputmode="numeric" (focus)="phone2.active = true" (blur)="phone2.active = false" pattern="[0-9]{3}" digitOnly class=form-control [(ngModel)]="inputPhone2" #phone2="ngModel">
+                          <input (input)="autoTab($event,'inputPhone3')" type="tel" name="inputPhone2" id="inputPhone2" placeholder="555" maxlength="3" required inputmode="numeric" (focus)="phone2.active = true" (blur)="phone2.active = false" pattern="[0-9]{3}" digitOnly class="form-control" [(ngModel)]="inputPhone2" #phone2="ngModel">
                         </div>
                         <div class="phone-dash">-</div>
                         <div class="col-4 padding-0">
-                          <input type="tel" name="inputPhone3" id="inputPhone3" placeholder="5555" maxlength="4" required inputmode="numeric" (focus)="phone3.active = true" (blur)="phone3.active = false" pattern="[0-9]{4}" digitOnly class=form-control [(ngModel)]="inputPhone3" #phone3="ngModel">
+                          <input type="tel" name="inputPhone3" id="inputPhone3" placeholder="5555" maxlength="4" required inputmode="numeric" (focus)="phone3.active = true" (blur)="phone3.active = false" pattern="[0-9]{4}" digitOnly class="form-control" [(ngModel)]="inputPhone3" #phone3="ngModel">
                         </div>
                       </div>
                       <div *ngIf="this.page==1 && (phone1.errors || phone2.errors || phone3.errors) && (this.attemptNext || phone1.dirty || phone1.touched || phone2.dirty || phone2.touched || phone3.dirty || phone3.dirty) && !(phone1.active || phone2.active || phone3.active)">
@@ -59,23 +58,23 @@
                     </div>
                   </div>
                   <div class="form-row">
-                    <div class="col-md-6">
+                    <div class="col-md">
                       <label for="inputPhone1" class="req-label-text">Date of Birth</label>
                       <div class="row phone-header">
                         <div class="col-3">
-                          <input type="tel" name="inputMonth" id="inputMonth" aria-described-by="month-help" placeholder="3" maxlength="12" required pattern="([1-9]|1[0-2])" inputmode="numeric" (focus)="month.active = true" (blur)="month.active = false" digitOnly class=form-control [(ngModel)]="inputMonth" #month="ngModel">
+                          <input type="tel" name="inputMonth" id="inputMonth" aria-described-by="month-help" placeholder="3" maxlength="12" required pattern="([1-9]|1[0-2])" inputmode="numeric" (focus)="month.active = true" (blur)="month.active = false" digitOnly class="form-control" [(ngModel)]="inputMonth" #month="ngModel">
                           <p id="month-help" class="form-text text-muted">
                             Month
                           </p>
                         </div>
                         <div class="col-3">
-                          <input type="tel" name="inputDay" id="inputDay" aria-described-by="day-help" placeholder="25" maxlength="2" required pattern="([1-9]|[12][0-9]|3[01])" inputmode="numeric" (focus)="day.active = true" (blur)="day.active = false" digitOnly class=form-control [(ngModel)]="inputDay" #day="ngModel">
+                          <input type="tel" name="inputDay" id="inputDay" aria-described-by="day-help" placeholder="25" maxlength="2" required pattern="([1-9]|[12][0-9]|3[01])" inputmode="numeric" (focus)="day.active = true" (blur)="day.active = false" digitOnly class="form-control" [(ngModel)]="inputDay" #day="ngModel">
                           <p id="day-help" class="form-text text-muted">
                             Day
                           </p>
                         </div>
                         <div class="col-4">
-                          <input type="tel" name="inputYear" id="inputYear" aria-described-by="year-help" placeholder="2003" maxlength="4" required pattern="(19[4-8][0-9]|199[0-9]|200[0-9]|201[0-9])" inputmode="numeric" (focus)="year.active = true" (blur)="year.active = false" digitOnly class=form-control [(ngModel)]="inputYear" #year="ngModel">
+                          <input type="tel" name="inputYear" id="inputYear" aria-described-by="year-help" placeholder="2003" maxlength="4" required pattern="(19[4-8][0-9]|199[0-9]|200[0-9]|201[0-9])" inputmode="numeric" (focus)="year.active = true" (blur)="year.active = false" digitOnly class="form-control" [(ngModel)]="inputYear" #year="ngModel">
                           <p id="day-help" class="form-text text-muted">
                             Year
                           </p>
@@ -92,30 +91,27 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-md-6">
-                          <label for="latinoNo" class="req-label-text full-width-dropdown">Are you Hispanic/Latino in origin?</label>
-                          <div class="form-check-inline">
-                            <input class="form-check-input" type="radio" name="latino" id="latinoNo" value="No" [(ngModel)]="latino">
-                            <label class="form-check-label" for="latinoNo">
-                              No
-                            </label>
-                          </div>
-                          <div class="form-check-inline">
-                            <input class="form-check-input" type="radio" name="latino" id="latinoYes" value="Yes" [(ngModel)]="latino">
-                            <label class="form-check-label" for="latinoYes">
-                              Yes
-                            </label>
-                          </div>
-                          <div *ngIf="this.attemptNext && this.page==1 && !this.latino" class="alert alert-danger">
-                            You must select an option
-                          </div>
+                    <div class="col-md">
+                      <label for="latinoNo" class="req-label-text full-width-dropdown">Are you Hispanic/Latino in origin?</label>
+                      <div class="form-check-inline">
+                        <input class="form-check-input" type="radio" name="latino" id="latinoNo" value="No" [(ngModel)]="latino">
+                        <label class="form-check-label" for="latinoNo">
+                            No
+                        </label>
+                      </div>
+                      <div class="form-check-inline">
+                        <input class="form-check-input" type="radio" name="latino" id="latinoYes" value="Yes" [(ngModel)]="latino">
+                        <label class="form-check-label" for="latinoYes">
+                          Yes
+                        </label>
+                      </div>
+                      <div *ngIf="this.attemptNext && this.page==1 && !this.latino" class="alert alert-danger">
+                          You must select an option
+                      </div>
                     </div>
                   </div>
                   <div class="form-row">
-
-                  </div>
-                  <div class="form-row">
-                    <div class="col-md-6 full-width-dropdown">
+                    <div class="col-md full-width-dropdown">
                       <label for="genderMale" class="req-label-text">Gender</label>
                       <!-- You have to hack around the radios not updating the entire thing's pristine status (but they do touched????) Angular requires non standard syntax-->
                       <div class="form-check" id="gender">
@@ -146,9 +142,9 @@
                         You must select an option
                       </div>
                     </div>
-                    <div div class="col-md-6 full-width-dropdown">
+                    <div div class="col-md full-width-dropdown">
                       <label for="race-ethnicity" class="req-label-text">Race/Ethnicity (Select all that apply)</label>
-                      <select class="selectpicker" data-live-search="true" id="race-ethnicity" name="race-ethnicity" multiple data-width="100%" [(ngModel)]="race-ethnicity" #race=ngModel>
+                      <select class="selectpicker" id="race-ethnicity" name="race-ethnicity" multiple data-width="100%" [(ngModel)]="race-ethnicity" #race=ngModel>
                         <option>White</option>
                         <option>Black or African American</option>
                         <option>American Indian or Alaskan Native</option>
@@ -189,7 +185,7 @@
                     You must either pick or enter a school
                   </div>
                   <div class="form-row">
-                    <div class="col-md-6 full-width-dropdown">
+                    <div class="col-md full-width-dropdown">
                       <label for="studyLevel" class="req-label-text">Current Level Of Study</label>
                       <select class="selectpicker" id="studyLevel" title="Nothing Selected" name="studyLevel" data-width="100%" [(ngModel)]="studyLevel" #study=ngModel>
                         <option>Below High School</option>
@@ -201,7 +197,7 @@
                         You must select a level of study
                       </div>
                     </div>
-                    <div class="col-md-6 full-width-dropdown">
+                    <div class="col-md full-width-dropdown">
                       <label for="graduationYear" class="req-label-text">Expected Graduation Year</label>
                       <select class="selectpicker" id="graduationYear" name="graduationYear" title="Nothing Selected" data-width="100%" [(ngModel)]="graduationYear" #graduation=ngModel>
                         <option>2020</option>
@@ -215,7 +211,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class=form-row>
+                  <div class="form-row">
                     <div class="col-md-4 minheight86">
                       <label for="haveGithubNo" class="full-width-dropdown">Do you have a Github?</label>
                       <div class="form-check-inline">
@@ -250,7 +246,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class=form-row>
+                  <div class="form-row">
                     <div class="col-md-4 minheight86">
                       <label for="haveResumeNo" class="full-width-dropdown">Do you have a Resume?</label>
                       <div class="form-check-inline">
@@ -285,9 +281,9 @@
                 <div class="containter">
                   <h3>Logistical Info</h3>
                   <div class="form-row">
-                    <div class="col-md-6 full-width-dropdown">
+                    <div class="col-md full-width-dropdown">
                       <label for="shirtSize" class="req-label-text">T-Shirt Size</label>
-                      <select class="selectpicker" id="shirtSize" title="Nothing Selected" data-width=100% name="shirtSize" title="T-Shirt Size" [(ngModel)]="shirtSize" #tshirt=ngModel>
+                      <select class="selectpicker" id="shirtSize" title="Nothing Selected" data-width="100%" name="shirtSize" title="T-Shirt Size" [(ngModel)]="shirtSize" #tshirt=ngModel>
                         <option>S</option>
                         <option>M</option>
                         <option>L</option>
@@ -298,7 +294,7 @@
                         You must select a T-Shirt size
                       </div>
                     </div>
-                    <div class="col-md-6 full-width-dropdown">
+                    <div class="col-md full-width-dropdown">
                       <label for="dietaryRestrictions" class="req-label-text">Dietary Restrictions</label>
                       <select class="selectpicker" multiple id="dietaryRestrictions" data-header="Select all that apply" name="dietaryRestrictions" data-width="100%" [(ngModel)]="dietaryRestrictions" #dietary=ngModel>
                         <option>None</option>
@@ -310,7 +306,7 @@
                         <option>Vegan</option>
                         <option>Religious dietary practices</option>
                         <option>Diabetic diet</option>
-                        <option>Gluten Free</option>
+                        <option>Gluten free</option>
                         <option>Other</option>
                       </select>
                       <div *ngIf="this.page==1 && this.attemptNext && (!dietary.value || dietary.value.length==0)" class="alert alert-danger">
@@ -319,8 +315,8 @@
                       <div *ngIf="this.page==1 && dietary.value && dietary.value.includes('None') && dietary.value.length>1" class="alert alert-danger">
                         You cannot select both none and something else
                       </div>
-                      <div *ngIf="this.page==1 && dietary.value && dietary.value.includes('Other')" class="alert alert-info">
-                        Please explain in the special accommodations box below
+                      <div *ngIf="this.page==1 && dietary.value && (dietary.value.includes('Other') || dietary.value.includes('Religious dietary practices'))" class="alert alert-info">
+                        Please specify in the special accommodations box below
                       </div>
                     </div>
                   </div>

@@ -24,7 +24,8 @@ export default class Utils {
     ["Manav Rachna International"],
     ["Edison Academy"],
     ["Port Credit Secondary School"],
-    ["John P. Stevens High School", "J.P. Stevens"]
+    ["John P. Stevens High School", "J.P. Stevens"],
+    ['Point Pleasant Beach High School']
   ];
 
   static hardwareList=[

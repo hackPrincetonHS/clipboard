@@ -1,4 +1,4 @@
-import { Component, OnInit } from  '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from  '@angular/core';
 import { AuthService } from  '../auth/auth.service';
 import { Router } from  "@angular/router";
 import * as lodash from 'lodash'
@@ -62,8 +62,9 @@ export  class  LoginComponent  implements  OnInit {
     register;
     registerShown;
     firstClickRegister=false;
+    loading=false;
 
-    constructor(public authService:  AuthService, public router: Router) { }
+    constructor(public authService:  AuthService, public router: Router, private cdr: ChangeDetectorRef) { }
     ngOnInit() {
       if(this.authService.isLoggedIn){
         this.router.navigate(['dashboard']);
@@ -76,6 +77,7 @@ export  class  LoginComponent  implements  OnInit {
       if(this.register) {
         this.register=false;
       } else {
+        this.loading=true;
         this.authService.login(userEmail.value, userPassword.value, this.badLoginAlert);
       }
     }
@@ -87,6 +89,7 @@ export  class  LoginComponent  implements  OnInit {
           this.badLoginAlert.shake=true;
         } else {
           this.badLoginAlert.value="false";
+          this.loading=true;
           this.authService.register(userEmail.value, userPassword.value, this.badLoginAlert);
         }
       } else {

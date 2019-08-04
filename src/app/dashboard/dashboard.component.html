@@ -51,7 +51,7 @@
                 </div>
                 <div class="col-sm-6">
                   <div class="form-group">
-                    <label>Spanish/Hispanic/Latino</label>
+                    <label>Hispanic/Latino</label>
                     <fa-icon (click)="edit($event)" class='ng-fa-icon right-icon mouse-hover' [icon]="['fas', 'pen']"></fa-icon>
                     <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Ethnicity' : ''" [value]="this.loaded ? this.userData.latino ? 'Yes' : 'No' : ''">
                   </div>
@@ -150,7 +150,7 @@
                         <div class="form-row">
                           <div class="col-md">
                             <div class="form-group">
-                              <label>Please upload your resume</label>
+                              <label>{{this.resumeModal.uploading ? "Uploading..." : "Please upload your resume"}}</label>
                               <input type="file" class="form-control-file" (change)="this.resumeModal.file=$event.target.files[0]">
                             </div>
                           </div>

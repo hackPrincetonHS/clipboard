@@ -106,5 +106,19 @@ u.dotted{
   bottom: 0;
   background-color: rgba(0,0,0,0.5); /* Black background with opacity */
   z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
-  cursor: pointer; /* Add a pointer on hover */
+}
+.alert {
+  margin-top:5px;
+  margin-bottom:0.1rem;
+}
+.capitalize{
+  text-transform: capitalize;
+}
+.info-circle {
+  cursor: help;
+  font-size:1rem;
+  margin: 0 0 0.15rem 0.3rem;
+}
+.info-circle:hover {
+  color: rgba(0,0,0,0.5);
 }

@@ -11,7 +11,7 @@ import { DigitOnlyModule } from '@uiowa/digit-only';
 import { HttpClientModule } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faSpinner, faMinus, faCheck, faTimes, faPen, faExternalLinkAlt, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner, faMinus, faCheck, faTimes, faPen, faExternalLinkAlt, faInfoCircle, faCog } from '@fortawesome/free-solid-svg-icons';
 import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
@@ -71,7 +71,8 @@ export class AppModule {
     library.add(faTimes);
     library.add(faPen);
     library.add(faExternalLinkAlt);
-    library.add(faInfoCircle)
+    library.add(faInfoCircle);
+    library.add(faCog);
 
   }
 }

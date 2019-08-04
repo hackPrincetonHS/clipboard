@@ -106,6 +106,7 @@ u.dotted{
   margin-bottom:0.1rem;
 }
 .info-circle {
+  cursor: help;
   font-size:1rem;
   margin: 0 0 0.15rem 0.3rem;
 }

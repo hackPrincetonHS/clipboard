@@ -81,6 +81,7 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   nextPage() {
+    window.scroll(0,0);
     if(this.checkPage()){
       this.attemptNext=false;
       this.page+=1;

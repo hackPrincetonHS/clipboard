@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from  '../auth/auth.service';
 import { StorageService, UserData, Upload } from '../storage/storage.service'
 import { Router } from  "@angular/router";
@@ -28,24 +28,24 @@ export class DashboardComponent implements OnInit {
   }
 
   resumeLink: Observable<String>;
-  constructor(public authService:  AuthService, public storageService: StorageService, public userData: UserData, public router: Router, public upload: Upload) { }
+  constructor(public authService:  AuthService, public storageService: StorageService, public userData: UserData, public router: Router, public upload: Upload, private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
-    console.log(this.authService.userEmail);
+    //console.log(this.authService.userEmail);
 
     this.resumeModal.saveChanges=function(self){
-      console.log("stupid");
       self.resumeModal.attemptSubmit=true;
+      self.cdr.detectChanges();
       if(document.getElementsByClassName("alert-danger").length==0){
         self.userData.hasResume=true;
         self.resumeModal.uploading=true;
         self.upload.file=self.resumeModal.file;
         self.storageService.uploadFile(self.upload);
-        console.log("starting");
+        //console.log("starting");
         self.upload.progress.subscribe((x: number) => {
           self.resumeModal.uploadPercentage=x;
           if(self.resumeModal.uploadPercentage==100){
-            console.log("done");
+            //console.log("done");
             //you want it to complete before moving on, otherwise it calls too quickly and the bar is only half full when it stops.
             //looks better, feels better. I use lodash instead of settimeout because I already use lodash in another part of the class so like...
             //this has to be passed  because it becomes an anon function. This is delt with later in the submitting funciton
@@ -56,7 +56,7 @@ export class DashboardComponent implements OnInit {
     }
 
     this.storageService.userInfoObservable.subscribe((userDataTemp: UserData) => {
-      console.log(userDataTemp);
+      //console.log(userDataTemp);
       this.userData=userDataTemp;
       if(!this.userData.isFullyLoggedIn) {
         this.router.navigate(['registration-form']);

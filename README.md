@@ -1,7 +1,7 @@
 ## Dependencies
 
 You just need to install the angular cli and it should roughly work
-All the Dependencies should be added by angular when it is built for the first time from package-lock.json
+All the Dependencies (should) be added by angular when it is built for the first time from package-lock.json
 
 ## UserSignInSystem
 

@@ -1,278 +1,296 @@
 <div *ngIf="!this.loaded" class="overlay"></div>
-<div class=backround>
+<div class="backround">
   <div class="page-wrap">
     <div class="page">
       <div class="page-content">
         <form class="well form-horizontal" action=" " id="contact_form">
           <fieldset>
-            <!-- Form Name -->
-            <img src="./assets/img/hackphslogo2019.svg" alt="hackPHS" class="center">
-            <div class="form-title">
-              <legend><div style="text-align: center;"><h2><b> Profile Edit</b></h2></div></legend><br>
-            </div>
-            <div class="form-itself">
-              <hr class="separator">
-              <div class=containter>
-                <h3>Demographic Info</h3>
-                <label for="inputFirstName" class="req-label-text">Name</label>
-                <div class="form-row">
-                  <div class="col">
-                    <input type="text" [value]="this.loaded ? this.userData.firstName : ''" class="form-control" placeholder="First name" id="inputFirstName" required [(ngModel)]="inputFirstName" (focus)="firstName.active = true" (blur)="firstName.active = false" name="inputFirstName" #firstName="ngModel">
-                    <div *ngIf="((firstName.dirty && firstName.errors && firstName.errors.required && firstName.active) || (lastName.dirty && lastName.errors && lastName.errors.required && lastName.active))" class="alert alert-danger">
-                      Name is required
-                    </div>
+              <!-- Form Name -->
+              <img src="./assets/img/hackphslogo2019.svg" alt="hackPHS" class="center">
+              <div class="form-title">
+                <legend><div style="text-align: center;"><h2><b> Profile Edit</b></h2></div></legend><br>
+              </div>
+              <div class="form-itself">
+                <div class="containter">
+                  <div class="d-flex align-items-center">
+                    <h3>Demographic Info</h3><fa-icon [icon]="['fas', 'info-circle']" data-toggle="tooltip" title="These questions are purely for statistical purposes and will not influence our admissions process" class="info-circle"></fa-icon>
                   </div>
-                  <div class="col">
-                    <input type="text" [value]="this.loaded ? this.userData.lastName : ''" class="form-control" placeholder="Last name" id="inputLastName" required [(ngModel)]="inputLastName" (focus)="lastName.active = true" (blur)="lastName.active = false" name="inputLastName" #lastName="ngModel">
-                  </div>
-                </div>
-
-                <div class="form-row">
-                  <div class="col-md">
-                    <label for="inputEmail" class="req-label-text">Email</label>
-                    <input class="form-control" type="text" [placeholder]="this.authService.userEmail" disabled>
-                  </div>
-                  <div class="col-md">
-                    <div class="row phone-header">
-                      <div class="col-3 padding-right-0">
-                        <label for="inputPhone1" class="req-label-text">Phone</label>
-                        <input [value]="this.loaded ? this.userData.phone.slice(0, 3) : ''" (input)="autoTab($event,'inputPhone2')" type="tel" name="inputPhone1" id="inputPhone1" placeholder="555" maxlength="3" required inputmode="numeric" (focus)="phone1.active = true" (blur)="phone1.active = false" pattern="[0-9]{3}" digitOnly class=form-control [(ngModel)]="inputPhone1" #phone1="ngModel">
-                      </div>
-                      <div class="phone-dash">-</div>
-                      <div class="col-3 padding-0">
-                        <input [value]="this.loaded ? this.userData.phone.slice(4, 7) : ''" (input)="autoTab($event,'inputPhone3')" type="tel" name="inputPhone2" id="inputPhone2" placeholder="555" maxlength="3" required inputmode="numeric" (focus)="phone2.active = true" (blur)="phone2.active = false" pattern="[0-9]{3}" digitOnly class=form-control [(ngModel)]="inputPhone2" #phone2="ngModel">
-                      </div>
-                      <div class="phone-dash">-</div>
-                      <div class="col-4 padding-0">
-                        <input [value]="this.loaded ? this.userData.phone.slice(8, 12) : ''" type="tel" name="inputPhone3" id="inputPhone3" placeholder="5555" maxlength="4" required inputmode="numeric" (focus)="phone3.active = true" (blur)="phone3.active = false" pattern="[0-9]{4}" digitOnly class=form-control [(ngModel)]="inputPhone3" #phone3="ngModel">
+                  <label for="inputFirstName" class="req-label-text">Name</label>
+                  <div class="form-row">
+                    <div class="col">
+                      <input type="text" [value]="this.loaded ? this.userData.firstName : ''" class="form-control capitalize" placeholder="First Name" id="inputFirstName" required [(ngModel)]="inputFirstName" (focus)="firstName.active = true" (blur)="firstName.active = false" name="inputFirstName" #firstName="ngModel">
+                      <div *ngIf="((firstName.dirty && firstName.errors && firstName.errors.required) || (lastName.dirty && lastName.errors && lastName.errors.required)) && !(firstName.active || lastName.active)" class="alert alert-danger">
+                        Name is required
                       </div>
                     </div>
-                    <div *ngIf="((phone1.errors && phone1.dirty) || (phone2.errors && phone2.dirty) || (phone3.errors && phone3.dirty)) && !(phone1.active || phone2.active || phone3.active)" class="alert alert-danger">
-                      Phone number is required
+                    <div class="col">
+                      <input type="text" [value]="this.loaded ? this.userData.lastName : ''" class="form-control capitalize" placeholder="Last Name" id="inputLastName" required [(ngModel)]="inputLastName" (focus)="lastName.active = true" (blur)="lastName.active = false" name="inputLastName" #lastName="ngModel">
                     </div>
                   </div>
-                </div>
-                <div class="form-row">
-                  <div class="col-md-6">
-                    <label for="inputPhone1" class="req-label-text">Date of Birth</label>
-                    <div class="row phone-header">
-                      <div class="col-3">
-                        <input [value]="this.loaded ? this.userData.dateOfBirth.split('-')[1] : ''" type="text" name="inputMonth" id="inputMonth" aria-described-by="month-help" placeholder="3" maxlength="12" inputmode="numeric" (focus)="month.active = true" (blur)="month.active = false" digitOnly class=form-control [(ngModel)]="inputMonth" #month="ngModel">
-                        <p id="month-help" class="form-text text-muted">
-                          Month
-                        </p>
-                      </div>
-                      <div class="col-3">
-                        <input [value]="this.loaded ? this.userData.dateOfBirth.split('-')[2] : ''" type="text" name="inputDay" id="inputDay" aria-described-by="day-help" placeholder="25" maxlength="2" required inputmode="numeric" (focus)="day.active = true" (blur)="day.active = false" digitOnly class=form-control [(ngModel)]="inputDay" #day="ngModel">
-                        <p id="day-help" class="form-text text-muted">
-                          Day
-                        </p>
-                      </div>
-                      <div class="col-4">
-                        <input [value]="this.loaded ? this.userData.dateOfBirth.split('-')[0] : ''" type="text" name="inputYear" id="inputYear" aria-described-by="year-help" placeholder="2003" maxlength="4" required inputmode="numeric" (focus)="year.active = true" (blur)="year.active = false" digitOnly class=form-control [(ngModel)]="inputYear" #year="ngModel">
-                        <p id="day-help" class="form-text text-muted">
-                          Year
-                        </p>
-                      </div>
+                  <div class="form-row">
+                    <div class="col-md full-width-dropdown">
+                      <label for="inputEmail" class="req-label-text">Email</label>
+                      <input class="form-control" type="text" [placeholder]="this.authService.userEmail" disabled>
                     </div>
-                    <div *ngIf="!(month.active || day.active || year.active)">
-                      <div *ngIf="((month.dirty && month.errors && month.errors.required) || (day.dirty && day.errors && day.errors.required) || (year.dirty && years.errors && year.errors.required)); else validate" class="alert alert-danger">
-                        Date of Birth is required
-                      </div>
-                      <ng-template #validate>
-                        <div *ngIf="!validateDate()" class="alert alert-danger">
-                          That date is invalid
+                    <div class="col-md full-width-dropdown">
+                      <div class="row phone-header">
+                        <div class="col-3 padding-right-0">
+                          <label for="inputPhone1" class="req-label-text">Phone</label>
+                          <input [value]="this.loaded ? this.userData.phone.slice(0, 3) : ''" (input)="autoTab($event,'inputPhone2')" type="tel" name="inputPhone1" id="inputPhone1" placeholder="555" maxlength="3" required inputmode="numeric" (focus)="phone1.active = true" (blur)="phone1.active = false" pattern="[0-9]{3}" digitOnly class="form-control" [(ngModel)]="inputPhone1" #phone1="ngModel">
                         </div>
-                      </ng-template>
-                    </div>
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="col-md-6 full-width-dropdown">
-                    <label for="genderMale" class="req-label-text">Gender</label>
-                    <div class="form-check" id="gender">
-                      <input class="form-check-input" type="radio" id="genderMale" value="Male" name="pickGender" [(ngModel)]="pickGender" #gender1=ngModel>
-                      <label class="form-check-label" for="genderMale">
-                        Male
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" id="genderFemale" value="Female" name="genderFemale" [(ngModel)]="pickGender" #gender2=ngModel>
-                      <label class="form-check-label" for="genderFemale">
-                        Female
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" id="genderNonBin" value="Non-Binary" name="genderNonBin" [(ngModel)]="pickGender" #gender3=ngModel>
-                      <label class="form-check-label" for="genderNonBin">
-                        Non-Binary
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" id="genderPrefNot" value="Prefer Not to Say" name="genderPrefNot" [(ngModel)]="pickGender" #gender4=ngModel>
-                      <label class="form-check-label" for="genderPrefNot">
-                        Prefer Not to Say
-                      </label>
-                    </div>
-                  </div>
-                  <div div class="col-md-6 full-width-dropdown">
-                    <label for="race-ethnicity" class="req-label-text">Race/Ethnicity</label>
-                    <select class="selectpicker" id="race-ethnicity" name="race-ethnicity" multiple data-width="100%" [(ngModel)]="race-ethnicity" #race=ngModel>
-                      <option>White</option>
-                      <option>Black or African American</option>
-                      <option>American Indian or Alaskan Native</option>
-                      <option>Asian</option>
-                      <option>Native Hawaiian or other Pacific Islander</option>
-                      <option>Prefer Not To Say</option>
-                    </select>
-                    <div *ngIf="this.loaded && this.ethnicity && this.ethnicity.length==0" class="alert alert-danger">
-                      You must select an option
-                    </div>
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div [className]="school.value=='My school isn\'t here' ? 'col-md-6 full-width-dropdown' : 'col-12 full-width-dropdown'">
-                    <label for="schoolInput" class="req-label-text">School</label>
-                    <select class="selectpicker" data-live-search="true" id="schoolInput" title="Nothing Selected" name="schoolInput" data-width="100%" [(ngModel)]="schoolInput" #school=ngModel>
-                      <optgroup label="Other">
-                        <!-- I add all the attributes to this so that it doesn't go away during search-->
-                        <option [attr.data-tokens]="this.schoolList.toString()">My school isn't here</option>
-                      </optgroup>
-                      <optgroup label="Schools">
-                        <option *ngFor="let item of this.schoolList;" [attr.data-tokens]="item.slice(1).toString()">{{item[0]}}</option>
-                      </optgroup>
-                    </select>
-                  </div>
-                  <div [className]="school.value=='My school isn\'t here' ? ' col-md-6 full-width-dropdown' : 'hide-completely col-md-6 full-width-dropdown'">
-                    <label for="schoolInputText" class="req-label-text">Enter your school here</label>
-                    <input type="text" class="form-control" placeholder="School" id="schoolInputText" required [(ngModel)]="schoolInputText" (focus)="schoolText.active = true" (blur)="schoolText.active = false" name="schoolInputText" #schoolText="ngModel">
-                  </div>
-                </div>
-                <div *ngIf="(school.value=='My school isn\'t here' && schoolText.errors && (this.attemptNext || schoolText.dirty || schoolText.touched) && !schoolText.active)" class="alert alert-danger">
-                  You must either pick or enter a school
-                </div>
-                <div class="form-row">
-                  <div class="col-md-6 full-width-dropdown">
-                    <label for="studyLevel" class="req-label-text">Current Level Of Study</label>
-                    <select class="selectpicker" id="studyLevel" title="Nothing Selected" name="studyLevel" data-width="100%" [(ngModel)]="studyLevel" #study=ngModel>
-                      <option>Below High School</option>
-                      <option>High School</option>
-                      <option>Undergraduate</option>
-                      <option>Graduate</option>
-                    </select>
-                  </div>
-                  <div class="col-md-6 full-width-dropdown">
-                    <label for="graduationYear" class="req-label-text">Expected Graduation Year</label>
-                    <select class="selectpicker" id="graduationYear" name="graduationYear" title="Nothing Selected" data-width="100%" [(ngModel)]="graduationYear" #graduation=ngModel>
-                      <option>2020</option>
-                      <option>2021</option>
-                      <option>2022</option>
-                      <option>2023</option>
-                      <option>After 2023</option>
-                    </select>
-                  </div>
-                </div>
-                <div class=form-row>
-                  <div class="col-md-4 minheight86">
-                    <label for="haveGithubNo" class="full-width-dropdown">Do you have a Github?</label>
-                    <div class="form-check-inline">
-                      <input class="form-check-input" type="radio" name="haveGithub" id="noHaveGithub" value="No" [(ngModel)]="haveGithub">
-                      <label class="form-check-label" for="noHaveGithub">
-                        No
-                      </label>
-                    </div>
-                    <div class="form-check-inline">
-                      <input class="form-check-input" type="radio" name="haveGithub" id="yesHaveGithub" value="Yes" [(ngModel)]="haveGithub">
-                      <label class="form-check-label" for="yesHaveGithub">
-                        Yes
-                      </label>
-                    </div>
-                  </div>
-                  <div [className]="this.haveGithub=='Yes' ? ' col-md-8 full-width-dropdown' : 'hide-completely col-md-8 full-width-dropdown'">
-                    <label for="githubLinkInput" class="req-label-text">Paste the link to your profile here</label>
-                    <div class="input-group">
-                      <input [value]="(this.userData.githubLink && this.loaded) ? this.userData.githubLink : ''" type="text" class="form-control" placeholder="https://github.com/hackPrincetonHS" id="githubLinkInput" pattern="http(s)?:\/\/(www\.)?github\.com\/[A-z0-9_-]+\/?" required maxlength="200" [(ngModel)]="githubLinkInput" (focus)="githubLink.active = true" (blur)="githubLink.active = false" name="githubLinkInput" #githubLink="ngModel">
-                      <button type="button" class="btn btn-secondary" (click)="checkGithubProfile(githubLink)"><u class="dotted">Validate Profile</u> <fa-icon [icon]="githubLink.loading ? ['fas', 'spinner'] : (githubLink.profileData!=githubLink.value || (githubLink.pristine && !this.userData.githubLink)) ? ['fas', 'minus'] : githubLink.badProfile ? ['fas', 'times'] : ['fas', 'check']" [spin]="githubLink.loading" [styles]="!githubLink.loading && !(githubLink.profileData!=githubLink.value || (githubLink.pristine && !this.userData.githubLink)) ? githubLink.badProfile ? {'color': 'red'} : {'color': '7FFF00'} : ''"></fa-icon></button>
-                    </div>
-                    <div *ngIf="this.haveGithub=='Yes' && (githubLink.dirty || githubLink.touched || this.validateClicked) && !githubLink.active && !githubLink.pristine">
-                      <div *ngIf="githubLink.errors && githubLink.errors.required" class="alert alert-danger">
-                        Please enter your profile
+                        <div class="phone-dash">-</div>
+                        <div class="col-3 padding-0">
+                          <input [value]="this.loaded ? this.userData.phone.slice(4, 7) : ''" (input)="autoTab($event,'inputPhone3')" type="tel" name="inputPhone2" id="inputPhone2" placeholder="555" maxlength="3" required inputmode="numeric" (focus)="phone2.active = true" (blur)="phone2.active = false" pattern="[0-9]{3}" digitOnly class="form-control" [(ngModel)]="inputPhone2" #phone2="ngModel">
+                        </div>
+                        <div class="phone-dash">-</div>
+                        <div class="col-4 padding-0">
+                          <input [value]="this.loaded ? this.userData.phone.slice(8, 12) : ''" type="tel" name="inputPhone3" id="inputPhone3" placeholder="5555" maxlength="4" required inputmode="numeric" (focus)="phone3.active = true" (blur)="phone3.active = false" pattern="[0-9]{4}" digitOnly class="form-control" [(ngModel)]="inputPhone3" #phone3="ngModel">
+                        </div>
                       </div>
-                      <div *ngIf="!(this.githubLink.errors && githubLink.errors.required) && ((githubLink.errors && githubLink.errors.pattern && !githubLink.errors.required) || githubLink.badProfile)" class="alert alert-danger">
-                        That is not a valid github profile
-                      </div>
-                      <div *ngIf="!(githubLink.errors && !githubLink.errors.required) && !((githubLink.errors && githubLink.errors.pattern) || githubLink.badProfile || githubLink.loading) && githubLink.profileData!=githubLink.value" class="alert alert-danger">
-                        You must click the button to validate your profile
+                      <div *ngIf="((phone1.errors && phone1.dirty) || (phone2.errors && phone2.dirty) || (phone3.errors && phone3.dirty)) && !(phone1.active || phone2.active || phone3.active)" class="alert alert-danger" style="margin-top:-10px">
+                        Phone number is required
                       </div>
                     </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col-md">
+                      <label for="inputPhone1" class="req-label-text">Date of Birth</label>
+                      <div class="row phone-header">
+                        <div class="col-3">
+                          <input [value]="this.loaded ? this.userData.dateOfBirth.split('-')[1] : ''" type="tel" name="inputMonth" id="inputMonth" aria-described-by="month-help" placeholder="3" maxlength="12" inputmode="numeric" (focus)="month.active = true" (blur)="month.active = false" digitOnly class="form-control" [(ngModel)]="inputMonth" #month="ngModel">
+                          <p id="month-help" class="form-text text-muted">
+                            Month
+                          </p>
+                        </div>
+                        <div class="col-3">
+                          <input [value]="this.loaded ? this.userData.dateOfBirth.split('-')[2] : ''" type="tel" name="inputDay" id="inputDay" aria-described-by="day-help" placeholder="25" maxlength="2" required inputmode="numeric" (focus)="day.active = true" (blur)="day.active = false" digitOnly class="form-control" [(ngModel)]="inputDay" #day="ngModel">
+                          <p id="day-help" class="form-text text-muted">
+                            Day
+                          </p>
+                        </div>
+                        <div class="col-4">
+                          <input [value]="this.loaded ? this.userData.dateOfBirth.split('-')[0] : ''" type="tel" name="inputYear" id="inputYear" aria-described-by="year-help" placeholder="2003" maxlength="4" required inputmode="numeric" (focus)="year.active = true" (blur)="year.active = false" digitOnly class="form-control" [(ngModel)]="inputYear" #year="ngModel">
+                          <p id="day-help" class="form-text text-muted">
+                            Year
+                          </p>
+                        </div>
+                      </div>
+                      <div *ngIf="!(month.active || day.active || year.active)">
+                        <div *ngIf="((month.dirty && month.errors && month.errors.required) || (day.dirty && day.errors && day.errors.required) || (year.dirty && years.errors && year.errors.required)); else validate" class="alert alert-danger">
+                          Date of Birth is required
+                        </div>
+                        <ng-template #validate>
+                          <div *ngIf="!validateDate()" class="alert alert-danger">
+                            That date is invalid
+                          </div>
+                        </ng-template>
+                      </div>
+                    </div>
+                    <div class="col-md">
+                      <label for="latinoNo" class="req-label-text full-width-dropdown">Are you Hispanic/Latino in origin?</label>
+                      <div class="form-check-inline">
+                        <input class="form-check-input" type="radio" name="latino" id="latinoNo" value="No" [(ngModel)]="latino">
+                        <label class="form-check-label" for="latinoNo">
+                            No
+                        </label>
+                      </div>
+                      <div class="form-check-inline">
+                        <input class="form-check-input" type="radio" name="latino" id="latinoYes" value="Yes" [(ngModel)]="latino">
+                        <label class="form-check-label" for="latinoYes">
+                          Yes
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col-md full-width-dropdown">
+                      <label for="genderMale" class="req-label-text">Gender</label>
+                      <div class="form-check" id="gender">
+                        <input class="form-check-input" type="radio" id="genderMale" value="Male" name="pickGender" [(ngModel)]="pickGender" #gender1=ngModel>
+                        <label class="form-check-label" for="genderMale">
+                          Male
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" id="genderFemale" value="Female" name="genderFemale" [(ngModel)]="pickGender" #gender2=ngModel>
+                        <label class="form-check-label" for="genderFemale">
+                          Female
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" id="genderNonBin" value="Non-Binary" name="genderNonBin" [(ngModel)]="pickGender" #gender3=ngModel>
+                        <label class="form-check-label" for="genderNonBin">
+                          Non-Binary
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" id="genderPrefNot" value="Prefer Not to Say" name="genderPrefNot" [(ngModel)]="pickGender" #gender4=ngModel>
+                        <label class="form-check-label" for="genderPrefNot">
+                          Prefer Not to Say
+                        </label>
+                      </div>
+                    </div>
+                    <div div class="col-md full-width-dropdown">
+                      <label for="race-ethnicity" class="req-label-text">Race/Ethnicity (Select all that apply)</label>
+                      <select class="selectpicker" id="race-ethnicity" name="race-ethnicity" multiple data-width="100%" [(ngModel)]="race-ethnicity" #race=ngModel>
+                        <option>White</option>
+                        <option>Black or African American</option>
+                        <option>American Indian or Alaskan Native</option>
+                        <option>Asian</option>
+                        <option>Native Hawaiian or other Pacific Islander</option>
+                        <option>Prefer Not To Say</option>
+                      </select>
+                      <div *ngIf="this.loaded && this.ethnicity && this.ethnicity.length==0" class="alert alert-danger">
+                        You must select an option
+                      </div>
+                      <div *ngIf="this.loaded && this.ethnicity && this.ethnicity.includes('Prefer Not To Say') && this.ethnicity.length>1" class="alert alert-danger">
+                        You cannot select both Prefer Not to Say and something else
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div [className]="school.value=='My school isn\'t here' ? 'col-md-6 full-width-dropdown' : 'col-12 full-width-dropdown'">
+                      <label for="schoolInput" class="req-label-text">School</label>
+                      <select class="selectpicker" data-live-search="true" id="schoolInput" title="Nothing Selected" name="schoolInput" data-width="100%" [(ngModel)]="schoolInput" #school=ngModel>
+                        <optgroup label="Other">
+                          <!-- I add all the attributes to this so that it doesn't go away during search-->
+                          <option [attr.data-tokens]="this.schoolList.toString()">My school isn't here</option>
+                        </optgroup>
+                        <optgroup label="Schools">
+                          <option *ngFor="let item of this.schoolList;" [attr.data-tokens]="item.slice(1).toString()">{{item[0]}}</option>
+                        </optgroup>
+                      </select>
+                    </div>
+                    <div [className]="school.value=='My school isn\'t here' ? ' col-md-6 full-width-dropdown' : 'hide-completely col-md-6 full-width-dropdown'">
+                      <label for="schoolInputText" class="req-label-text">Enter your school here</label>
+                      <input type="text" class="form-control" placeholder="School" id="schoolInputText" required [(ngModel)]="schoolInputText" (focus)="schoolText.active = true" (blur)="schoolText.active = false" name="schoolInputText" #schoolText="ngModel">
+                    </div>
+                  </div>
+                  <div *ngIf="(school.value=='My school isn\'t here' && schoolText.errors && (this.attemptNext || schoolText.dirty || schoolText.touched) && !schoolText.active)" class="alert alert-danger">
+                    You must either pick or enter a school
+                  </div>
+                  <div class="form-row">
+                    <div class="col-md full-width-dropdown">
+                      <label for="studyLevel" class="req-label-text">Current Level Of Study</label>
+                      <select class="selectpicker" id="studyLevel" title="Nothing Selected" name="studyLevel" data-width="100%" [(ngModel)]="studyLevel" #study=ngModel>
+                        <option>Below High School</option>
+                        <option>High School</option>
+                        <option>Undergraduate</option>
+                        <option>Graduate</option>
+                      </select>
+                    </div>
+                    <div class="col-md full-width-dropdown">
+                      <label for="graduationYear" class="req-label-text">Expected Graduation Year</label>
+                      <select class="selectpicker" id="graduationYear" name="graduationYear" title="Nothing Selected" data-width="100%" [(ngModel)]="graduationYear" #graduation=ngModel>
+                        <option>2020</option>
+                        <option>2021</option>
+                        <option>2022</option>
+                        <option>2023</option>
+                        <option>After 2023</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col-md-4 minheight86">
+                      <label for="haveGithubNo" class="full-width-dropdown">Do you have a Github?</label>
+                      <div class="form-check-inline">
+                        <input class="form-check-input" type="radio" name="haveGithub" id="noHaveGithub" value="No" [(ngModel)]="haveGithub">
+                        <label class="form-check-label" for="noHaveGithub">
+                          No
+                        </label>
+                      </div>
+                      <div class="form-check-inline">
+                        <input class="form-check-input" type="radio" name="haveGithub" id="yesHaveGithub" value="Yes" [(ngModel)]="haveGithub">
+                        <label class="form-check-label" for="yesHaveGithub">
+                          Yes
+                        </label>
+                      </div>
+                    </div>
+                    <div [className]="this.haveGithub=='Yes' ? ' col-md-8 full-width-dropdown' : 'hide-completely col-md-8 full-width-dropdown'">
+                      <label for="githubLinkInput" class="req-label-text">Paste the link to your profile here</label>
+                      <div class="input-group">
+                        <input [value]="(this.userData.githubLink && this.loaded) ? this.userData.githubLink : ''" type="text" class="form-control" placeholder="https://github.com/hackPrincetonHS" id="githubLinkInput" pattern="http(s)?:\/\/(www\.)?github\.com\/[A-z0-9_-]+\/?" required maxlength="200" [(ngModel)]="githubLinkInput" (focus)="githubLink.active = true" (blur)="githubLink.active = false" name="githubLinkInput" #githubLink="ngModel">
+                        <button type="button" class="btn btn-secondary" (click)="checkGithubProfile(githubLink)"><u class="dotted">Validate Profile</u> <fa-icon [icon]="githubLink.loading ? ['fas', 'spinner'] : (githubLink.profileData!=githubLink.value || (githubLink.pristine && !this.userData.githubLink)) ? ['fas', 'minus'] : githubLink.badProfile ? ['fas', 'times'] : ['fas', 'check']" [spin]="githubLink.loading" [styles]="!githubLink.loading && !(githubLink.profileData!=githubLink.value || (githubLink.pristine && !this.userData.githubLink)) ? githubLink.badProfile ? {'color': 'red'} : {'color': '7FFF00'} : ''"></fa-icon></button>
+                      </div>
+                      <div *ngIf="this.haveGithub=='Yes' && (githubLink.dirty || githubLink.touched || this.validateClicked) && !githubLink.active && !githubLink.pristine">
+                        <div *ngIf="githubLink.errors && githubLink.errors.required" class="alert alert-danger">
+                          Please enter your profile
+                        </div>
+                        <div *ngIf="!(githubLink.errors && githubLink.errors.required) && ((githubLink.errors && githubLink.errors.pattern && !githubLink.errors.required) || githubLink.badProfile)" class="alert alert-danger">
+                          That is not a valid github profile
+                        </div>
+                        <div *ngIf="!(githubLink.errors && !githubLink.errors.required) && !((githubLink.errors && githubLink.errors.pattern) || githubLink.badProfile || githubLink.loading) && githubLink.profileData!=githubLink.value" class="alert alert-danger">
+                          You must click the button to validate your profile
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <hr class="separator">
+                <div class="containter">
+                  <h3>Logistical Info</h3>
+                  <div class="form-row">
+                    <div class="col-md full-width-dropdown">
+                      <label for="shirtSize" class="req-label-text">T-Shirt Size</label>
+                      <select class="selectpicker" id="shirtSize" title="Nothing Selected" data-width="100%" name="shirtSize" title="T-Shirt Size" [(ngModel)]="shirtSize" #tshirt=ngModel>
+                        <option>S</option>
+                        <option>M</option>
+                        <option>L</option>
+                        <option>XL</option>
+                        <option>XXL</option>
+                      </select>
+                    </div>
+                    <div class="col-md full-width-dropdown">
+                      <label for="dietaryRestrictions" class="req-label-text">Dietary Restrictions</label>
+                      <select class="selectpicker" multiple id="dietaryRestrictions" data-header="Select all that apply" name="dietaryRestrictions" data-width="100%" [(ngModel)]="dietaryRestrictions" #dietary=ngModel>
+                        <!--I have to make life harder for myself and remove the values becuase otherwise I can't set defaults. It's a known bug in the library -->
+                        <option>None</option>
+                        <option data-divider="true"></option>
+                        <option>Lactose intolerant or milk allergies</option>
+                        <option>Vegetarian</option>
+                        <option>Ovo-Vegetarian</option>
+                        <option>Lacto-Vegetarian</option>
+                        <option>Vegan</option>
+                        <option>Religious dietary practices</option>
+                        <option>Diabetic diet</option>
+                        <option>Gluten free</option>
+                        <option>Other</option>
+                      </select>
+                      <div *ngIf="this.loaded && this.dietaryRestrictions && this.dietaryRestrictions.length==0" class="alert alert-danger">
+                        You must select an option
+                      </div>
+                      <div *ngIf="this.loaded && this.dietaryRestrictions && this.dietaryRestrictions.includes('None') && dietaryRestrictions.length>1" class="alert alert-danger">
+                        You cannot select both none and something else
+                      </div>
+                      <!--This is a hack, idk why this one doesn't work and the ethnicity one does -->
+                      <div *ngIf="this.loaded && ((this.dietaryRestrictions && (this.dietaryRestrictions.includes('Other') || this.dietaryRestrictions.includes('Religious dietary practices'))) || (!this.dietaryRestrictions && (this.userData.dietaryRestrictions.includes('Other') || this.userData.dietaryRestrictions.includes('Religious dietary practices'))))" class="alert alert-info">
+                        Please specify in the special accomadations box below
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="this.userData.hardware || this.userData.hardwareOther" class="form-group">
+                    <div class="col-md-12">
+                      <label for="usingHardwareNo" class="full-width-dropdown">Hardware:</label>
+                      <div class="alert alert-info">
+                        Hardware is for estimation purposes, if you really need a piece of hardware and you didn't put it in your registration, email us at team@hackphs.tech with subject "hardware"
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="specialAccomadations">Please list any special accommodations you may require (e.g. late arrival, early departure)</label>
+                    <textarea  [value]="this.loaded ? this.userData.specialAccomadations : ''" class="form-control" id="specialAccomadations" name="specialAccomadations" rows="3" [(ngModel)]="specialAccomadations" #accomadations=ngModel></textarea>
                   </div>
                 </div>
               </div>
-              <hr class="separator">
-              <div class="containter">
-                <h3>Logistical Info</h3>
-                <div class="form-row">
-                  <div class="col-md-6 full-width-dropdown">
-                    <label for="shirtSize" class="req-label-text">T-Shirt Size</label>
-                    <select class="selectpicker" id="shirtSize" title="Nothing Selected" data-width=100% name="shirtSize" title="T-Shirt Size" [(ngModel)]="shirtSize" #tshirt=ngModel>
-                      <option>S</option>
-                      <option>M</option>
-                      <option>L</option>
-                      <option>XL</option>
-                      <option>XXL</option>
-                    </select>
-                  </div>
-                  <div class="col-md-6 full-width-dropdown">
-                    <label for="dietaryRestrictions" class="req-label-text">Dietary Restrictions</label>
-                    <select class="selectpicker" multiple id="dietaryRestrictions" data-header="Select all that apply" name="dietaryRestrictions" data-width="100%" [(ngModel)]="dietaryRestrictions" #dietary=ngModel>
-                      <!--I have to make life harder for myself and remove the values becuase otherwise I can't set defaults. It's a known bug in the library -->
-                      <option value="None">None</option>
-                      <option data-divider="true"></option>
-                      <option>Lactose intolerant or milk allergies</option>
-                      <option>Vegetarian</option>
-                      <option>Ovo-Vegetarian</option>
-                      <option>Lacto-Vegetarian</option>
-                      <option>Vegan</option>
-                      <option>Religious dietary practices</option>
-                      <option>Diabetic diet</option>
-                      <option>Gluten free</option>
-                      <option>Other</option>
-                    </select>
-                    <div *ngIf="this.loaded && this.dietaryRestrictions && this.dietaryRestrictions.length==0" class="alert alert-danger">
-                      You must select an option
-                    </div>
-                    <div *ngIf="this.loaded && this.dietaryRestrictions && this.dietaryRestrictions.includes('None') && dietaryRestrictions.length>1" class="alert alert-danger">
-                      You cannot select both none and something else
-                    </div>
-                    <!--This is a hack, idk why this one doesn't work and the ethnicity one does -->
-                    <div *ngIf="this.loaded && ((this.dietaryRestrictions && this.dietaryRestrictions.includes('Other')) || (!this.dietaryRestrictions && this.userData.dietaryRestrictions.includes('Other')))" class="alert alert-info">
-                      Please Explain in the special accomadations box below
-                    </div>
-                  </div>
-                </div>
-                <div *ngIf="this.userData.hardware || this.userData.hardwareOther" class="form-group">
-                  <div class="col-md-12">
-                    <label for="usingHardwareNo" class="full-width-dropdown">Hardware:</label>
-                    <div class="alert alert-info">
-                      Hardware is for estimation purposes, if you really need a piece of hardware and you didn't put it in your registration, email us at team@hackphs.tech with subject "hardware"
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="specialAccomadations">Please list any special accomadations you may require (e.g. late arrival, early departure)</label>
-                  <textarea  [value]="this.loaded ? this.userData.specialAccomadations : ''" class="form-control" id="specialAccomadations" name="specialAccomadations" rows="3" [(ngModel)]="specialAccomadations" #accomadations=ngModel></textarea>
-                </div>
+            </fieldset>
+            <div class="row">
+              <div class="col">
+                <button type="button" class="btn btn-secondary" (click)="back()">Back</button>
+              </div>
+              <div class="col text-right">
+                <button type="button" class="btn btn-primary .navbar-right" (click)="submitting();">Submit</button>
               </div>
             </div>
-          </fieldset>
-          <div class="row">
-            <div class="col">
-              <button type="button" class="btn btn-secondary" (click)="back()">Back</button>
-            </div>
-            <div class="col text-right">
-              <button type="button" class="btn btn-primary .navbar-right" (click)="submitting();">Submit</button>
-            </div>
-          </div>
         </form>
       </div>
     </div>

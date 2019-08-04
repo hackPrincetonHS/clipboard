@@ -37,6 +37,7 @@ export class EditInfoComponent implements OnInit {
   studyLevel;
   graduationYear;
   specialAccomadations;
+  latino;
   shirtSize;
   haveGithub;
   haveResume;
@@ -67,6 +68,7 @@ export class EditInfoComponent implements OnInit {
         this.cdr.detectChanges();
         (<any>document.getElementById("githubLinkInput")).profileData=this.userData.githubLink;
       }
+      this.latino=(this.userData.latino ? "Yes" : "No");
 
 
       //set up all the dropdowns.
@@ -103,6 +105,7 @@ export class EditInfoComponent implements OnInit {
     //have to cast to any or it won't compile
     //this is the only working way to do it on stackoverflow, so it's the only solution
     (<any>$('select')).selectpicker();
+    (<any>$('[data-toggle="tooltip"]')).tooltip();
   }
 
   autoTab(event, nextInput) {
@@ -136,6 +139,7 @@ export class EditInfoComponent implements OnInit {
   }
 
   submitting() {
+    window.scroll(0,0);
     if(this.checkPage()){
       var oldUserData=lodash.cloneDeep(this.userData);
 
@@ -166,6 +170,7 @@ export class EditInfoComponent implements OnInit {
       this.userData.lastName=this.inputLastName;
       this.userData.phone=this.inputPhone1+"-"+this.inputPhone2+"-"+this.inputPhone3;
       this.userData.dateOfBirth=this.inputYear+"-"+this.inputMonth+"-"+this.inputDay;
+      this.userData.latino=this.latino=="Yes";
       this.userData.gender=this.pickGender;
       this.userData.ethnicity=this.ethnicity;
       if(this.schoolInput=="My school isn't here") {
@@ -196,6 +201,7 @@ export class EditInfoComponent implements OnInit {
       this.userData.fullName=this.userData.firstName+" "+this.userData.lastName;
 
       this.storageService.createUser(this.userData);
+      console.log(this.userData);
     }
   }
 
