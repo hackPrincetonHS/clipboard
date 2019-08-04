@@ -93,7 +93,7 @@
                       </div>
                     </div>
                     <div class="col-md-6">
-                          <label for="latinoNo" class="req-label-text full-width-dropdown">Are you Spanish/Hispanic/Latino in origin?</label>
+                          <label for="latinoNo" class="req-label-text full-width-dropdown">Are you Hispanic/Latino in origin?</label>
                           <div class="form-check-inline">
                             <input class="form-check-input" type="radio" name="latino" id="latinoNo" value="No" [(ngModel)]="latino">
                             <label class="form-check-label" for="latinoNo">
@@ -320,7 +320,7 @@
                         You cannot select both none and something else
                       </div>
                       <div *ngIf="this.page==1 && dietary.value && dietary.value.includes('Other')" class="alert alert-info">
-                        Please explain in the special accomadations box below
+                        Please explain in the special accommodations box below
                       </div>
                     </div>
                   </div>
@@ -363,7 +363,7 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="specialAccomadations">Please list any special accomadations you may require (e.g. late arrival, early departure)</label>
+                    <label for="specialAccomadations">Please list any special accommodations you may require (e.g. late arrival, early departure)</label>
                     <textarea class="form-control" id="specialAccomadations" name="specialAccomadations" rows="3" [(ngModel)]="specialAccomadations" #accomadations=ngModel></textarea>
                   </div>
                 </div>

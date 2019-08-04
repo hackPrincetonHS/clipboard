@@ -5,7 +5,7 @@
   <a class="navbar-brand" href="https://hackphs.tech">
     <img src="./assets/img/hackphslogo2019.svg" height="48" alt="">
   </a>
-  <a class="navbar-brand">Clipboard <div style="display: inline-flex; margin-bottom:5px; margin-left: 0.1rem;"><img src="./assets/clipboardlogo.svg" style="height:1.25rem; transform: rotate(35deg);"></div></a>
+  <a class="navbar-brand">Clipboard <div style="display: inline-flex; margin-bottom:5px; margin-left: 0.1rem;"><img src="./assets/clipboardlogo.svg" alt="" style="height:1.25rem; transform: rotate(35deg);"></div></a>
   <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
     <ul class="navbar-nav mr-auto mt-lg-0">
       <li class="nav-item shifted-nav">
@@ -27,7 +27,9 @@
     <span class="navbar-toggler-icon"></span>
   </button>
 </nav>
+<main>
 <router-outlet></router-outlet>
+</main>
 <footer>
   <div class="container">
     <a href="mailto:team@hackphs.tech">Questions? Bugs? Contact us!</a><br>
@@ -39,7 +41,7 @@
         <a target="_blank"  href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">Code Of Conduct</a>
       </li>
       <li class="list-inline-item">
-        <a href="https://github.com/hackPrincetonHS/clipboard/blob/master/LICENSE">Licence</a>
+        <a href="https://github.com/hackPrincetonHS/clipboard/blob/master/LICENSE">License</a>
       </li>
     </ul>
     <a *ngIf="this.router.isActive('reset-password', false)" href="https://icons8.com/icon/94/lock">Lock icon by Icons8</a>
