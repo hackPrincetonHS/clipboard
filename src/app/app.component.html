@@ -1,15 +1,20 @@
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
-  <a class="navbar-brand" href="http://hackphs.tech">
-    <img src="./assets/img/hackphslogo2019.svg" width="30" height="30" alt="">
-  </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+  <button *ngIf="authService.isLoggedIn" class="navbar-toggler d-mmd-none" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
+  <a class="navbar-brand" href="https://hackphs.tech">
+    <img src="./assets/img/hackphslogo2019.svg" height="48" alt="">
+  </a>
+  <a class="navbar-brand">Clipboard <div style="display: inline-flex; margin-bottom:5px; margin-left: 0.1rem;"><img src="./assets/clipboardlogo.svg" style="height:1.25rem; transform: rotate(35deg);"></div></a>
   <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-    <a class="navbar-brand">Clipboard</a>
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-      <li class="nav-item">
+    <ul class="navbar-nav mr-auto mt-lg-0">
+      <li class="nav-item shifted-nav">
         <a class="nav-link" style="cursor: pointer" (click)="dashboard()">Dashboard</a>
+      </li>
+      <li class="nav-item shifted-nav">
+        <div data-toggle="tooltip" title="Coming Soon!">
+          <a class="nav-link disabled" style="cursor: pointer">Discord Server</a>
+        </div>
       </li>
     </ul>
   </div>
@@ -18,6 +23,9 @@
       <li> <button class="btn btn-outline-success my-2 my-sm-0" (click)="authService.logout()"a>Log Out</button></li>
     </ul>
   </div>
+  <button *ngIf="!authService.isLoggedIn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 </nav>
 <router-outlet></router-outlet>
 <footer>

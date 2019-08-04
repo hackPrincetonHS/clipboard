@@ -34,3 +34,29 @@ footer ul li a {
 footer ul li a:hover, footer ul li a:focus, footer ul li a:active, footer ul li a.active {
   text-decoration: none;
 }
+/*
+no one will ever beat this pun
+*/
+.hidden-in-plain-site {
+  overflow: visible !important;
+  height: 0 !important;
+  width: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  padding: 0 !important;
+  display: block !important;
+}
+
+@media (min-width: 576px) {
+  .shifted-nav {
+    margin-left: 0px;
+  }
+  .shifted-nav:first-child {
+    margin-left: -6px;
+  }
+}
+@media (max-width: 410px) {
+  .d-mmd-none {
+    display: none;
+  }
+}

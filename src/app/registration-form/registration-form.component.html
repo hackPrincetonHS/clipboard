@@ -15,7 +15,9 @@
             <div class="form-itself">
               <div [className]="this.page==1 ? '':'hide-completely'">
                 <div class=containter>
-                  <h3>Demographic Info</h3>
+                  <div class="d-flex align-items-center">
+                    <h3>Demographic Info</h3><fa-icon [icon]="['fas', 'info-circle']" data-toggle="tooltip" title="These questions are purely for statistical purposes and will not influence our admissions process" class="info-circle"></fa-icon>
+                  </div>
                   <label for="inputFirstName" class="req-label-text">Name</label>
                   <div class="form-row">
                     <div class="col">
@@ -81,11 +83,11 @@
                       </div>
                       <div *ngIf="this.page==1 && (this.attemptNext || month.dirty || month.touched || day.dirty || day.touched || year.dirty || year.dirty) && !(month.active || day.active || year.active)">
                         <div *ngIf="(month.errors || day.errors || year.errors)">
-                          <div *ngIf="(month.errors && month.errors.required) || (day.errors && day.errors.required) || (year.errors && year.errors.required); else notrequiredyear" class="alert alert-danger">
+                          <div *ngIf="(month.errors && month.errors.required) || (day.errors && day.errors.required) || (year.errors && year.errors.required); else notrequiredyear" class="alert alert-danger" style="margin-top:-10px">
                             Date of Birth is required
                           </div>
                         </div>
-                        <div *ngIf="!validateDate(month,day,year)" class="alert alert-danger">
+                        <div *ngIf="!validateDate(month,day,year)" class="alert alert-danger" style="margin-top:-10px">
                           That date is invalid
                         </div>
                       </div>

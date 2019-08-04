@@ -13,4 +13,7 @@ export class AppComponent implements  OnInit {
     dashboard(){
       this.router.navigate(['dashboard']);
     }
+    ngAfterContentChecked(){
+      (<any>$('[data-toggle="tooltip"]')).tooltip();
+    }
 }
