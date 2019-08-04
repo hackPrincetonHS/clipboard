@@ -5,12 +5,14 @@
       <div class="page-content">
         <form class="well form-horizontal" action=" " id="contact_form">
           <fieldset>
-              <!-- Form Name -->
-              <img src="./assets/img/hackphslogo2019.svg" alt="hackPHS" class="center">
-              <div class="form-title">
-                <legend><div style="text-align: center;"><h2><b> Profile Edit</b></h2></div></legend><br>
-              </div>
-              <div class="form-itself">
+            <!-- Form Name -->
+            <img src="./assets/img/hackphslogo2019.svg" alt="hackPHS" class="center">
+            <div class="form-title">
+              <legend><div style="text-align: center;"><h2><b> Profile Edit</b></h2></div></legend><br>
+            </div>
+            <div class="form-itself">
+              <!-- literally just to make the tabbing line up with registration. Matches up with the page selector -->
+              <div>
                 <div class="containter">
                   <div class="d-flex align-items-center">
                     <h3>Demographic Info</h3><fa-icon [icon]="['fas', 'info-circle']" data-toggle="tooltip" title="These questions are purely for statistical purposes and will not influence our admissions process" class="info-circle"></fa-icon>
@@ -91,7 +93,7 @@
                       <div class="form-check-inline">
                         <input class="form-check-input" type="radio" name="latino" id="latinoNo" value="No" [(ngModel)]="latino">
                         <label class="form-check-label" for="latinoNo">
-                            No
+                          No
                         </label>
                       </div>
                       <div class="form-check-inline">
@@ -282,15 +284,16 @@
                   </div>
                 </div>
               </div>
-            </fieldset>
-            <div class="row">
-              <div class="col">
-                <button type="button" class="btn btn-secondary" (click)="back()">Back</button>
-              </div>
-              <div class="col text-right">
-                <button type="button" class="btn btn-primary .navbar-right" (click)="submitting();">Submit</button>
-              </div>
             </div>
+          </fieldset>
+          <div class="row">
+            <div class="col">
+              <button type="button" class="btn btn-secondary" (click)="back()">Back</button>
+            </div>
+            <div class="col text-right">
+              <button type="button" class="btn btn-primary .navbar-right" (click)="submitting();">Submit</button>
+            </div>
+          </div>
         </form>
       </div>
     </div>
