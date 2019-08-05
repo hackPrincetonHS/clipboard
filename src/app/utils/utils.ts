@@ -25,7 +25,10 @@ export default class Utils {
     ["Edison Academy"],
     ["Port Credit Secondary School"],
     ["John P. Stevens High School", "J.P. Stevens"],
-    ['Point Pleasant Beach High School']
+    ['Point Pleasant Beach High School'],
+    ['Great Neck South High School'],
+    ['Monroe Township High School'],
+    ['Newark Charter Junior/Senior High School', 'Newark Charter High School']
   ];
 
   static hardwareList=[

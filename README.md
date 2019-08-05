@@ -20,8 +20,7 @@ Run `ng generate component component-name` to generate a new component. You can 
 This will build and immediately publish whatever changes you have
 Your code, however, won't be commited and pushed automatically
 ```
-ng build --prod --base-href "https://clipboard.hackphs.tech/"
-npx angular-cli-ghpages --dir=dist/userSignInSystem --cname=clipboard.hackphs.tech
+ng run userSignInSystem:deploy --cname=clipboard.hackphs.tech
 ```
 AOT compilation should be faster and smaller, but it sometimes breaks and I don't know why
 
