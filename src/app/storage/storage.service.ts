@@ -55,13 +55,18 @@ export class UserData {
   shirtSize : string;
   dietaryRestrictions : string;
   githubLink : string;
-  hardware : string;
-  hardwareOther : string;
   satisfaction : number;
   latino: boolean;
   questionsComments : string;
   isFullyLoggedIn : boolean;
   hasResume : boolean;
+  street1 : string;
+  street2 : string;
+  city : string;
+  state : string;
+  zip5 : string;
+  zip4 : string;
+  deliveryPoint : string;
   dateCreated : firestore.Timestamp;
 }
 

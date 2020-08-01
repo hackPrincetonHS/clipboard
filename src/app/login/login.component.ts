@@ -73,6 +73,7 @@ export  class  LoginComponent  implements  OnInit {
       this.registerShown=false;
     }
     clickButtonLogin(userEmail, userPassword) {
+      console.log("here");
       this.badLoginAlert.value="false";
       if(this.register) {
         this.register=false;
@@ -83,6 +84,7 @@ export  class  LoginComponent  implements  OnInit {
     }
     clickRegister(userEmail, userPassword, userConfirm){
       this.firstClickRegister=true;
+      this.loading=false;
       if(this.register) {
         if(userPassword.value!=userConfirm.value) {
           this.badLoginAlert.value="the passwords must match";
@@ -95,6 +97,7 @@ export  class  LoginComponent  implements  OnInit {
       } else {
         this.badLoginAlert.value="false";
       }
+      console.log(this.loading);
       this.register=true;
       this.registerShown=true;
     }

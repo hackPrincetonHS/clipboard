@@ -231,9 +231,9 @@
                       <label for="githubLinkInput" class="req-label-text">Paste the link to your profile here</label>
                       <div class="input-group">
                         <input type="text" class="form-control" placeholder="https://github.com/hackPrincetonHS" id="githubLinkInput" pattern="http(s)?:\/\/(www\.)?github\.com\/[A-z0-9_-]+\/?" required maxlength="200" [(ngModel)]="githubLinkInput" (focus)="githubLink.active = true" (blur)="githubLink.active = false" name="githubLinkInput" #githubLink="ngModel">
-                        <button type="button" class="btn btn-secondary" (click)="checkGithubProfile(githubLink)"><u class="dotted">Validate Profile</u> <fa-icon [icon]="githubLink.loading ? ['fas', 'spinner'] : (githubLink.profileData!=githubLink.value || githubLink.pristine) ? ['fas', 'minus'] : githubLink.badProfile ? ['fas', 'times'] : ['fas', 'check']" [spin]="githubLink.loading" [styles]="!githubLink.loading && !(githubLink.profileData!=githubLink.value || githubLink.pristine) ? githubLink.badProfile ? {'color': 'red'} : {'color': '7FFF00'} : ''"></fa-icon></button>
+                        <button type="button" class="btn btn-secondary" (click)="checkGithubProfile(githubLink)"><u class="dotted">Validate Profile</u> <fa-icon [icon]="githubLink.loading ? ['fas', 'spinner'] : (githubLink.profileData!=githubLink.value || !validateClickedGithub) ? ['fas', 'minus'] : githubLink.badProfile ? ['fas', 'times'] : ['fas', 'check']" [spin]="githubLink.loading" [styles]="!githubLink.loading && !(githubLink.profileData!=githubLink.value || !validateClickedGithub) ? githubLink.badProfile ? {'color': 'red'} : {'color': '7FFF00'} : ''"></fa-icon></button>
                       </div>
-                      <div *ngIf="this.page==1 && (this.haveGithub=='Yes' && (this.attemptNext || githubLink.dirty || githubLink.touched || this.validateClicked) && !githubLink.active)">
+                      <div *ngIf="this.page==1 && (this.haveGithub=='Yes' && (this.attemptNext || githubLink.dirty || githubLink.touched || this.validateClickedGithub) && !githubLink.active)">
                         <div *ngIf="githubLink.errors && githubLink.errors.required" class="alert alert-danger">
                           Please enter your profile
                         </div>
@@ -309,53 +309,339 @@
                         <option>Gluten free</option>
                         <option>Other</option>
                       </select>
-                      <div *ngIf="this.page==1 && this.attemptNext && (!dietary.value || dietary.value.length==0)" class="alert alert-danger">
+                      <div *ngIf="this.page==1 && this.attemptNext && (!this.dietaryRestrictions || this.dietaryRestrictions.length==0)" class="alert alert-danger">
                         You must select an option
                       </div>
-                      <div *ngIf="this.page==1 && dietary.value && dietary.value.includes('None') && dietary.value.length>1" class="alert alert-danger">
+                      <div *ngIf="this.page==1 && this.dietaryRestrictions && this.dietaryRestrictions.includes('None') && this.dietaryRestrictions.length>1" class="alert alert-danger">
                         You cannot select both none and something else
                       </div>
-                      <div *ngIf="this.page==1 && dietary.value && (dietary.value.includes('Other') || dietary.value.includes('Religious dietary practices'))" class="alert alert-info">
+                      <div *ngIf="this.page==1 && this.dietaryRestrictions && (this.dietaryRestrictions.includes('Other') || this.dietaryRestrictions.includes('Religious dietary practices'))" class="alert alert-info">
                         Please specify in the special accommodations box below
                       </div>
                     </div>
                   </div>
                   <div class="form-row">
-                    <div class="col-md-4 minheight110">
-                      <label for="usingHardwareNo" class="full-width-dropdown">Do you expect to be using hardware for your hack?</label>
+                    <div class="col minheight76">
+                      <label for="haveGithubNo" class="full-width-dropdown">Would you like to receive your swag by mail?</label>
                       <div class="form-check-inline">
-                        <input class="form-check-input" type="radio" name="usingHardware" id="usingHardwareNo" value="No" [(ngModel)]="usingHardware">
-                        <label class="form-check-label" for="usingHardwareNo">
+                        <input class="form-check-input" type="radio" name="haveAddress" id="noHaveAddress" value="No" [(ngModel)]="haveAddress">
+                        <label class="form-check-label" for="noHaveAddress">
                           No
                         </label>
                       </div>
                       <div class="form-check-inline">
-                        <input class="form-check-input" type="radio" name="usingHardware" id="usingHardwareYes" value="Yes" [(ngModel)]="usingHardware">
-                        <label class="form-check-label" for="usingHardwareYes">
+                        <input class="form-check-input" type="radio" name="haveAddress" id="yesHaveAddress" value="Yes" [(ngModel)]="haveAddress">
+                        <label class="form-check-label" for="yesHaveAddress">
                           Yes
                         </label>
                       </div>
                     </div>
-                    <div [className]="usingHardware=='Yes' ? 'col-md-8 full-width-dropdown' : 'hide-completely'">
-                      <label for="hardwareInput" class="req-label-text">Hardware</label>
-                      <select class="selectpicker" multiple data-live-search="true" id="hardwareInput" name="hardwareInput" data-width="100%" [(ngModel)]="hardwareInput" #hardware=ngModel>
-                        <optgroup label="Other">
-                          <!-- I add all the attributes to this so that it doesn't go away during search-->
-                          <option [attr.data-tokens]="this.hardwareList.toString()">Other</option>
-                        </optgroup>
-                        <optgroup label="Hardware">
-                          <option *ngFor="let item of this.hardwareList;" [attr.data-tokens]="item.slice(1).toString()">{{item[0]}}</option>
-                        </optgroup>
-                      </select>
-                      <div *ngIf="this.page==1 && usingHardware=='Yes' && this.attemptNext && hardware.pristine" class="alert alert-danger col-12">
-                        Please pick at least one option
+                  </div>
+                  <div [className]="this.haveAddress=='Yes' ? 'mb-3' : 'hide-completely'">
+                    <div class="form-row">
+                      <div class="col full-width-dropdown">
+                        <input type="text" class="form-control" placeholder="Street and Number, P.O. box, c/o" id="street1Input" required maxlength="200" [(ngModel)]="street1Input" (focus)="street1.active = true" (blur)="street1.active = false" name="street1Input" #street1="ngModel">
+                        <p class="text-muted form-text  mb-0">
+                          Address Line 1
+                        </p>
                       </div>
                     </div>
-                  </div>
-                  <div [className]="usingHardware=='Yes' ? 'form-row' : 'form-row hide-completely'">
-                    <div [className]="hardware.value && hardware.value.includes('Other') ? ' col-md-12 full-width-dropdown' : 'hide-completely col-md-12 full-width-dropdown'">
-                      <label for="hardwareInputText">List everything else here</label>
-                      <input type="text" class="form-control" placeholder="FPGA" id="hardwareInputText" required [(ngModel)]="hardwareInputText" (focus)="hardwareText.active = true" (blur)="hardwareText.active = false" name="hardwareInputText" #hardwareText="ngModel">
+                    <div class="form-row">
+                      <div class="col full-width-dropdown">
+                        <input type="text" class="form-control" placeholder="Apartment, Suite, Unit, etc." id="street2Input" required maxlength="200" [(ngModel)]="street2Input" (focus)="street2.active = true" (blur)="street2.active = false" name="street2Input" #street2="ngModel">
+                        <p class="text-muted form-text mb-0">
+                          Address Line 2
+                        </p>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="col-md-6 full-width-dropdown">
+                        <input type="text" class="form-control" id="cityInput" required maxlength="200" [(ngModel)]="cityInput" (focus)="city.active = true" (blur)="city.active = false" name="cityInput" #city="ngModel">
+                        <p class="text-muted form-text mb-0">
+                          City
+                        </p>
+                      </div>
+                      <div class="col-md-4 full-width-dropdown">
+                        <input type="text" class="form-control" id="stateInput" required maxlength="200" [(ngModel)]="stateInput" (focus)="state.active = true" (blur)="state.active = false" name="stateInput" #state="ngModel">
+                        <p class="text-muted form-text mb-0">
+                          State/Province/Region
+                        </p>
+                      </div>
+                      <div class="col-md-2 full-width-dropdown">
+                        <input type="text" class="form-control" id="zipInput" required maxlength="200" [(ngModel)]="zipInput" (focus)="zip.active = true" (blur)="zip.active = false" name="zipInput" #zip="ngModel">
+                        <p class="text-muted form-text  mb-0">
+                          ZIP/Postal Code
+                        </p>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="col full-width-dropdown">
+                        <select class="selectpicker" id="dietaryRestrictions" data-live-search="true" name="dietaryRestrictions" data-width="100%" [(ngModel)]="countryInput" #country=ngModel>
+                          <option value="Afganistan">Afghanistan</option>
+                          <option value="Albania">Albania</option>
+                          <option value="Algeria">Algeria</option>
+                          <option value="American Samoa">American Samoa</option>
+                          <option value="Andorra">Andorra</option>
+                          <option value="Angola">Angola</option>
+                          <option value="Anguilla">Anguilla</option>
+                          <option value="Antigua & Barbuda">Antigua & Barbuda</option>
+                          <option value="Argentina">Argentina</option>
+                          <option value="Armenia">Armenia</option>
+                          <option value="Aruba">Aruba</option>
+                          <option value="Australia">Australia</option>
+                          <option value="Austria">Austria</option>
+                          <option value="Azerbaijan">Azerbaijan</option>
+                          <option value="Bahamas">Bahamas</option>
+                          <option value="Bahrain">Bahrain</option>
+                          <option value="Bangladesh">Bangladesh</option>
+                          <option value="Barbados">Barbados</option>
+                          <option value="Belarus">Belarus</option>
+                          <option value="Belgium">Belgium</option>
+                          <option value="Belize">Belize</option>
+                          <option value="Benin">Benin</option>
+                          <option value="Bermuda">Bermuda</option>
+                          <option value="Bhutan">Bhutan</option>
+                          <option value="Bolivia">Bolivia</option>
+                          <option value="Bonaire">Bonaire</option>
+                          <option value="Bosnia & Herzegovina">Bosnia & Herzegovina</option>
+                          <option value="Botswana">Botswana</option>
+                          <option value="Brazil">Brazil</option>
+                          <option value="British Indian Ocean Ter">British Indian Ocean Ter</option>
+                          <option value="Brunei">Brunei</option>
+                          <option value="Bulgaria">Bulgaria</option>
+                          <option value="Burkina Faso">Burkina Faso</option>
+                          <option value="Burundi">Burundi</option>
+                          <option value="Cambodia">Cambodia</option>
+                          <option value="Cameroon">Cameroon</option>
+                          <option value="Canada">Canada</option>
+                          <option value="Canary Islands">Canary Islands</option>
+                          <option value="Cape Verde">Cape Verde</option>
+                          <option value="Cayman Islands">Cayman Islands</option>
+                          <option value="Central African Republic">Central African Republic</option>
+                          <option value="Chad">Chad</option>
+                          <option value="Channel Islands">Channel Islands</option>
+                          <option value="Chile">Chile</option>
+                          <option value="China">China</option>
+                          <option value="Christmas Island">Christmas Island</option>
+                          <option value="Cocos Island">Cocos Island</option>
+                          <option value="Colombia">Colombia</option>
+                          <option value="Comoros">Comoros</option>
+                          <option value="Congo">Congo</option>
+                          <option value="Cook Islands">Cook Islands</option>
+                          <option value="Costa Rica">Costa Rica</option>
+                          <option value="Cote DIvoire">Cote DIvoire</option>
+                          <option value="Croatia">Croatia</option>
+                          <option value="Cuba">Cuba</option>
+                          <option value="Curaco">Curacao</option>
+                          <option value="Cyprus">Cyprus</option>
+                          <option value="Czech Republic">Czech Republic</option>
+                          <option value="Denmark">Denmark</option>
+                          <option value="Djibouti">Djibouti</option>
+                          <option value="Dominica">Dominica</option>
+                          <option value="Dominican Republic">Dominican Republic</option>
+                          <option value="East Timor">East Timor</option>
+                          <option value="Ecuador">Ecuador</option>
+                          <option value="Egypt">Egypt</option>
+                          <option value="El Salvador">El Salvador</option>
+                          <option value="Equatorial Guinea">Equatorial Guinea</option>
+                          <option value="Eritrea">Eritrea</option>
+                          <option value="Estonia">Estonia</option>
+                          <option value="Ethiopia">Ethiopia</option>
+                          <option value="Falkland Islands">Falkland Islands</option>
+                          <option value="Faroe Islands">Faroe Islands</option>
+                          <option value="Fiji">Fiji</option>
+                          <option value="Finland">Finland</option>
+                          <option value="France">France</option>
+                          <option value="French Guiana">French Guiana</option>
+                          <option value="French Polynesia">French Polynesia</option>
+                          <option value="French Southern Ter">French Southern Ter</option>
+                          <option value="Gabon">Gabon</option>
+                          <option value="Gambia">Gambia</option>
+                          <option value="Georgia">Georgia</option>
+                          <option value="Germany">Germany</option>
+                          <option value="Ghana">Ghana</option>
+                          <option value="Gibraltar">Gibraltar</option>
+                          <option value="Great Britain">Great Britain</option>
+                          <option value="Greece">Greece</option>
+                          <option value="Greenland">Greenland</option>
+                          <option value="Grenada">Grenada</option>
+                          <option value="Guadeloupe">Guadeloupe</option>
+                          <option value="Guam">Guam</option>
+                          <option value="Guatemala">Guatemala</option>
+                          <option value="Guinea">Guinea</option>
+                          <option value="Guyana">Guyana</option>
+                          <option value="Haiti">Haiti</option>
+                          <option value="Hawaii">Hawaii</option>
+                          <option value="Honduras">Honduras</option>
+                          <option value="Hong Kong">Hong Kong</option>
+                          <option value="Hungary">Hungary</option>
+                          <option value="Iceland">Iceland</option>
+                          <option value="Indonesia">Indonesia</option>
+                          <option value="India">India</option>
+                          <option value="Iran">Iran</option>
+                          <option value="Iraq">Iraq</option>
+                          <option value="Ireland">Ireland</option>
+                          <option value="Isle of Man">Isle of Man</option>
+                          <option value="Israel">Israel</option>
+                          <option value="Italy">Italy</option>
+                          <option value="Jamaica">Jamaica</option>
+                          <option value="Japan">Japan</option>
+                          <option value="Jordan">Jordan</option>
+                          <option value="Kazakhstan">Kazakhstan</option>
+                          <option value="Kenya">Kenya</option>
+                          <option value="Kiribati">Kiribati</option>
+                          <option value="Korea North">Korea North</option>
+                          <option value="Korea Sout">Korea South</option>
+                          <option value="Kuwait">Kuwait</option>
+                          <option value="Kyrgyzstan">Kyrgyzstan</option>
+                          <option value="Laos">Laos</option>
+                          <option value="Latvia">Latvia</option>
+                          <option value="Lebanon">Lebanon</option>
+                          <option value="Lesotho">Lesotho</option>
+                          <option value="Liberia">Liberia</option>
+                          <option value="Libya">Libya</option>
+                          <option value="Liechtenstein">Liechtenstein</option>
+                          <option value="Lithuania">Lithuania</option>
+                          <option value="Luxembourg">Luxembourg</option>
+                          <option value="Macau">Macau</option>
+                          <option value="Macedonia">Macedonia</option>
+                          <option value="Madagascar">Madagascar</option>
+                          <option value="Malaysia">Malaysia</option>
+                          <option value="Malawi">Malawi</option>
+                          <option value="Maldives">Maldives</option>
+                          <option value="Mali">Mali</option>
+                          <option value="Malta">Malta</option>
+                          <option value="Marshall Islands">Marshall Islands</option>
+                          <option value="Martinique">Martinique</option>
+                          <option value="Mauritania">Mauritania</option>
+                          <option value="Mauritius">Mauritius</option>
+                          <option value="Mayotte">Mayotte</option>
+                          <option value="Mexico">Mexico</option>
+                          <option value="Midway Islands">Midway Islands</option>
+                          <option value="Moldova">Moldova</option>
+                          <option value="Monaco">Monaco</option>
+                          <option value="Mongolia">Mongolia</option>
+                          <option value="Montserrat">Montserrat</option>
+                          <option value="Morocco">Morocco</option>
+                          <option value="Mozambique">Mozambique</option>
+                          <option value="Myanmar">Myanmar</option>
+                          <option value="Nambia">Nambia</option>
+                          <option value="Nauru">Nauru</option>
+                          <option value="Nepal">Nepal</option>
+                          <option value="Netherland Antilles">Netherland Antilles</option>
+                          <option value="Netherlands">Netherlands (Holland, Europe)</option>
+                          <option value="Nevis">Nevis</option>
+                          <option value="New Caledonia">New Caledonia</option>
+                          <option value="New Zealand">New Zealand</option>
+                          <option value="Nicaragua">Nicaragua</option>
+                          <option value="Niger">Niger</option>
+                          <option value="Nigeria">Nigeria</option>
+                          <option value="Niue">Niue</option>
+                          <option value="Norfolk Island">Norfolk Island</option>
+                          <option value="Norway">Norway</option>
+                          <option value="Oman">Oman</option>
+                          <option value="Pakistan">Pakistan</option>
+                          <option value="Palau Island">Palau Island</option>
+                          <option value="Palestine">Palestine</option>
+                          <option value="Panama">Panama</option>
+                          <option value="Papua New Guinea">Papua New Guinea</option>
+                          <option value="Paraguay">Paraguay</option>
+                          <option value="Peru">Peru</option>
+                          <option value="Phillipines">Philippines</option>
+                          <option value="Pitcairn Island">Pitcairn Island</option>
+                          <option value="Poland">Poland</option>
+                          <option value="Portugal">Portugal</option>
+                          <option value="Puerto Rico">Puerto Rico</option>
+                          <option value="Qatar">Qatar</option>
+                          <option value="Republic of Montenegro">Republic of Montenegro</option>
+                          <option value="Republic of Serbia">Republic of Serbia</option>
+                          <option value="Reunion">Reunion</option>
+                          <option value="Romania">Romania</option>
+                          <option value="Russia">Russia</option>
+                          <option value="Rwanda">Rwanda</option>
+                          <option value="St Barthelemy">St Barthelemy</option>
+                          <option value="St Eustatius">St Eustatius</option>
+                          <option value="St Helena">St Helena</option>
+                          <option value="St Kitts-Nevis">St Kitts-Nevis</option>
+                          <option value="St Lucia">St Lucia</option>
+                          <option value="St Maarten">St Maarten</option>
+                          <option value="St Pierre & Miquelon">St Pierre & Miquelon</option>
+                          <option value="St Vincent & Grenadines">St Vincent & Grenadines</option>
+                          <option value="Saipan">Saipan</option>
+                          <option value="Samoa">Samoa</option>
+                          <option value="Samoa American">Samoa American</option>
+                          <option value="San Marino">San Marino</option>
+                          <option value="Sao Tome & Principe">Sao Tome & Principe</option>
+                          <option value="Saudi Arabia">Saudi Arabia</option>
+                          <option value="Senegal">Senegal</option>
+                          <option value="Seychelles">Seychelles</option>
+                          <option value="Sierra Leone">Sierra Leone</option>
+                          <option value="Singapore">Singapore</option>
+                          <option value="Slovakia">Slovakia</option>
+                          <option value="Slovenia">Slovenia</option>
+                          <option value="Solomon Islands">Solomon Islands</option>
+                          <option value="Somalia">Somalia</option>
+                          <option value="South Africa">South Africa</option>
+                          <option value="Spain">Spain</option>
+                          <option value="Sri Lanka">Sri Lanka</option>
+                          <option value="Sudan">Sudan</option>
+                          <option value="Suriname">Suriname</option>
+                          <option value="Swaziland">Swaziland</option>
+                          <option value="Sweden">Sweden</option>
+                          <option value="Switzerland">Switzerland</option>
+                          <option value="Syria">Syria</option>
+                          <option value="Tahiti">Tahiti</option>
+                          <option value="Taiwan">Taiwan</option>
+                          <option value="Tajikistan">Tajikistan</option>
+                          <option value="Tanzania">Tanzania</option>
+                          <option value="Thailand">Thailand</option>
+                          <option value="Togo">Togo</option>
+                          <option value="Tokelau">Tokelau</option>
+                          <option value="Tonga">Tonga</option>
+                          <option value="Trinidad & Tobago">Trinidad & Tobago</option>
+                          <option value="Tunisia">Tunisia</option>
+                          <option value="Turkey">Turkey</option>
+                          <option value="Turkmenistan">Turkmenistan</option>
+                          <option value="Turks & Caicos Is">Turks & Caicos Is</option>
+                          <option value="Tuvalu">Tuvalu</option>
+                          <option value="Uganda">Uganda</option>
+                          <option value="United Kingdom">United Kingdom</option>
+                          <option value="Ukraine">Ukraine</option>
+                          <option value="United Arab Erimates">United Arab Emirates</option>
+                          <option value="United States of America" selected="selected">United States of America</option>
+                          <option value="Uraguay">Uruguay</option>
+                          <option value="Uzbekistan">Uzbekistan</option>
+                          <option value="Vanuatu">Vanuatu</option>
+                          <option value="Vatican City State">Vatican City State</option>
+                          <option value="Venezuela">Venezuela</option>
+                          <option value="Vietnam">Vietnam</option>
+                          <option value="Virgin Islands (Brit)">Virgin Islands (Brit)</option>
+                          <option value="Virgin Islands (USA)">Virgin Islands (USA)</option>
+                          <option value="Wake Island">Wake Island</option>
+                          <option value="Wallis & Futana Is">Wallis & Futana Is</option>
+                          <option value="Yemen">Yemen</option>
+                          <option value="Zaire">Zaire</option>
+                          <option value="Zambia">Zambia</option>
+                          <option value="Zimbabwe">Zimbabwe</option>
+                        </select>
+                        <p class="text-muted form-text mb-0">
+                          Country
+                        </p>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <button type="button" class="btn btn-secondary w-100" (click)="checkAddress(street1)"><u class="dotted">Validate Address</u> <fa-icon [icon]="street1.loading ? ['fas', 'spinner'] : (street1Input!=street1.street1Input || cityInput!=street1.cityInput || stateInput!=street1.stateInput || countryInput!=street1.countryInput || !validateClickedAddress) ? ['fas', 'minus'] : street1.badAddress ? ['fas', 'times'] : ['fas', 'check']" [spin]="street1.loading" [styles]="!street1.loading && !(street1Input!=street1.street1Input || cityInput!=street1.cityInput || stateInput!=street1.stateInput || countryInput!=street1.countryInput || !validateClickedAddress) ? street1.badAddress ? {'color': 'red'} : {'color': '7FFF00'} : ''"></fa-icon></button>
+                    </div>
+                    <div *ngIf="this.page==1 && this.haveAddress=='Yes' && (this.attemptNext || (street1.dirty || street1.touched || street2.dirty || street2.touched || city.dirty || city.touched || state.dirty || state.touched || zip.dirty || zip.touched || country.dirty || country.touched) || this.validateClickedAddress)">
+                      <div *ngIf="street1Input!=street1.street1Input || cityInput!=street1.cityInput || stateInput!=street1.stateInput || countryInput!=street1.countryInput || !validateClickedAddress" class="alert alert-danger">
+                        You must validate your address
+                      </div>
+                      <div *ngIf="!(street1Input!=street1.street1Input || cityInput!=street1.cityInput || stateInput!=street1.stateInput || countryInput!=street1.countryInput || !validateClickedAddress) && street1.badAddress" class="alert alert-danger">
+                        That is not a valid address
+                      </div>
+                    </div>
+                    <div *ngIf="!street1.loading && !(street1Input!=street1.street1Input || cityInput!=street1.cityInput || stateInput!=street1.stateInput || countryInput!=street1.countryInput || !validateClickedAddress) && !street1.badAddress" class="alert alert-info">
+                      Please make sure that the address above is correct
                     </div>
                   </div>
                   <div class="form-group">
@@ -368,24 +654,32 @@
 
               <div [className]="this.page==2 ? '':'hide-completely'">
                 <p>
-                  I authorize you to share my application/registration information for event administraion, ranking, MLH administration, pre- and post-event informational e-mails, and occasional messages about hackathons in-line with the MLH Privacy Policy, <a target="_blank" href="https://mlh.io/privacy">https://mlh.io/privacy</a>. I further agree to the terms of both the MLH Contest Terms and Conditions, <a target="_blank" href="https://github.com/MLH/mlh-policies/tree/master/prize-terms-and-conditions">https://github.com/MLH/mlh-policies/tree/master/prize-terms-and-conditions</a>, and the MLH Privacy Policy, <a target="_blank" href="https://mlh.io/privacy">https://mlh.io/privacy</a>.
+                  I have read and agree to the MLH Code of Conduct. I further agree to the terms of both the MLH Contest Terms and Conditions and the MLH Privacy Policy.</p>
+                <div class="custom-control custom-switch bottom-div">
+                  <input type="checkbox" class="custom-control-input" id="termsCodeOfConduct" name="termsCodeOfConduct" [(ngModel)]="termsCodeOfConduct" #codeOfConduct=ngModel>
+                  <label class="custom-control-label" for="termsCodeOfConduct">Yes!</label>
+                </div>
+                <div *ngIf="this.page==2 && this.attemptNext && !codeOfConduct.value" class="alert alert-danger">
+                  You must agree to the Terms and Conditions.
+                </div>
+                <p>
+                  I authorize you to share my application/registration information with Major League Hacking for event administration, ranking, and MLH administration in-line with the MLH Privacy Policy.”</p>
+                <div class="custom-control custom-switch bottom-div">
+                  <input type="checkbox" class="custom-control-input" id="termsMLH" name="termsMLH" [(ngModel)]="termsMLH" #mlh=ngModel>
+                  <label class="custom-control-label" for="termsMLH">Yes!</label>
+                </div>
+                <div *ngIf="this.page==2 && this.attemptNext && !mlh.value" class="alert alert-danger">
+                  You must agree to the MLH affiliation policy.
+                </div>
+                <p>
+                  I authorize Major League Hacking to send me occasional messages about hackathons including pre- and post-event informational emails.
                 </p>
                 <div class="custom-control custom-switch bottom-div">
                   <input type="checkbox" class="custom-control-input" id="termsDataSharing" name="termsDataSharing" [(ngModel)]="termsDataSharing" #dataSharing=ngModel>
                   <label class="custom-control-label" for="termsDataSharing">Yes!</label>
                 </div>
                 <div *ngIf="this.page==2 && this.attemptNext && !dataSharing.value" class="alert alert-danger">
-                  You must agree to the data policy
-                </div>
-                <p>
-                  By registering for hackPHS, you agree to follow the MLH Code of Conduct, and for hackPHS to use your information as described in the MLH Privacy Policy.
-                </p>
-                <div class="custom-control custom-switch bottom-div">
-                  <input type="checkbox" class="custom-control-input" id="termsCodeOfConduct" name="termsCodeOfConduct" [(ngModel)]="termsCodeOfConduct" #codeOfConduct=ngModel>
-                  <label class="custom-control-label" for="termsCodeOfConduct">Yes!</label>
-                </div>
-                <div *ngIf="this.page==2 && this.attemptNext && !codeOfConduct.value" class="alert alert-danger">
-                  You must agree to follow the Code of Conduct
+                  You must agree to the data sharing policy.
                 </div>
               </div>
 

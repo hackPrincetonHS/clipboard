@@ -1,7 +1,8 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
-import * as lodash from 'lodash'
+import * as lodash from 'lodash';
+import xml2js from 'xml2js';
 import { catchError } from 'rxjs/operators';
 import { AuthService } from  '../auth/auth.service';
 import { StorageService, UserData, Upload } from '../storage/storage.service';
@@ -42,6 +43,13 @@ export class RegistrationFormComponent implements OnInit {
   shirtSize;
   haveGithub;
   haveResume;
+  haveAddress;
+  street1Input;
+  street2Input;
+  cityInput;
+  stateInput;
+  zipInput;
+  countryInput;
   dietaryRestrictions;
   usingHardware;
   githubLinkInput;
@@ -49,9 +57,13 @@ export class RegistrationFormComponent implements OnInit {
   hardwareInputText;
   termsDataSharing;
   termsCodeOfConduct;
+  termsMLH;
   satisfactionRange;
   questionsComments;
   latino;
+
+  zip4;
+  deliveryPoint;
 
   resumeFile;
 
@@ -62,14 +74,16 @@ export class RegistrationFormComponent implements OnInit {
 
   hardwareList=Utils.hardwareList;
 
-  validateClicked=false;
+  validateClickedGithub=false;
+
+  validateClickedAddress=false;
 
   constructor(private cdr: ChangeDetectorRef, private httpClient: HttpClient, public authService:  AuthService, public userData: UserData, public storageService: StorageService, public upload: Upload) { }
 
   ngOnInit() {
     this.haveGithub="No";
     this.haveResume="No";
-    this.usingHardware="No";
+    this.haveAddress="No";
     this.checkGithubProfile=lodash.throttle(this.sendCheckGithubProfile, 2000);
   }
 
@@ -130,12 +144,17 @@ export class RegistrationFormComponent implements OnInit {
     self.userData.specialAccomadations=self.specialAccomadations;
     self.userData.shirtSize=self.shirtSize;
     self.userData.dietaryRestrictions=self.dietaryRestrictions;
+    if(self.haveAddress=="Yes"){
+      self.userData.street1=self.street1Input;
+      self.userData.street2=self.street2Input;
+      self.userData.city=self.cityInput;
+      self.userData.state=self.stateInput;
+      self.userData.zip5=self.zipInput;
+      self.userData.zip4=self.zip4;
+      self.userData.deliveryPoint=self.deliveryPoint;
+    }
     if(self.haveGithub=="Yes"){
       self.userData.githubLink=this.githubLinkInput;
-    }
-    if(self.usingHardware=="Yes"){
-      self.userData.hardware=self.hardwareInput;
-      self.userData.hardwareOther=self.hardwareInputText;
     }
     if(self.satisfactionRange===undefined){
       self.userData.satisfaction=50;
@@ -193,7 +212,7 @@ export class RegistrationFormComponent implements OnInit {
     return true
   }
   sendCheckGithubProfile(gitlink){
-    this.validateClicked=true;
+    this.validateClickedGithub=true;
     //console.log(this.resumeFile);
     if(!gitlink.errors){
       var smallString=gitlink.value;
@@ -206,5 +225,57 @@ export class RegistrationFormComponent implements OnInit {
       gitlink.badProfile=true;
     }
   }
+  checkAddress(street1){
+    this.validateClickedAddress=true;
+    let obj = {
+      "AddressValidateRequest": {
+        $: {
+          "USERID": "557COMPU2757"
+        },
+        "Revision" : "1",
+        "Address": {
+          $: {
+            "ID": "0"
+          },
+          "Address1" : {},
+          "Address2" : {_ : this.street1Input ? this.street1Input : ""},
+          "City" : {_ : this.cityInput ? this.cityInput : ""},
+          "State" : {_ : this.stateInput ? this.stateInput : ""},
+          "Zip5" : {_ : this.zipInput ? this.zipInput : ""},
+          "Zip4" : {},
+        }
+      }
+    };
+    var builder = new xml2js.Builder({headless: true, renderOpts: {pretty : false}});
+    var parser = new xml2js.Parser();
 
+    var result=`http://production.shippingapis.com/ShippingAPI.dll?API=Verify&XML=`+builder.buildObject(obj);
+    street1.loading=true;
+    this.httpClient.get(result, {responseType: 'text'}).subscribe(data => {
+      parser.parseString(data, (err, data) => {
+        //console.log(data);
+        if(this.countryInput!="United States of America"){
+          street1.badAddress=false;
+        } else if(!data.Error || !data.AddressValidateResponse.Address[0].Error){
+          this.street1Input=data.AddressValidateResponse.Address[0].Address2;
+          this.cityInput=data.AddressValidateResponse.Address[0].City;
+          this.stateInput=data.AddressValidateResponse.Address[0].State;
+          this.zipInput=data.AddressValidateResponse.Address[0].Zip5;
+          this.zip4=data.AddressValidateResponse.Address[0].Zip4;
+          this.deliveryPoint=data.AddressValidateResponse.Address[0].DeliveryPoint;
+          street1.badAddress=false;
+        } else {
+          street1.badAddress=true;
+        }
+        //console.log(this.zip4);
+        //console.log(this.deliveryPoint);
+        street1.loading=false;
+        street1.street1Input=this.street1Input;
+        street1.cityInput=this.cityInput;
+        street1.stateInput=this.stateInput;
+        street1.zipInput=this.zipInput;
+        street1.countryInput=this.countryInput;
+      });
+    });
+  }
 }

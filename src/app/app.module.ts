@@ -20,9 +20,8 @@ import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { StorageService, UserData, Upload } from './storage/storage.service';
-import { EditInfoComponent } from './edit-info/edit-info.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import './utils/string.extensions'
+import './utils/string.extensions';
 
 
 var firebaseConfig = {
@@ -43,7 +42,6 @@ var firebaseConfig = {
     OcticonDirective,
     LoginComponent,
     DashboardComponent,
-    EditInfoComponent,
     ResetPasswordComponent
   ],
   imports: [
