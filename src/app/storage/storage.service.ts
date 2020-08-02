@@ -38,6 +38,7 @@ export class StorageService {
   }
 }
 
+@Injectable()
 export class UserData {
   uid : string;
   firstName : string;
@@ -70,6 +71,7 @@ export class UserData {
   dateCreated : firestore.Timestamp;
 }
 
+@Injectable()
 export class Upload {
   progress: Observable<number>;
   file;
