@@ -9,8 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { DigitOnlyModule } from '@uiowa/digit-only';
 import { HttpClientModule } from '@angular/common/http';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
-import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome'
 import { faSpinner, faMinus, faCheck, faTimes, faPen, faExternalLinkAlt, faInfoCircle, faCog } from '@fortawesome/free-solid-svg-icons';
 import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
@@ -22,7 +21,6 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { UserData, Upload } from './storage/storage.service';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import './utils/string.extensions';
-
 
 var firebaseConfig = {
     apiKey: "AIzaSyDzlH7XeqauTFE9PYpg9FYJizcOiUqd-U4",
@@ -62,16 +60,16 @@ var firebaseConfig = {
   exports: [AppRoutingModule]
 })
 export class AppModule {
-  constructor() {
+  constructor(library: FaIconLibrary) {
     // Add an icon to the library for convenient access in other components
-    library.add(faSpinner);
-    library.add(faMinus);
-    library.add(faCheck);
-    library.add(faTimes);
-    library.add(faPen);
-    library.add(faExternalLinkAlt);
-    library.add(faInfoCircle);
-    library.add(faCog);
+    library.addIcons(faSpinner);
+    library.addIcons(faMinus);
+    library.addIcons(faCheck);
+    library.addIcons(faTimes);
+    library.addIcons(faPen);
+    library.addIcons(faExternalLinkAlt);
+    library.addIcons(faInfoCircle);
+    library.addIcons(faCog);
 
   }
 }

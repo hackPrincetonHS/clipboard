@@ -39,15 +39,15 @@
                       <div class="row phone-header">
                         <div class="col-3 padding-right-0">
                           <label for="inputPhone1" class="req-label-text">Phone</label>
-                          <input (input)="autoTab($event,'inputPhone2')" type="tel" name="inputPhone1" id="inputPhone1" placeholder="555" maxlength="3" required inputmode="numeric" (focus)="phone1.active = true" (blur)="phone1.active = false" pattern="[0-9]{3}" digitOnly class="form-control" [(ngModel)]="inputPhone1" #phone1="ngModel">
+                          <input (input)="autoTab($event,'inputPhone2')" type="tel" name="inputPhone1" id="inputPhone1" placeholder="555" maxlength="3" required inputmode="numeric" (focus)="phone1.active = true" (blur)="phone1.active = false" digitOnly class="form-control" [(ngModel)]="inputPhone1" #phone1="ngModel">
                         </div>
                         <div class="phone-dash">-</div>
                         <div class="col-3 padding-0">
-                          <input (input)="autoTab($event,'inputPhone3')" type="tel" name="inputPhone2" id="inputPhone2" placeholder="555" maxlength="3" required inputmode="numeric" (focus)="phone2.active = true" (blur)="phone2.active = false" pattern="[0-9]{3}" digitOnly class="form-control" [(ngModel)]="inputPhone2" #phone2="ngModel">
+                          <input (input)="autoTab($event,'inputPhone3')" type="tel" name="inputPhone2" id="inputPhone2" placeholder="555" maxlength="3" required inputmode="numeric" (focus)="phone2.active = true" (blur)="phone2.active = false" digitOnly class="form-control" [(ngModel)]="inputPhone2" #phone2="ngModel">
                         </div>
                         <div class="phone-dash">-</div>
                         <div class="col-4 padding-0">
-                          <input type="tel" name="inputPhone3" id="inputPhone3" placeholder="5555" maxlength="4" required inputmode="numeric" (focus)="phone3.active = true" (blur)="phone3.active = false" pattern="[0-9]{4}" digitOnly class="form-control" [(ngModel)]="inputPhone3" #phone3="ngModel">
+                          <input type="tel" name="inputPhone3" id="inputPhone3" placeholder="5555" maxlength="4" required inputmode="numeric" (focus)="phone3.active = true" (blur)="phone3.active = false" digitOnly class="form-control" [(ngModel)]="inputPhone3" #phone3="ngModel">
                         </div>
                       </div>
                       <div *ngIf="this.page==1 && (phone1.errors || phone2.errors || phone3.errors) && (this.attemptNext || phone1.dirty || phone1.touched || phone2.dirty || phone2.touched || phone3.dirty || phone3.dirty) && !(phone1.active || phone2.active || phone3.active)">
@@ -62,19 +62,19 @@
                       <label for="inputPhone1" class="req-label-text">Date of Birth</label>
                       <div class="row phone-header">
                         <div class="col-3">
-                          <input type="tel" name="inputMonth" id="inputMonth" aria-described-by="month-help" placeholder="3" maxlength="12" required pattern="([1-9]|1[0-2])" inputmode="numeric" (focus)="month.active = true" (blur)="month.active = false" digitOnly class="form-control" [(ngModel)]="inputMonth" #month="ngModel">
+                          <input type="tel" name="inputMonth" id="inputMonth" aria-described-by="month-help" placeholder="3" maxlength="2" required inputmode="numeric" (focus)="month.active = true" (blur)="month.active = false" digitOnly class="form-control" [(ngModel)]="inputMonth" #month="ngModel">
                           <p id="month-help" class="form-text text-muted">
                             Month
                           </p>
                         </div>
                         <div class="col-3">
-                          <input type="tel" name="inputDay" id="inputDay" aria-described-by="day-help" placeholder="25" maxlength="2" required pattern="([1-9]|[12][0-9]|3[01])" inputmode="numeric" (focus)="day.active = true" (blur)="day.active = false" digitOnly class="form-control" [(ngModel)]="inputDay" #day="ngModel">
+                          <input type="tel" name="inputDay" id="inputDay" aria-described-by="day-help" placeholder="25" maxlength="2" required inputmode="numeric" (focus)="day.active = true" (blur)="day.active = false" digitOnly class="form-control" [(ngModel)]="inputDay" #day="ngModel">
                           <p id="day-help" class="form-text text-muted">
                             Day
                           </p>
                         </div>
                         <div class="col-4">
-                          <input type="tel" name="inputYear" id="inputYear" aria-described-by="year-help" placeholder="2003" maxlength="4" required pattern="(19[4-8][0-9]|199[0-9]|200[0-9]|201[0-9])" inputmode="numeric" (focus)="year.active = true" (blur)="year.active = false" digitOnly class="form-control" [(ngModel)]="inputYear" #year="ngModel">
+                          <input type="tel" name="inputYear" id="inputYear" aria-described-by="year-help" placeholder="2003" maxlength="4" required inputmode="numeric" (focus)="year.active = true" (blur)="year.active = false" digitOnly class="form-control" [(ngModel)]="inputYear" #year="ngModel">
                           <p id="day-help" class="form-text text-muted">
                             Year
                           </p>
