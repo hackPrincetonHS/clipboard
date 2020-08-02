@@ -21,7 +21,6 @@
     "@angular/platform-browser-dynamic": "^9.1.12",
     "@angular/router": "^9.1.12",
     "@fortawesome/angular-fontawesome": "^0.7.0",
-
     "@types/jquery": "^3.5.1",
     "@uiowa/digit-only": "^2.1.0",
     "add": "^2.0.6",
