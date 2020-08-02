@@ -1,6 +1,6 @@
 import { Injectable } from  '@angular/core';
+import {Observable} from 'rxjs';
 import { Router } from  "@angular/router";
-import { auth } from  'firebase/app';
 import { AngularFireAuth } from  "@angular/fire/auth";
 import { User } from  'firebase';
 
@@ -9,20 +9,12 @@ import { User } from  'firebase';
 })
 export  class  AuthService {
   user: User;
-  constructor(public  afAuth:  AngularFireAuth, public  router:  Router) {
-    this.afAuth.authState.subscribe(user => {
-      if (user) {
-        this.user = user;
-        localStorage.setItem('user', JSON.stringify(this.user));
-      } else {
-        localStorage.setItem('user', null);
-      }
-    })
-  }
-  async  login(email:  string, password:  string, alertToActivate) {
 
+  constructor(public  afAuth:  AngularFireAuth, public  router:  Router) {}
+  async  login(email:  string, password:  string, alertToActivate) {
     try {
-      await  this.afAuth.auth.signInWithEmailAndPassword(email, password)
+      this.user = (await this.afAuth.auth.signInWithEmailAndPassword(email, password)).user;
+      localStorage.setItem('user', JSON.stringify(this.user));
       this.router.navigate(['dashboard']);
     } catch (e) {
       alertToActivate.value=e.message;
@@ -30,10 +22,13 @@ export  class  AuthService {
     }
   }
   async  register(email:  string, password:  string, alertToActivate) {
+    console.log("here")
     try {
-      await  this.afAuth.auth.createUserWithEmailAndPassword(email, password)
+      this.user = (await  this.afAuth.auth.createUserWithEmailAndPassword(email, password)).user;
+      localStorage.setItem('user', JSON.stringify(this.user));
       this.router.navigate(['registration-form']);
     } catch (e) {
+      console.log(e);
       alertToActivate.value=e.message;
     }
   }
@@ -70,6 +65,6 @@ export  class  AuthService {
   async logout(){
     await this.afAuth.auth.signOut();
     localStorage.removeItem('user');
-    this.router.navigate(['/login']);
+    this.router.navigate(['login']);
   }
 }

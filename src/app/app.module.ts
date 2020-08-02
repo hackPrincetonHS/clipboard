@@ -19,7 +19,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AngularFireStorageModule } from '@angular/fire/storage';
-import { StorageService, UserData, Upload } from './storage/storage.service';
+import { UserData, Upload } from './storage/storage.service';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import './utils/string.extensions';
 
@@ -58,7 +58,8 @@ var firebaseConfig = {
     AngularFireStorageModule
   ],
   providers: [ UserData, Upload],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [AppRoutingModule]
 })
 export class AppModule {
   constructor() {

@@ -1,7 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from  '@angular/core';
 import { AuthService } from  '../auth/auth.service';
 import { Router } from  "@angular/router";
-import * as lodash from 'lodash'
 
 
 import {
@@ -73,7 +72,6 @@ export  class  LoginComponent  implements  OnInit {
       this.registerShown=false;
     }
     clickButtonLogin(userEmail, userPassword) {
-      console.log("here");
       this.badLoginAlert.value="false";
       if(this.register) {
         this.register=false;
@@ -97,7 +95,6 @@ export  class  LoginComponent  implements  OnInit {
       } else {
         this.badLoginAlert.value="false";
       }
-      console.log(this.loading);
       this.register=true;
       this.registerShown=true;
     }
