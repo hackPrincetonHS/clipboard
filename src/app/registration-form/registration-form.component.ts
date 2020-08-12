@@ -249,7 +249,7 @@ export class RegistrationFormComponent implements OnInit {
     var builder = new xml2js.Builder({headless: true, renderOpts: {pretty : false}});
     var parser = new xml2js.Parser();
 
-    var result=`http://production.shippingapis.com/ShippingAPI.dll?API=Verify&XML=`+builder.buildObject(obj);
+    var result=`https://secure.shippingapis.com/ShippingAPI.dll?API=Verify&XML=`+builder.buildObject(obj);
     street1.loading=true;
     this.httpClient.get(result, {responseType: 'text'}).subscribe(data => {
       parser.parseString(data, (err, data) => {
