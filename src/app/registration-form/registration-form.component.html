@@ -644,10 +644,46 @@
                       Please make sure that the address above is correct
                     </div>
                   </div>
+                  <!-- Accomodations -->
                   <div class="form-group">
                     <label for="specialAccomadations">Please list any special accommodations you may require (e.g. late arrival, early departure)</label>
                     <textarea class="form-control" id="specialAccomadations" name="specialAccomadations" rows="3" [(ngModel)]="specialAccomadations" #accomadations=ngModel></textarea>
                   </div>
+                  <!-- Accomodations -->
+                  
+                  
+				<!-- Vaccination Card-->
+				<div class="form-row">
+					<div class="col-md-4 minheight86">
+						<label for="haveVaccinationNo" class="full-width-dropdown">Do you have a vaccination card?</label>
+						<div class="form-check-inline">
+						<input class="form-check-input" type="radio" name="haveVaccination" id="noHaveVaccination" value="No" [(ngModel)]="haveVaccination">
+						<label class="form-check-label" for="noHaveVaccination">
+							No
+						</label>
+						</div>
+						<div class="form-check-inline">
+						<input class="form-check-input" type="radio" name="haveVaccination" id="yesHaveVaccination" value="Yes" [(ngModel)]="haveVaccination">
+						<label class="form-check-label" for="yesHaveVaccination">
+							Yes
+						</label>
+						</div>
+					</div>
+					<div [className]="this.haveVaccination=='Yes' ? ' col-md-8 full-width-dropdown' : 'hide-completely col-md-8 full-width-dropdown'">
+
+						<p>Enter Link(of vaccination card)</p>
+						<div class="input-group">
+							<!-- Input based on: <input type="text" class="form-control" placeholder="https://github.com/hackPrincetonHS" id="githubLinkInput" pattern="http(s)?:\/\/(www\.)?github\.com\/[A-z0-9_-]+\/?" required maxlength="200" [(ngModel)]="githubLinkInput" (focus)="githubLink.active = true" (blur)="githubLink.active = false" name="githubLinkInput" #githubLink="ngModel">-->
+							<input type="text" class="form-control" placeholder="" id="vaccinationCardLinkInput" pattern="" required maxlength="200" [(ngModel)]="vaccinationCardLinkInput" name="vaccinationCardLinkInput" #vaccinationLink="ngModel">
+						</div>
+
+					</div>
+				</div>
+				<!-- Vaccination Card-->
+                  
+                  
+                  
+
                 </div>
               </div>
 

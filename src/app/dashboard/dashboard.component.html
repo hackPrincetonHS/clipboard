@@ -98,7 +98,9 @@
                       <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Github Link' : ''" [value]="this.loaded ? this.userData.githubLink ? this.userData.githubLink : 'None' : ''">
                       <a *ngIf="this.userData.githubLink" [href]="this.userData.githubLink" target="_blank">
                         <div class="input-group-append">
-                          <span class="input-group-text" id="basic-addon2"><fa-icon class='ng-fa-icon' [icon]="['fas', 'external-link-alt']"></fa-icon></span>
+                          <span class="input-group-text" id="basic-addon2">
+                            <fa-icon class='ng-fa-icon' [icon]="['fas', 'external-link-alt']"></fa-icon>
+                          </span>
                         </div>
                       </a>
                     </div>
@@ -111,7 +113,9 @@
                       <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Resume Link' : ''" [value]="this.loaded ? (this.resumeLink | async) : ''">
                       <a [href]="this.resumeLink | async" target="_blank">
                         <div class="input-group-append">
-                          <span class="input-group-text" id="basic-addon2"><fa-icon class='ng-fa-icon' [icon]="['fas', 'external-link-alt']"></fa-icon></span>
+                          <span class="input-group-text" id="basic-addon2">
+                            <fa-icon class='ng-fa-icon' [icon]="['fas', 'external-link-alt']"></fa-icon>
+                          </span>
                         </div>
                       </a>
                     </div>

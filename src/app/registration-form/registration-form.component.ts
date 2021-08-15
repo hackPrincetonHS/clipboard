@@ -41,7 +41,11 @@ export class RegistrationFormComponent implements OnInit {
   graduationYear;
   specialAccomadations;
   shirtSize;
+
+  // basing "have vaccination" on haveGithub
   haveGithub;
+  haveVaccination;
+
   haveResume;
   haveAddress;
   street1Input;
@@ -52,7 +56,11 @@ export class RegistrationFormComponent implements OnInit {
   countryInput;
   dietaryRestrictions;
   usingHardware;
+  
+  // basing "vaccination input" on githubLink
   githubLinkInput;
+  vaccinationCardLinkInput;  
+
   hardwareInput;
   hardwareInputText;
   termsDataSharing;
@@ -77,11 +85,16 @@ export class RegistrationFormComponent implements OnInit {
   validateClickedGithub=false;
 
   validateClickedAddress=false;
+  
 
   constructor(private cdr: ChangeDetectorRef, private httpClient: HttpClient, public authService:  AuthService, public userData: UserData, public storageService: StorageService, public upload: Upload) { }
 
   ngOnInit() {
     this.haveGithub="No";
+    
+    // Initialize Vaccination status as "no"
+    this.haveVaccination="No";
+
     this.haveResume="No";
     this.haveAddress="No";
     this.checkGithubProfile=lodash.throttle(this.sendCheckGithubProfile, 2000);
@@ -156,6 +169,13 @@ export class RegistrationFormComponent implements OnInit {
     if(self.haveGithub=="Yes"){
       self.userData.githubLink=this.githubLinkInput;
     }
+    
+    // Check if user has checked "Yes" for a vaccination card
+    if(self.haveVaccination=="Yes"){
+      self.userData.vaccinationLink=this.vaccinationCardLinkInput;
+      console.log("Have vaccination checked, with link of: " + self.userData.vaccinationLink);
+    }
+
     if(self.satisfactionRange===undefined){
       self.userData.satisfaction=50;
     } else {
