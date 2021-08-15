@@ -200,11 +200,11 @@
                     <div class="col-md full-width-dropdown">
                       <label for="graduationYear" class="req-label-text">Expected Graduation Year</label>
                       <select class="selectpicker" id="graduationYear" name="graduationYear" title="Nothing Selected" data-width="100%" [(ngModel)]="graduationYear" #graduation=ngModel>
-                        <option>2020</option>
-                        <option>2021</option>
                         <option>2022</option>
                         <option>2023</option>
-                        <option>After 2023</option>
+                        <option>2024</option>
+                        <option>2025</option>
+                        <option>After 2025</option>
                       </select>
                       <div *ngIf="this.page==1 && this.attemptNext && graduation.pristine" class="alert alert-danger">
                         You must select a graduation year

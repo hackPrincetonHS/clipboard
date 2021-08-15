@@ -174,6 +174,8 @@ export class RegistrationFormComponent implements OnInit {
     if(self.haveVaccination=="Yes"){
       self.userData.vaccinationLink=this.vaccinationCardLinkInput;
       console.log("Have vaccination checked, with link of: " + self.userData.vaccinationLink);
+    }else{
+      self.userData.vaccinationLink="None";
     }
 
     if(self.satisfactionRange===undefined){
