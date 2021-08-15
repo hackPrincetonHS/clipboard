@@ -56,6 +56,10 @@ export class UserData {
   shirtSize : string;
   dietaryRestrictions : string;
   githubLink : string;
+  
+  // adding reference for vaccination link:
+  vaccinationLink: string;  
+
   satisfaction : number;
   latino: boolean;
   questionsComments : string;

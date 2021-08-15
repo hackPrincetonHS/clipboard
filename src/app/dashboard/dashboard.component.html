@@ -1,157 +1,169 @@
 <div *ngIf="!this.loaded" class="overlay"></div>
 <div [class]="this.loaded ? 'content' : 'content no-scroll'">
-  <div class="container">
-    <div class="row">
-      <div class="col">
-        <div class="card">
-          <div class="card-header">
-            <h4 class="card-title">Profile</h4>
-          </div>
-          <div class="card-body">
-            <form>
-              <div class="form-row">
-                <div class="col">
-                  <div class="form-group">
-                    <label>First Name</label>
-                    <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'First' : ''" [value]="this.loaded ? this.userData.firstName : ''">
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="form-group">
-                    <label class="req-label-text">Last Name</label>
-                    <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Last' : ''" [value]="this.loaded ? this.userData.lastName : ''">
-                  </div>
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="col-sm">
-                  <div class="form-group">
-                    <label>Email</label>
-                    <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Email' : ''" [value]="this.loaded ? this.authService.userEmail : ''">
-                  </div>
-                </div>
-                <div class="col-sm">
-                  <div class="form-group">
-                    <label>Phone</label>
-                    <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Phone' : ''" [value]="this.loaded ? this.userData.phone : ''">
-                  </div>
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <label>Date of Birth</label>
-                    <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'D.O.B' : ''" [value]="this.loaded ? formatDate() : ''">
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <label>Hispanic/Latino</label>
-                    <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Ethnicity' : ''" [value]="this.loaded ? this.userData.latino ? 'Yes' : 'No' : ''">
-                  </div>
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="col-sm">
-                  <div class="form-group">
-                    <label>Gender</label>
-                    <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Gender' : ''" [value]="this.loaded ? this.userData.gender : ''">
-                  </div>
-                </div>
-                <div class="col-sm">
-                  <div class="form-group">
-                    <label>Race/Ethnicity</label>
-                    <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Ethnicity' : ''" [value]="this.loaded ? this.arrayAsString(this.userData.ethnicity) : ''">
-                  </div>
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="col-sm">
-                  <div class="form-group">
-                    <label>School</label>
-                    <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'School' : ''" [value]="this.loaded ? this.userData.school : ''">
-                  </div>
-                </div>
-                <div *ngIf="userData.schoolNotInList" class="col-sm align-sm-to-text">
-                  We will contact you by email to confirm your school
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="col-sm">
-                  <div class="form-group">
-                    <label>Level Of Study</label>
-                    <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Level of Study' : ''" [value]="this.loaded ? this.userData.studyLevel : ''">
-                  </div>
-                </div>
-                <div class="col-sm">
-                  <div class="form-group">
-                    <label>Expected Graduation Year</label>
-                    <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Graduation Year' : ''" [value]="this.loaded ? this.userData.graduationYear : ''">
-                  </div>
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="col-md">
-                  <div class="form-group">
-                    <label>Github Profile</label>
-                    <div class="input-group">
-                      <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Github Link' : ''" [value]="this.loaded ? this.userData.githubLink ? this.userData.githubLink : 'None' : ''">
-                      <a *ngIf="this.userData.githubLink" [href]="this.userData.githubLink" target="_blank">
-                        <div class="input-group-append">
-                          <span class="input-group-text" id="basic-addon2">
-                            <fa-icon class='ng-fa-icon' [icon]="['fas', 'external-link-alt']"></fa-icon>
-                          </span>
-                        </div>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md">
-                  <div *ngIf="this.userData.hasResume" class="form-group">
-                    <label>View Resume</label>
-                    <div class="input-group">
-                      <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Resume Link' : ''" [value]="this.loaded ? (this.resumeLink | async) : ''">
-                      <a [href]="this.resumeLink | async" target="_blank">
-                        <div class="input-group-append">
-                          <span class="input-group-text" id="basic-addon2">
-                            <fa-icon class='ng-fa-icon' [icon]="['fas', 'external-link-alt']"></fa-icon>
-                          </span>
-                        </div>
-                      </a>
-                    </div>
-                  </div>
-                  <div *ngIf="!this.userData.hasResume" data-toggle="modal" data-target="#changeResumeModal" class="align-md-to-text d-flex justify-content-center">
-                    <button type="button" class="btn btn-outline-danger">No Resume</button>
-                  </div>
-                </div>
-              </div>
-              <hr class="seperator">
-              <div class="form-row">
-                <div class="col-sm">
-                  <div class="form-group">
-                    <label>T-Shirt Size</label>
-                    <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Shirt Size' : ''" [value]="this.loaded ? toFullSizeWord(this.userData.shirtSize) : ''">
-                  </div>
-                </div>
-                <div class="col-sm">
-                  <div class="form-group">
-                    <label>Dietary Restrictions</label>
-                    <input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Restriction' : ''" [value]="this.loaded ? this.arrayAsString(this.userData.dietaryRestrictions) : ''">
-                  </div>
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="col-sm">
-                  <div class="form-group">
-                    <label>Special Accomdations</label>
-                    <textarea disabled [placeholder]="this.loaded ? 'None' : ''" [value]="this.loaded ? this.userData.specialAccomadations : ''" class="form-control" rows="3"></textarea>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<div class="card">
+					<div class="card-header">
+						<h4 class="card-title">Profile</h4>
+					</div>
+					<div class="card-body">
+						<form>
+							<div class="form-row">
+								<div class="col">
+									<div class="form-group">
+										<label>First Name</label>
+										<input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'First' : ''" [value]="this.loaded ? this.userData.firstName : ''">
+									</div>
+								</div>
+								<div class="col">
+									<div class="form-group">
+										<label class="req-label-text">Last Name</label>
+										<input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Last' : ''" [value]="this.loaded ? this.userData.lastName : ''">
+									</div>
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="col-sm">
+									<div class="form-group">
+										<label>Email</label>
+										<input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Email' : ''" [value]="this.loaded ? this.authService.userEmail : ''">
+									</div>
+								</div>
+								<div class="col-sm">
+									<div class="form-group">
+										<label>Phone</label>
+										<input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Phone' : ''" [value]="this.loaded ? this.userData.phone : ''">
+									</div>
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label>Date of Birth</label>
+										<input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'D.O.B' : ''" [value]="this.loaded ? formatDate() : ''">
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label>Hispanic/Latino</label>
+										<input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Ethnicity' : ''" [value]="this.loaded ? this.userData.latino ? 'Yes' : 'No' : ''">
+									</div>
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="col-sm">
+									<div class="form-group">
+										<label>Gender</label>
+										<input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Gender' : ''" [value]="this.loaded ? this.userData.gender : ''">
+									</div>
+								</div>
+								<div class="col-sm">
+									<div class="form-group">
+										<label>Race/Ethnicity</label>
+										<input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Ethnicity' : ''" [value]="this.loaded ? this.arrayAsString(this.userData.ethnicity) : ''">
+									</div>
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="col-sm">
+									<div class="form-group">
+										<label>School</label>
+										<input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'School' : ''" [value]="this.loaded ? this.userData.school : ''">
+									</div>
+								</div>
+								<div *ngIf="userData.schoolNotInList" class="col-sm align-sm-to-text">
+									We will contact you by email to confirm your school
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="col-sm">
+									<div class="form-group">
+										<label>Level Of Study</label>
+										<input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Level of Study' : ''" [value]="this.loaded ? this.userData.studyLevel : ''">
+									</div>
+								</div>
+								<div class="col-sm">
+									<div class="form-group">
+										<label>Expected Graduation Year</label>
+										<input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Graduation Year' : ''" [value]="this.loaded ? this.userData.graduationYear : ''">
+									</div>
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="col-md">
+									<div class="form-group">
+										<label>Github Profile</label>
+										<div class="input-group">
+											<input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Github Link' : ''" [value]="this.loaded ? this.userData.githubLink ? this.userData.githubLink : 'None' : ''">
+											<a *ngIf="this.userData.githubLink" [href]="this.userData.githubLink" target="_blank">
+												<div class="input-group-append">
+													<span class="input-group-text" id="basic-addon2">
+														<fa-icon class='ng-fa-icon' [icon]="['fas', 'external-link-alt']"></fa-icon>
+													</span>
+												</div>
+											</a>
+										</div>
+									</div>
+								</div>
+								<div class="col-md">
+									<div *ngIf="this.userData.hasResume" class="form-group">
+										<label>View Resume</label>
+										<div class="input-group">
+											<input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Resume Link' : ''" [value]="this.loaded ? (this.resumeLink | async) : ''">
+											<a [href]="this.resumeLink | async" target="_blank">
+												<div class="input-group-append">
+													<span class="input-group-text" id="basic-addon2">
+														<fa-icon class='ng-fa-icon' [icon]="['fas', 'external-link-alt']"></fa-icon>
+													</span>
+												</div>
+											</a>
+										</div>
+									</div>
+									<div *ngIf="!this.userData.hasResume" data-toggle="modal" data-target="#changeResumeModal" class="align-md-to-text d-flex justify-content-center">
+										<button type="button" class="btn btn-outline-danger">No Resume</button>
+									</div>
+								</div>
+							</div>
+							<hr class="seperator">
+							<div class="form-row">
+								<div class="col-sm">
+									<div class="form-group">
+										<label>T-Shirt Size</label>
+										<input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Shirt Size' : ''" [value]="this.loaded ? toFullSizeWord(this.userData.shirtSize) : ''">
+									</div>
+								</div>
+								<div class="col-sm">
+									<div class="form-group">
+										<label>Dietary Restrictions</label>
+										<input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Restriction' : ''" [value]="this.loaded ? this.arrayAsString(this.userData.dietaryRestrictions) : ''">
+									</div>
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="col-sm">
+									<div class="form-group">
+										<label>Special Accomdations</label>
+										<textarea disabled [placeholder]="this.loaded ? 'None' : ''" [value]="this.loaded ? this.userData.specialAccomadations : ''" class="form-control" rows="3"></textarea>
+									</div>
+								</div>
+							</div>
+							
+							<!-- Adding in a place to show vaccination status -->							
+							<div class="form-row">
+								<div class="col-sm">
+									<div class="form-group">
+										<label>Vaccination</label>
+										<textarea disabled [placeholder]="this.loaded ? 'None' : ''" [value]="this.loaded ? this.userData.vaccinationLink: ''" class="form-control" ></textarea>
+									</div>
+								</div>
+							</div>
+
+
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
