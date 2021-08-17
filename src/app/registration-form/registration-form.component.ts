@@ -128,7 +128,7 @@ export class RegistrationFormComponent implements OnInit {
     }
     //convert to truthy/falsy (not not)
     self.userData.hasResume=!!self.resumeFile;
-    self.userData.hasVaccination=!!self.hasVaccination
+    self.userData.hasVaccination=!!self.vaccinationFile;
 
     self.userData.isFullyLoggedIn=true;
     self.userData.uid=self.authService.userUid;
@@ -182,7 +182,7 @@ export class RegistrationFormComponent implements OnInit {
     self.storageService.createUser(self.userData);
   }
   submittingWithFile(){
-    if(this.haveResume && !this.haveVaccination){
+    if(this.haveResume=="Yes" && this.haveVaccination=="No"){
       this.uploadResume.file=this.resumeFile;
       this.storageService.uploadFile(this.uploadResume, "resumes");
       this.uploadResume.progress.subscribe((x) => {
@@ -190,7 +190,7 @@ export class RegistrationFormComponent implements OnInit {
       });
       this.uploadResume.progress.pipe(filter((x: number) => x==100)).subscribe(() =>  lodash.delay(this.restOfSubmitting, 1000,this))
     }
-    if(this.haveVaccination && !this.haveResume) {
+    if(this.haveVaccination=="Yes" && this.haveResume=="No") {
       this.uploadVaccination.file=this.vaccinationFile;
       this.storageService.uploadFile(this.uploadVaccination, "vaccinationCards");
       this.uploadVaccination.progress.subscribe((x) => {
@@ -198,7 +198,7 @@ export class RegistrationFormComponent implements OnInit {
       });
       this.uploadVaccination.progress.pipe(filter((x: number) => x==100)).subscribe(() =>  lodash.delay(this.restOfSubmitting, 1000,this))
     }
-    if(this.haveVaccination && this.haveResume) {
+    if(this.haveVaccination=="Yes" && this.haveResume=="Yes") {
       this.uploadResume.file=this.resumeFile;
       this.storageService.uploadFile(this.uploadResume, "resumes");
       this.uploadResume.progress.subscribe((x) => {

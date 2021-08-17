@@ -42,6 +42,13 @@ export class StorageService {
   get resumeLink() : Observable<String>{
     return this.fireStorage.ref("resumes/"+this.authService.userUid).getDownloadURL();
   }
+  
+  // fetch vaccination
+  get vaccinationLink() : Observable<String>{
+    console.log("works");
+    return this.fireStorage.ref("vaccinationCards/" + this.authService.userUid).getDownloadURL();
+  }  
+
 }
 
 @Injectable()

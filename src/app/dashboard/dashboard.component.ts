@@ -27,6 +27,9 @@ export class DashboardComponent implements OnInit {
   }
 
   resumeLink: Observable<String>;
+  
+  // vaccinationLink
+  vaccinationLink: Observable<String>;
   constructor(public authService:  AuthService, public storageService: StorageService, public userData: UserData, public router: Router, public upload: Upload, private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
@@ -35,15 +38,39 @@ export class DashboardComponent implements OnInit {
       this.userData=userDataTemp;
       if(!this.userData.isFullyLoggedIn) {
         this.router.navigate(['registration-form']);
-      } else if(this.userData.hasResume) {
+      } else if(this.userData.hasResume && this.userData.hasVaccination) {
+        this.resumeLink=this.storageService.resumeLink;
+
+        //nested for BOTH case
+        this.resumeLink.subscribe((resumeLink: String) => {
+          this.vaccinationLink=this.storageService.vaccinationLink;
+          this.vaccinationLink.subscribe((vaccinationLink: String) => {
+            this.loaded=true;
+          });
+        });
+
+      }else if(this.userData.hasResume){ // ONLY RESUME
+        
         this.resumeLink=this.storageService.resumeLink;
         this.resumeLink.subscribe((resumeLink: String) => {
           this.loaded=true;
         });
+
+      }else if(this.userData.hasVaccination){ // ONLY VACCINATION
+        
+        this.vaccinationLink = this.storageService.vaccinationLink;
+        this.vaccinationLink.subscribe((vaccinationLink: String) => {
+          this.loaded=true;
+        });
+
       } else {
         this.loaded=true;
       }
     });
+    
+    console.log(this.userData.hasVaccination);    
+    
+
   }
 
   formatDate(){

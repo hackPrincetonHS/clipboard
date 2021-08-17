@@ -140,6 +140,30 @@
 									</div>
 								</div>
 							</div>
+							
+							<div class="form-row">
+								<div class="col">
+									<div *ngIf="this.userData.hasVaccination" class="form-group">
+										<label>View Vaccination Card</label>
+										<div class="input-group">
+											<input type="text" class="form-control" disabled [placeholder]="this.loaded ? 'Vaccination Link' : ''" [value]="this.loaded ? (this.vaccinationLink | async) : ''">
+											<a [href]="this.vaccinationLink | async" target="_blank">
+												<div class="input-group-append">
+													<span class="input-group-text" id="basic-addon2">
+														<fa-icon class='ng-fa-icon' [icon]="['fas', 'external-link-alt']"></fa-icon>
+													</span>
+												</div>
+											</a>
+										</div>
+									</div>
+
+									<div *ngIf="!this.userData.hasVaccination" data-toggle="modal" data-target="#changeResumeModal" class="align-md-to-text d-flex justify-content-center">
+										<button type="button" class="btn btn-outline-danger">No Vaccination</button>
+									</div>
+
+								</div>
+							</div>
+
 							<div class="form-row">
 								<div class="col-sm">
 									<div class="form-group">
@@ -149,16 +173,9 @@
 								</div>
 							</div>
 							
-							<!-- Adding in a place to show vaccination status 						
-							<div class="form-row">
-								<div class="col-sm">
-									<div class="form-group">
-										<label>Vaccination</label>
-										<textarea disabled [placeholder]="this.loaded ? 'None' : ''" [value]="this.loaded ? this.userData.vaccinationLink: ''" class="form-control" ></textarea>
-									</div>
-								</div>
-							</div>
-							-->	
+							
+							
+							
 
 						</form>
 					</div>
