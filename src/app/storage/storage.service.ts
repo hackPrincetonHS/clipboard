@@ -23,6 +23,8 @@ export class StorageService {
   get userInfoObservable() : Observable<UserData>{
     return this.fs.collection("users").doc<UserData>(this.authService.userUid).valueChanges();
   }
+  
+  // upload resume
   uploadFile(upload: Upload) {
     const file = upload.file;
     const filePath = "resumes/"+this.authService.userUid;
@@ -30,9 +32,13 @@ export class StorageService {
     const task = ref.put(file);
     upload.progress=task.percentageChanges();
   }
+  
+  // delete resume
   deleteResume() {
     return this.fireStorage.ref("resumes/"+this.authService.userUid).delete();
   }
+  
+  // fetch resume
   get resumeLink() : Observable<String>{
     return this.fireStorage.ref("resumes/"+this.authService.userUid).getDownloadURL();
   }
@@ -56,15 +62,15 @@ export class UserData {
   shirtSize : string;
   dietaryRestrictions : string;
   githubLink : string;
-  
-  // adding reference for vaccination link:
-  vaccinationLink: string;  
-
   satisfaction : number;
   latino: boolean;
   questionsComments : string;
   isFullyLoggedIn : boolean;
+
   hasResume : boolean;
+  // checking if has vaccination
+  hasVaccination: boolean;
+
   street1 : string;
   street2 : string;
   city : string;

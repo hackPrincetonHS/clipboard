@@ -41,12 +41,13 @@ export class RegistrationFormComponent implements OnInit {
   graduationYear;
   specialAccomadations;
   shirtSize;
-
-  // basing "have vaccination" on haveGithub
   haveGithub;
-  haveVaccination;
 
   haveResume;
+  // basing "have vaccination" on haveResume 
+  haveVaccination;
+  
+
   haveAddress;
   street1Input;
   street2Input;
@@ -56,11 +57,7 @@ export class RegistrationFormComponent implements OnInit {
   countryInput;
   dietaryRestrictions;
   usingHardware;
-  
-  // basing "vaccination input" on githubLink
   githubLinkInput;
-  vaccinationCardLinkInput;  
-
   hardwareInput;
   hardwareInputText;
   termsDataSharing;
@@ -69,21 +66,18 @@ export class RegistrationFormComponent implements OnInit {
   satisfactionRange;
   questionsComments;
   latino;
-
   zip4;
   deliveryPoint;
 
   resumeFile;
+  // basing vaccinationFile on resumeFile
+  vaccinationFile;
 
   uploadPercentage;
-
   checkGithubProfile;
   schoolList=Utils.schoolList;
-
   hardwareList=Utils.hardwareList;
-
   validateClickedGithub=false;
-
   validateClickedAddress=false;
   
 
@@ -91,11 +85,11 @@ export class RegistrationFormComponent implements OnInit {
 
   ngOnInit() {
     this.haveGithub="No";
-    
+
+    this.haveResume="No";
     // Initialize Vaccination status as "no"
     this.haveVaccination="No";
 
-    this.haveResume="No";
     this.haveAddress="No";
     this.checkGithubProfile=lodash.throttle(this.sendCheckGithubProfile, 2000);
   }
@@ -134,6 +128,7 @@ export class RegistrationFormComponent implements OnInit {
     }
     //convert to truthy/falsy (not not)
     self.userData.hasResume=!!self.resumeFile;
+    self.userData.hasVaccination=!!self.hasVaccination
 
     self.userData.isFullyLoggedIn=true;
     self.userData.uid=self.authService.userUid;
@@ -169,15 +164,6 @@ export class RegistrationFormComponent implements OnInit {
     if(self.haveGithub=="Yes"){
       self.userData.githubLink=this.githubLinkInput;
     }
-    
-    // Check if user has checked "Yes" for a vaccination card
-    if(self.haveVaccination=="Yes"){
-      self.userData.vaccinationLink=this.vaccinationCardLinkInput;
-      console.log("Have vaccination checked, with link of: " + self.userData.vaccinationLink);
-    }else{
-      self.userData.vaccinationLink="None";
-    }
-
     if(self.satisfactionRange===undefined){
       self.userData.satisfaction=50;
     } else {
@@ -196,17 +182,35 @@ export class RegistrationFormComponent implements OnInit {
     self.storageService.createUser(self.userData);
   }
   submittingWithFile(){
-    this.upload.file=this.resumeFile
+    if(this.haveResume){
+      this.upload.file=this.resumeFile;
+    }else{
+      this.upload.file=this.vaccinationFile;
+    }
+
     this.storageService.uploadFile(this.upload);
-    this.upload.progress.subscribe((x: number) => {
-      this.uploadPercentage=x;
-      if(this.uploadPercentage==100){
-        //you want it to complete before moving on, otherwise it calls too quickly and the bar is only half full when it stops.
-        //looks better, feels better. I use lodash instead of settimeout because I already use lodash in another part of the class so like...
-        //this has to be passed  because it becomes an anon function. This is delt with later in the submitting funciton
-        lodash.delay(this.restOfSubmitting, 1000,this);
-      }
-    });
+    if(this.haveResume ^ this.haveVaccination){
+      this.upload.progress.subscribe((x: number) => {
+        this.uploadPercentage=x;
+        if(this.uploadPercentage==100){
+          //you want it to complete before moving on, otherwise it calls too quickly and the bar is only half full when it stops.
+          //looks better, feels better. I use lodash instead of settimeout because I already use lodash in another part of the class so like...
+          //this has to be passed  because it becomes an anon function. This is delt with later in the submitting funciton
+          lodash.delay(this.restOfSubmitting, 1000,this);
+        }
+      });
+    }else{ // case where both are uploaded
+      this.upload.progress.subscribe((x: number) => {
+        this.uploadPercentage=x/2;
+        if(this.uploadPercentage==101){
+          
+          this.upload.file=this.vaccinationFile;
+          this.storageService.uploadFile(this.upload);
+
+            lodash.delay(this.restOfSubmitting, 1000,this);
+        }
+      });
+    }
     //this.submitting(dict);
   }
   restOfSubmitting(optional){

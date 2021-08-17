@@ -671,10 +671,10 @@
 					</div>
 					<div [className]="this.haveVaccination=='Yes' ? ' col-md-8 full-width-dropdown' : 'hide-completely col-md-8 full-width-dropdown'">
 
-						<p>Enter Link(of vaccination card)</p>
+						<p>Please upload your vaccination card:</p>
 						<div class="input-group">
-							<!-- Input based on: <input type="text" class="form-control" placeholder="https://github.com/hackPrincetonHS" id="githubLinkInput" pattern="http(s)?:\/\/(www\.)?github\.com\/[A-z0-9_-]+\/?" required maxlength="200" [(ngModel)]="githubLinkInput" (focus)="githubLink.active = true" (blur)="githubLink.active = false" name="githubLinkInput" #githubLink="ngModel">-->
-							<input type="text" class="form-control" placeholder="" id="vaccinationCardLinkInput" pattern="" required maxlength="200" [(ngModel)]="vaccinationCardLinkInput" name="vaccinationCardLinkInput" #vaccinationLink="ngModel">
+							<!-- <input type="file" class="form-control-file" id="resumeFile" (change)="this.resumeFile=$event.target.files[0]"> -->
+							<input type="file" class="form-control-file" id="vaccinationCard" (change)="this.vaccinationFile=$event.target.files[0]">
 						</div>
 
 					</div>
@@ -751,8 +751,8 @@
                 <button type="button" class="btn btn-primary .navbar-right" (click)="nextPage()">Next</button>
               </div>
               <ng-template #submit>
-                <button *ngIf="haveResume!='Yes'" type="button" class="btn btn-primary .navbar-right" (click)="submitting();">Submit</button>
-                <button  *ngIf="haveResume=='Yes'" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal" (click)="submittingWithFile();">
+                <button *ngIf="haveResume!='Yes' && haveVaccination!='Yes'" type="button" class="btn btn-primary .navbar-right" (click)="submitting();">Submit</button>
+                <button  *ngIf="haveResume=='Yes' || haveVaccination=='Yes'" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal" (click)="submittingWithFile();">
                   Submit
                 </button>
 
