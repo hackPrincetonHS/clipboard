@@ -25,9 +25,9 @@ export class StorageService {
   }
   
   // upload resume
-  uploadFile(upload: Upload) {
+  uploadFile(upload: Upload, extension: string) {
     const file = upload.file;
-    const filePath = "resumes/"+this.authService.userUid;
+    const filePath = extension + "/" + this.authService.userUid;
     const ref = this.fireStorage.ref(filePath);
     const task = ref.put(file);
     upload.progress=task.percentageChanges();

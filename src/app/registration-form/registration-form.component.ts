@@ -3,10 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
 import * as lodash from 'lodash';
 import xml2js from 'xml2js';
-import { catchError } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { AuthService } from  '../auth/auth.service';
 import { StorageService, UserData, Upload } from '../storage/storage.service';
-import {firestore} from 'firebase/app';
+import {firestore, setLogLevel} from 'firebase/app';
 import Utils from '../utils/utils';
 
 
@@ -44,9 +44,9 @@ export class RegistrationFormComponent implements OnInit {
   haveGithub;
 
   haveResume;
-  // basing "have vaccination" on haveResume 
+  // basing "have vaccination" on haveResume
   haveVaccination;
-  
+
 
   haveAddress;
   street1Input;
@@ -79,9 +79,9 @@ export class RegistrationFormComponent implements OnInit {
   hardwareList=Utils.hardwareList;
   validateClickedGithub=false;
   validateClickedAddress=false;
-  
 
-  constructor(private cdr: ChangeDetectorRef, private httpClient: HttpClient, public authService:  AuthService, public userData: UserData, public storageService: StorageService, public upload: Upload) { }
+
+  constructor(private cdr: ChangeDetectorRef, private httpClient: HttpClient, public authService:  AuthService, public userData: UserData, public storageService: StorageService, public uploadResume: Upload, public uploadVaccination: Upload) { }
 
   ngOnInit() {
     this.haveGithub="No";
@@ -182,36 +182,37 @@ export class RegistrationFormComponent implements OnInit {
     self.storageService.createUser(self.userData);
   }
   submittingWithFile(){
-    if(this.haveResume){
-      this.upload.file=this.resumeFile;
-    }else{
-      this.upload.file=this.vaccinationFile;
-    }
-
-    this.storageService.uploadFile(this.upload);
-    if(this.haveResume ^ this.haveVaccination){
-      this.upload.progress.subscribe((x: number) => {
+    if(this.haveResume && !this.haveVaccination){
+      this.uploadResume.file=this.resumeFile;
+      this.storageService.uploadFile(this.uploadResume, "resumes");
+      this.uploadResume.progress.subscribe((x) => {
         this.uploadPercentage=x;
-        if(this.uploadPercentage==100){
-          //you want it to complete before moving on, otherwise it calls too quickly and the bar is only half full when it stops.
-          //looks better, feels better. I use lodash instead of settimeout because I already use lodash in another part of the class so like...
-          //this has to be passed  because it becomes an anon function. This is delt with later in the submitting funciton
-          lodash.delay(this.restOfSubmitting, 1000,this);
-        }
       });
-    }else{ // case where both are uploaded
-      this.upload.progress.subscribe((x: number) => {
-        this.uploadPercentage=x/2;
-        if(this.uploadPercentage==101){
-          
-          this.upload.file=this.vaccinationFile;
-          this.storageService.uploadFile(this.upload);
-
-            lodash.delay(this.restOfSubmitting, 1000,this);
-        }
-      });
+      this.uploadResume.progress.pipe(filter((x: number) => x==100)).subscribe(() =>  lodash.delay(this.restOfSubmitting, 1000,this))
     }
-    //this.submitting(dict);
+    if(this.haveVaccination && !this.haveResume) {
+      this.uploadVaccination.file=this.vaccinationFile;
+      this.storageService.uploadFile(this.uploadVaccination, "vaccinationCards");
+      this.uploadVaccination.progress.subscribe((x) => {
+        this.uploadPercentage=x;
+      });
+      this.uploadVaccination.progress.pipe(filter((x: number) => x==100)).subscribe(() =>  lodash.delay(this.restOfSubmitting, 1000,this))
+    }
+    if(this.haveVaccination && this.haveResume) {
+      this.uploadResume.file=this.resumeFile;
+      this.storageService.uploadFile(this.uploadResume, "resumes");
+      this.uploadResume.progress.subscribe((x) => {
+        this.uploadPercentage=x/2;
+      });
+      this.uploadResume.progress.pipe(filter((x: number) => x==100)).subscribe(() =>  {
+        this.uploadVaccination.file=this.vaccinationFile;
+        this.storageService.uploadFile(this.uploadVaccination, "vaccinationCards");
+        this.uploadVaccination.progress.subscribe((x) => {
+          this.uploadPercentage=50+x/2;
+        });
+        this.uploadVaccination.progress.pipe(filter((x: number) => x==100)).subscribe(() =>  lodash.delay(this.restOfSubmitting, 1000,this))
+      })
+    }
   }
   restOfSubmitting(optional){
     (<any>$('#modal')).modal('toggle');
@@ -305,3 +306,4 @@ export class RegistrationFormComponent implements OnInit {
     });
   }
 }
+
