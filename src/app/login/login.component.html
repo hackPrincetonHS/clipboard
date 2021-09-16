@@ -1,0 +1,40 @@
+<div *ngIf="this.loading && this.badLoginAlert.value=='false'" class="overlay">
+  <fa-icon class='ng-fa-icon fa-8x center-center' [icon]="['fas', 'cog']" [spin]="true"></fa-icon>
+</div>
+<div class="backround">
+  <div class="wrapper fadeInDown">
+    <div id="formContent">
+      <!-- Tabs Titles -->
+
+      <!-- Icon -->
+      <div class="fadeIn first img-margin">
+        <img src="./assets/img/hackphslogo2019.svg" id="icon" alt="hackPHS" />
+      </div>
+
+      <!-- Login Form -->
+      <form>
+        <input type="text" id="login" class="fadeIn second" name="login" #userEmail placeholder="email" autofocus>
+        <input type="password" [@shakeit]="this.badLoginAlert.shake" (@shakeit.done)="this.badLoginAlert.shake=false" id="password" [className]="this.badLoginAlert.shake ? 'fadeIn third erroredText' : 'fadeIn third'" name="login" #userPassword [placeholder]="this.register ? 'create password' : 'password'">
+        <input [hidden]="!this.registerShown" #userConfirm [@simpleFadeAnimation]="this.register" (@simpleFadeAnimation.done)="this.toggleRegisterShown()" [@shakeit]="this.badLoginAlert.shake" type="password" id="password2" name="login" placeholder="confirm password" [className]="this.badLoginAlert.shake ? 'erroredText' : ''">
+        <div *ngIf="this.badLoginAlert.value!='false'" class="alert-login">
+          <div class="alert alert-danger fade show low-alert-margin" role="alert">
+            {{this.badLoginAlert.value}}
+          </div>
+        </div>
+        <!-- This button makes it so that when you click enter, it goes to the right thing. You can't use display:none because then it is hidden by user interactions
+        I then also need to set the tabindexes manually so that people don't tab over to this button accidently-->
+        <button *ngIf="this.register" class="hidden-in-plain-site" (click)="this.clickRegister(userEmail, userPassword, userConfirm)" tabindex="-1" type="submit"></button>
+
+        <input [hidden]="this.register" type="submit" (click)="this.clickButtonLogin(userEmail, userPassword)" [class]="!this.firstClickRegister ? 'fadeIn fourth login' : 'fadeIn login'" value="Log In">
+        <input [ngStyle]="{'margin-top': this.register ? '20px': '5px'}" type="submit" class="fadeIn fifth register" (click)="this.clickRegister(userEmail, userPassword, userConfirm)" value="Sign Up">
+      </form>
+
+      <!-- Remind Passowrd -->
+      <div id="formFooter">
+        <a *ngIf="!this.register" class="underlineHover cursor-pointer" (click)="this.router.navigate(['reset-password']);">Forgot Password?</a>
+        <a *ngIf="this.register" class="underlineHover cursor-pointer" (click)="this.clickButtonLogin('','')">Back to Login</a>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+.content{
+  padding-top:30px
+}
+.right-icon{
+  float: right;
+  padding-right: 1rem;
+}
+.mouse-hover{
+  cursor: pointer;
+}
+.left-icon{
+  padding-left: 1rem;
+}
+.align-to-text  {
+  margin-bottom: 1rem;
+}
+@media (min-width: 576px) {
+  .align-sm-to-text{
+    margin-top: 0.5rem;
+    padding-top: 1.5rem;
+  }
+}
+@media (min-width: 768px) {
+  .align-md-to-text{
+    margin-top: 0.5rem;
+    padding-top: 1.5rem;
+  }
+}
+.overlay {
+  position: fixed; /* Sit on top of the page content */
+  display: block;
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+}
+
+.no-scroll{
+  position: fixed;
+}

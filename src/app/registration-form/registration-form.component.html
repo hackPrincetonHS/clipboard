@@ -1,0 +1,772 @@
+<div class="backround">
+  <div class="page-wrap">
+    <div class="page">
+      <div class="page-content">
+        <form class="well form-horizontal" action=" " id="contact_form">
+          <fieldset>
+            <!-- Form Name -->
+            <img src="./assets/img/hackphslogo2019.svg" alt="hackPHS" class="center">
+            <div class="form-title">
+              <legend><div style="text-align: center;"><h2><b>Registration Form</b></h2></div></legend><br>
+            </div>
+            <div class="progress">
+              <div class="progress-bar progress-bar progress-bar-striped" role="progressbar" [style.width]="((this.page)/this.numPages)*100+'%'" aria-valuenow="((this.page)/this.numPages)*100" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <div class="form-itself">
+              <div [className]="this.page==1 ? '':'hide-completely'">
+                <div class="containter">
+                  <div class="d-flex align-items-center">
+                    <h3>Demographic Info</h3><fa-icon [icon]="['fas', 'info-circle']" data-toggle="tooltip" title="These questions are purely for statistical purposes and will not influence our admissions process" class="info-circle"></fa-icon>
+                  </div>
+                  <label for="inputFirstName" class="req-label-text">Name</label>
+                  <div class="form-row">
+                    <div class="col">
+                      <input type="text" class="form-control capitalize" placeholder="First Name" id="inputFirstName" required [(ngModel)]="inputFirstName" (focus)="firstName.active = true" (blur)="firstName.active = false" name="inputFirstName" #firstName="ngModel">
+                      <div *ngIf="((firstName.errors && firstName.errors.required) || (lastName.errors && lastName.errors.required)) && ((this.attemptNext || firstName.dirty || firstName.touched || lastName.dirty || lastName.touched) && !(firstName.active || lastName.active)) && this.page==1" class="alert alert-danger">
+                        Name is required
+                      </div>
+                    </div>
+                    <div class="col">
+                      <input type="text" class="form-control capitalize" placeholder="Last Name" id="inputLastName" required [(ngModel)]="inputLastName" (focus)="lastName.active = true" (blur)="lastName.active = false" name="inputLastName" #lastName="ngModel">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col-md full-width-dropdown">
+                      <label for="inputEmail" class="req-label-text">Email</label>
+                      <input class="form-control" type="text" [placeholder]="this.authService.userEmail" disabled>
+                    </div>
+                    <div class="col-md full-width-dropdown">
+                      <div class="row phone-header">
+                        <div class="col-3 padding-right-0">
+                          <label for="inputPhone1" class="req-label-text">Phone</label>
+                          <input (input)="autoTab($event,'inputPhone2')" type="tel" name="inputPhone1" id="inputPhone1" placeholder="555" maxlength="3" required inputmode="numeric" (focus)="phone1.active = true" (blur)="phone1.active = false" digitOnly class="form-control" [(ngModel)]="inputPhone1" #phone1="ngModel">
+                        </div>
+                        <div class="phone-dash">-</div>
+                        <div class="col-3 padding-0">
+                          <input (input)="autoTab($event,'inputPhone3')" type="tel" name="inputPhone2" id="inputPhone2" placeholder="555" maxlength="3" required inputmode="numeric" (focus)="phone2.active = true" (blur)="phone2.active = false" digitOnly class="form-control" [(ngModel)]="inputPhone2" #phone2="ngModel">
+                        </div>
+                        <div class="phone-dash">-</div>
+                        <div class="col-4 padding-0">
+                          <input type="tel" name="inputPhone3" id="inputPhone3" placeholder="5555" maxlength="4" required inputmode="numeric" (focus)="phone3.active = true" (blur)="phone3.active = false" digitOnly class="form-control" [(ngModel)]="inputPhone3" #phone3="ngModel">
+                        </div>
+                      </div>
+                      <div *ngIf="this.page==1 && (phone1.errors || phone2.errors || phone3.errors) && (this.attemptNext || phone1.dirty || phone1.touched || phone2.dirty || phone2.touched || phone3.dirty || phone3.dirty) && !(phone1.active || phone2.active || phone3.active)">
+                        <div *ngIf="(phone1.errors && phone1.errors.required) || (phone2.errors && phone2.errors.required) || (phone3.errors && phone3.errors.required)" class="alert alert-danger">
+                          Phone number is required
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col-md">
+                      <label for="inputPhone1" class="req-label-text">Date of Birth</label>
+                      <div class="row phone-header">
+                        <div class="col-3">
+                          <input type="tel" name="inputMonth" id="inputMonth" aria-described-by="month-help" placeholder="3" maxlength="2" required inputmode="numeric" (focus)="month.active = true" (blur)="month.active = false" digitOnly class="form-control" [(ngModel)]="inputMonth" #month="ngModel">
+                          <p id="month-help" class="form-text text-muted">
+                            Month
+                          </p>
+                        </div>
+                        <div class="col-3">
+                          <input type="tel" name="inputDay" id="inputDay" aria-described-by="day-help" placeholder="25" maxlength="2" required inputmode="numeric" (focus)="day.active = true" (blur)="day.active = false" digitOnly class="form-control" [(ngModel)]="inputDay" #day="ngModel">
+                          <p id="day-help" class="form-text text-muted">
+                            Day
+                          </p>
+                        </div>
+                        <div class="col-4">
+                          <input type="tel" name="inputYear" id="inputYear" aria-described-by="year-help" placeholder="2003" maxlength="4" required inputmode="numeric" (focus)="year.active = true" (blur)="year.active = false" digitOnly class="form-control" [(ngModel)]="inputYear" #year="ngModel">
+                          <p id="day-help" class="form-text text-muted">
+                            Year
+                          </p>
+                        </div>
+                      </div>
+                      <div *ngIf="this.page==1 && (this.attemptNext || month.dirty || month.touched || day.dirty || day.touched || year.dirty || year.dirty) && !(month.active || day.active || year.active)">
+                        <div *ngIf="(month.errors || day.errors || year.errors)">
+                          <div *ngIf="(month.errors && month.errors.required) || (day.errors && day.errors.required) || (year.errors && year.errors.required); else notrequiredyear" class="alert alert-danger" style="margin-top:-10px">
+                            Date of Birth is required
+                          </div>
+                        </div>
+                        <div *ngIf="!validateDate(month,day,year)" class="alert alert-danger" style="margin-top:-10px">
+                          That date is invalid
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md">
+                      <label for="latinoNo" class="req-label-text full-width-dropdown">Are you Hispanic/Latino in origin?</label>
+                      <div class="form-check-inline">
+                        <input class="form-check-input" type="radio" name="latino" id="latinoNo" value="No" [(ngModel)]="latino">
+                        <label class="form-check-label" for="latinoNo">
+                            No
+                        </label>
+                      </div>
+                      <div class="form-check-inline">
+                        <input class="form-check-input" type="radio" name="latino" id="latinoYes" value="Yes" [(ngModel)]="latino">
+                        <label class="form-check-label" for="latinoYes">
+                          Yes
+                        </label>
+                      </div>
+                      <div *ngIf="this.attemptNext && this.page==1 && !this.latino" class="alert alert-danger">
+                          You must select an option
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col-md full-width-dropdown">
+                      <label for="genderMale" class="req-label-text">Gender</label>
+                      <!-- You have to hack around the radios not updating the entire thing's pristine status (but they do touched????) Angular requires non standard syntax-->
+                      <div class="form-check" id="gender">
+                        <input class="form-check-input" type="radio" id="genderMale" value="Male" name="pickGender" [(ngModel)]="pickGender" #gender1=ngModel>
+                        <label class="form-check-label" for="genderMale">
+                          Male
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" id="genderFemale" value="Female" name="genderFemale" [(ngModel)]="pickGender" #gender2=ngModel>
+                        <label class="form-check-label" for="genderFemale">
+                          Female
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" id="genderNonBin" value="Non-Binary" name="genderNonBin" [(ngModel)]="pickGender" #gender3=ngModel>
+                        <label class="form-check-label" for="genderNonBin">
+                          Non-Binary
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" id="genderPrefNot" value="Prefer Not to Say" name="genderPrefNot" [(ngModel)]="pickGender" #gender4=ngModel>
+                        <label class="form-check-label" for="genderPrefNot">
+                          Prefer Not to Say
+                        </label>
+                      </div>
+                      <div *ngIf="this.page==1 && this.attemptNext && gender1.pristine && gender2.pristine && gender3.pristine && gender4.pristine" class="alert alert-danger">
+                        You must select an option
+                      </div>
+                    </div>
+                    <div div class="col-md full-width-dropdown">
+                      <label for="race-ethnicity" class="req-label-text">Race/Ethnicity (Select all that apply)</label>
+                      <select class="selectpicker" id="race-ethnicity" name="race-ethnicity" multiple data-width="100%" [(ngModel)]="race-ethnicity" #race=ngModel>
+                        <option>White</option>
+                        <option>Black or African American</option>
+                        <option>American Indian or Alaskan Native</option>
+                        <option>Asian</option>
+                        <option>Native Hawaiian or other Pacific Islander</option>
+                        <option>Prefer Not To Say</option>
+                      </select>
+                      <div *ngIf="this.page==1 && this.attemptNext && (!race.value || race.value.length==0)" class="alert alert-danger">
+                        You must select an option
+                      </div>
+                      <div *ngIf="this.page==1 && race.value && race.value.includes('Prefer Not To Say') && race.value.length>1" class="alert alert-danger">
+                        You cannot select both Prefer Not to Say and something else
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div [className]="school.value=='My school isn\'t here' ? 'col-md-6 full-width-dropdown' : 'col-12 full-width-dropdown'">
+                      <label for="schoolInput" class="req-label-text">School</label>
+                      <select class="selectpicker" data-live-search="true" id="schoolInput" title="Nothing Selected" name="schoolInput" data-width="100%" [(ngModel)]="schoolInput" #school=ngModel>
+                        <optgroup label="Other">
+                          <!-- I add all the attributes to this so that it doesn't go away during search-->
+                          <option [attr.data-tokens]="this.schoolList.toString()">My school isn't here</option>
+                        </optgroup>
+                        <optgroup label="Schools">
+                          <option *ngFor="let item of this.schoolList;" [attr.data-tokens]="item.slice(1).toString()">{{item[0]}}</option>
+                        </optgroup>
+                      </select>
+                      <div *ngIf="this.page==1 && this.attemptNext && school.pristine" class="alert alert-danger col-12">
+                        School is required
+                      </div>
+                    </div>
+                    <div [className]="school.value=='My school isn\'t here' ? ' col-md-6 full-width-dropdown' : 'hide-completely col-md-6 full-width-dropdown'">
+                      <label for="schoolInputText" class="req-label-text">Enter your school here</label>
+                      <input type="text" class="form-control" placeholder="School" id="schoolInputText" required [(ngModel)]="schoolInputText" (focus)="schoolText.active = true" (blur)="schoolText.active = false" name="schoolInputText" #schoolText="ngModel">
+                    </div>
+                  </div>
+                  <div *ngIf="this.page==1 && (school.value=='My school isn\'t here' && schoolText.errors && (this.attemptNext || schoolText.dirty || schoolText.touched) && !schoolText.active)" class="alert alert-danger">
+                    You must either pick or enter a school
+                  </div>
+                  <div class="form-row">
+                    <div class="col-md full-width-dropdown">
+                      <label for="studyLevel" class="req-label-text">Current Level Of Study</label>
+                      <select class="selectpicker" id="studyLevel" title="Nothing Selected" name="studyLevel" data-width="100%" [(ngModel)]="studyLevel" #study=ngModel>
+                        <option>Below High School</option>
+                        <option>High School</option>
+                        <option>Undergraduate</option>
+                        <option>Graduate</option>
+                      </select>
+                      <div *ngIf="this.page==1 && this.attemptNext && study.pristine" class="alert alert-danger">
+                        You must select a level of study
+                      </div>
+                    </div>
+                    <div class="col-md full-width-dropdown">
+                      <label for="graduationYear" class="req-label-text">Expected Graduation Year</label>
+                      <select class="selectpicker" id="graduationYear" name="graduationYear" title="Nothing Selected" data-width="100%" [(ngModel)]="graduationYear" #graduation=ngModel>
+                        <option>2022</option>
+                        <option>2023</option>
+                        <option>2024</option>
+                        <option>2025</option>
+                        <option>After 2025</option>
+                      </select>
+                      <div *ngIf="this.page==1 && this.attemptNext && graduation.pristine" class="alert alert-danger">
+                        You must select a graduation year
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col-md-4 minheight86">
+                      <label for="haveGithubNo" class="full-width-dropdown">Do you have a Github?</label>
+                      <div class="form-check-inline">
+                        <input class="form-check-input" type="radio" name="haveGithub" id="noHaveGithub" value="No" [(ngModel)]="haveGithub">
+                        <label class="form-check-label" for="noHaveGithub">
+                          No
+                        </label>
+                      </div>
+                      <div class="form-check-inline">
+                        <input class="form-check-input" type="radio" name="haveGithub" id="yesHaveGithub" value="Yes" [(ngModel)]="haveGithub">
+                        <label class="form-check-label" for="yesHaveGithub">
+                          Yes
+                        </label>
+                      </div>
+                    </div>
+                    <div [className]="this.haveGithub=='Yes' ? ' col-md-8 full-width-dropdown' : 'hide-completely col-md-8 full-width-dropdown'">
+                      <label for="githubLinkInput" class="req-label-text">Paste the link to your profile here</label>
+                      <div class="input-group">
+                        <input type="text" class="form-control" placeholder="https://github.com/hackPrincetonHS" id="githubLinkInput" pattern="http(s)?:\/\/(www\.)?github\.com\/[A-z0-9_-]+\/?" required maxlength="200" [(ngModel)]="githubLinkInput" (focus)="githubLink.active = true" (blur)="githubLink.active = false" name="githubLinkInput" #githubLink="ngModel">
+                        <button type="button" class="btn btn-secondary" (click)="checkGithubProfile(githubLink)"><u class="dotted">Validate Profile</u> <fa-icon [icon]="githubLink.loading ? ['fas', 'spinner'] : (githubLink.profileData!=githubLink.value || !validateClickedGithub) ? ['fas', 'minus'] : githubLink.badProfile ? ['fas', 'times'] : ['fas', 'check']" [spin]="githubLink.loading" [styles]="!githubLink.loading && !(githubLink.profileData!=githubLink.value || !validateClickedGithub) ? githubLink.badProfile ? {'color': 'red'} : {'color': '7FFF00'} : ''"></fa-icon></button>
+                      </div>
+                      <div *ngIf="this.page==1 && (this.haveGithub=='Yes' && (this.attemptNext || githubLink.dirty || githubLink.touched || this.validateClickedGithub) && !githubLink.active)">
+                        <div *ngIf="githubLink.errors && githubLink.errors.required" class="alert alert-danger">
+                          Please enter your profile
+                        </div>
+                        <div *ngIf="!(githubLink.errors && githubLink.errors.required) && ((githubLink.errors && githubLink.errors.pattern && !githubLink.errors.required) || githubLink.badProfile)" class="alert alert-danger">
+                          That is not a valid github profile
+                        </div>
+                        <div *ngIf="!(githubLink.errors && !githubLink.errors.required) && !((githubLink.errors && githubLink.errors.pattern) || githubLink.badProfile || githubLink.loading) && githubLink.profileData!=githubLink.value" class="alert alert-danger">
+                          You must click the button to validate your profile
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col-md-4 minheight86">
+                      <label for="haveResumeNo" class="full-width-dropdown">Do you have a Resume?</label>
+                      <div class="form-check-inline">
+                        <input class="form-check-input" type="radio" name="haveResume" id="noHaveResume" value="No" [(ngModel)]="haveResume">
+                        <label class="form-check-label" for="noHaveResume">
+                          No
+                        </label>
+                      </div>
+                      <div class="form-check-inline">
+                        <input class="form-check-input" type="radio" name="haveResume" id="yesHaveResume" value="Yes" [(ngModel)]="haveResume">
+                        <label class="form-check-label" for="yesHaveResume">
+                          Yes
+                        </label>
+                      </div>
+                    </div>
+                    <div [className]="haveResume=='Yes' ? ' col-md-8 full-width-dropdown' : 'hide-completely col-md-8 full-width-dropdown'">
+                      <label for="githubLinkInput" class="req-label-text">Please upload your resume</label>
+                      <input type="file" class="form-control-file" id="resumeFile" (change)="this.resumeFile=$event.target.files[0]">
+                    </div>
+                  </div>
+                  <div *ngIf="this.page==1 && haveResume=='Yes' && this.attemptNext && !this.resumeFile" class="alert alert-danger">
+                    Please pick a file
+                  </div>
+                  <div *ngIf="this.resumeFile && this.resumeFile.type=='application/pdf' && this.resumeFile.size>2000000" class="alert alert-danger">
+                    The size limit is 2MB
+                  </div>
+                  <div *ngIf="this.resumeFile && this.resumeFile.type!='application/pdf'" class="alert alert-danger">
+                    The file must be PDF
+                  </div>
+                </div>
+                <hr class="separator">
+                <div class="containter">
+                  <h3>Logistical Info</h3>
+                  <div class="form-row">
+                    <div class="col-md full-width-dropdown">
+                      <label for="shirtSize" class="req-label-text">T-Shirt Size</label>
+                      <select class="selectpicker" id="shirtSize" title="Nothing Selected" data-width="100%" name="shirtSize" title="T-Shirt Size" [(ngModel)]="shirtSize" #tshirt=ngModel>
+                        <option>S</option>
+                        <option>M</option>
+                        <option>L</option>
+                        <option>XL</option>
+                        <option>XXL</option>
+                      </select>
+                      <div *ngIf="this.page==1 && this.attemptNext && tshirt.pristine" class="alert alert-danger">
+                        You must select a T-Shirt size
+                      </div>
+                    </div>
+                    <div class="col-md full-width-dropdown">
+                      <label for="dietaryRestrictions" class="req-label-text">Dietary Restrictions</label>
+                      <select class="selectpicker" multiple id="dietaryRestrictions" data-header="Select all that apply" name="dietaryRestrictions" data-width="100%" [(ngModel)]="dietaryRestrictions" #dietary=ngModel>
+                        <option>None</option>
+                        <option data-divider="true"></option>
+                        <option>Lactose intolerant or milk allergies</option>
+                        <option>Vegetarian</option>
+                        <option>Ovo-Vegetarian</option>
+                        <option>Lacto-Vegetarian</option>
+                        <option>Vegan</option>
+                        <option>Religious dietary practices</option>
+                        <option>Diabetic diet</option>
+                        <option>Gluten free</option>
+                        <option>Other</option>
+                      </select>
+                      <div *ngIf="this.page==1 && this.attemptNext && (!this.dietaryRestrictions || this.dietaryRestrictions.length==0)" class="alert alert-danger">
+                        You must select an option
+                      </div>
+                      <div *ngIf="this.page==1 && this.dietaryRestrictions && this.dietaryRestrictions.includes('None') && this.dietaryRestrictions.length>1" class="alert alert-danger">
+                        You cannot select both none and something else
+                      </div>
+                      <div *ngIf="this.page==1 && this.dietaryRestrictions && (this.dietaryRestrictions.includes('Other') || this.dietaryRestrictions.includes('Religious dietary practices'))" class="alert alert-info">
+                        Please specify in the special accommodations box below
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col minheight76">
+                      <label for="haveGithubNo" class="full-width-dropdown">Would you like to receive your swag by mail?</label>
+                      <div class="form-check-inline">
+                        <input class="form-check-input" type="radio" name="haveAddress" id="noHaveAddress" value="No" [(ngModel)]="haveAddress">
+                        <label class="form-check-label" for="noHaveAddress">
+                          No
+                        </label>
+                      </div>
+                      <div class="form-check-inline">
+                        <input class="form-check-input" type="radio" name="haveAddress" id="yesHaveAddress" value="Yes" [(ngModel)]="haveAddress">
+                        <label class="form-check-label" for="yesHaveAddress">
+                          Yes
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div [className]="this.haveAddress=='Yes' ? 'mb-3' : 'hide-completely'">
+                    <div class="form-row">
+                      <div class="col full-width-dropdown">
+                        <input type="text" class="form-control" placeholder="Street and Number, P.O. box, c/o" id="street1Input" required maxlength="200" [(ngModel)]="street1Input" (focus)="street1.active = true" (blur)="street1.active = false" name="street1Input" #street1="ngModel">
+                        <p class="text-muted form-text  mb-0">
+                          Address Line 1
+                        </p>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="col full-width-dropdown">
+                        <input type="text" class="form-control" placeholder="Apartment, Suite, Unit, etc." id="street2Input" required maxlength="200" [(ngModel)]="street2Input" (focus)="street2.active = true" (blur)="street2.active = false" name="street2Input" #street2="ngModel">
+                        <p class="text-muted form-text mb-0">
+                          Address Line 2
+                        </p>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="col-md-6 full-width-dropdown">
+                        <input type="text" class="form-control" id="cityInput" required maxlength="200" [(ngModel)]="cityInput" (focus)="city.active = true" (blur)="city.active = false" name="cityInput" #city="ngModel">
+                        <p class="text-muted form-text mb-0">
+                          City
+                        </p>
+                      </div>
+                      <div class="col-md-4 full-width-dropdown">
+                        <input type="text" class="form-control" id="stateInput" required maxlength="200" [(ngModel)]="stateInput" (focus)="state.active = true" (blur)="state.active = false" name="stateInput" #state="ngModel">
+                        <p class="text-muted form-text mb-0">
+                          State/Province/Region
+                        </p>
+                      </div>
+                      <div class="col-md-2 full-width-dropdown">
+                        <input type="text" class="form-control" id="zipInput" required maxlength="200" [(ngModel)]="zipInput" (focus)="zip.active = true" (blur)="zip.active = false" name="zipInput" #zip="ngModel">
+                        <p class="text-muted form-text  mb-0">
+                          ZIP/Postal Code
+                        </p>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="col full-width-dropdown">
+                        <select class="selectpicker" id="dietaryRestrictions" data-live-search="true" name="dietaryRestrictions" data-width="100%" [(ngModel)]="countryInput" #country=ngModel>
+                          <option value="Afganistan">Afghanistan</option>
+                          <option value="Albania">Albania</option>
+                          <option value="Algeria">Algeria</option>
+                          <option value="American Samoa">American Samoa</option>
+                          <option value="Andorra">Andorra</option>
+                          <option value="Angola">Angola</option>
+                          <option value="Anguilla">Anguilla</option>
+                          <option value="Antigua & Barbuda">Antigua & Barbuda</option>
+                          <option value="Argentina">Argentina</option>
+                          <option value="Armenia">Armenia</option>
+                          <option value="Aruba">Aruba</option>
+                          <option value="Australia">Australia</option>
+                          <option value="Austria">Austria</option>
+                          <option value="Azerbaijan">Azerbaijan</option>
+                          <option value="Bahamas">Bahamas</option>
+                          <option value="Bahrain">Bahrain</option>
+                          <option value="Bangladesh">Bangladesh</option>
+                          <option value="Barbados">Barbados</option>
+                          <option value="Belarus">Belarus</option>
+                          <option value="Belgium">Belgium</option>
+                          <option value="Belize">Belize</option>
+                          <option value="Benin">Benin</option>
+                          <option value="Bermuda">Bermuda</option>
+                          <option value="Bhutan">Bhutan</option>
+                          <option value="Bolivia">Bolivia</option>
+                          <option value="Bonaire">Bonaire</option>
+                          <option value="Bosnia & Herzegovina">Bosnia & Herzegovina</option>
+                          <option value="Botswana">Botswana</option>
+                          <option value="Brazil">Brazil</option>
+                          <option value="British Indian Ocean Ter">British Indian Ocean Ter</option>
+                          <option value="Brunei">Brunei</option>
+                          <option value="Bulgaria">Bulgaria</option>
+                          <option value="Burkina Faso">Burkina Faso</option>
+                          <option value="Burundi">Burundi</option>
+                          <option value="Cambodia">Cambodia</option>
+                          <option value="Cameroon">Cameroon</option>
+                          <option value="Canada">Canada</option>
+                          <option value="Canary Islands">Canary Islands</option>
+                          <option value="Cape Verde">Cape Verde</option>
+                          <option value="Cayman Islands">Cayman Islands</option>
+                          <option value="Central African Republic">Central African Republic</option>
+                          <option value="Chad">Chad</option>
+                          <option value="Channel Islands">Channel Islands</option>
+                          <option value="Chile">Chile</option>
+                          <option value="China">China</option>
+                          <option value="Christmas Island">Christmas Island</option>
+                          <option value="Cocos Island">Cocos Island</option>
+                          <option value="Colombia">Colombia</option>
+                          <option value="Comoros">Comoros</option>
+                          <option value="Congo">Congo</option>
+                          <option value="Cook Islands">Cook Islands</option>
+                          <option value="Costa Rica">Costa Rica</option>
+                          <option value="Cote DIvoire">Cote DIvoire</option>
+                          <option value="Croatia">Croatia</option>
+                          <option value="Cuba">Cuba</option>
+                          <option value="Curaco">Curacao</option>
+                          <option value="Cyprus">Cyprus</option>
+                          <option value="Czech Republic">Czech Republic</option>
+                          <option value="Denmark">Denmark</option>
+                          <option value="Djibouti">Djibouti</option>
+                          <option value="Dominica">Dominica</option>
+                          <option value="Dominican Republic">Dominican Republic</option>
+                          <option value="East Timor">East Timor</option>
+                          <option value="Ecuador">Ecuador</option>
+                          <option value="Egypt">Egypt</option>
+                          <option value="El Salvador">El Salvador</option>
+                          <option value="Equatorial Guinea">Equatorial Guinea</option>
+                          <option value="Eritrea">Eritrea</option>
+                          <option value="Estonia">Estonia</option>
+                          <option value="Ethiopia">Ethiopia</option>
+                          <option value="Falkland Islands">Falkland Islands</option>
+                          <option value="Faroe Islands">Faroe Islands</option>
+                          <option value="Fiji">Fiji</option>
+                          <option value="Finland">Finland</option>
+                          <option value="France">France</option>
+                          <option value="French Guiana">French Guiana</option>
+                          <option value="French Polynesia">French Polynesia</option>
+                          <option value="French Southern Ter">French Southern Ter</option>
+                          <option value="Gabon">Gabon</option>
+                          <option value="Gambia">Gambia</option>
+                          <option value="Georgia">Georgia</option>
+                          <option value="Germany">Germany</option>
+                          <option value="Ghana">Ghana</option>
+                          <option value="Gibraltar">Gibraltar</option>
+                          <option value="Great Britain">Great Britain</option>
+                          <option value="Greece">Greece</option>
+                          <option value="Greenland">Greenland</option>
+                          <option value="Grenada">Grenada</option>
+                          <option value="Guadeloupe">Guadeloupe</option>
+                          <option value="Guam">Guam</option>
+                          <option value="Guatemala">Guatemala</option>
+                          <option value="Guinea">Guinea</option>
+                          <option value="Guyana">Guyana</option>
+                          <option value="Haiti">Haiti</option>
+                          <option value="Hawaii">Hawaii</option>
+                          <option value="Honduras">Honduras</option>
+                          <option value="Hong Kong">Hong Kong</option>
+                          <option value="Hungary">Hungary</option>
+                          <option value="Iceland">Iceland</option>
+                          <option value="Indonesia">Indonesia</option>
+                          <option value="India">India</option>
+                          <option value="Iran">Iran</option>
+                          <option value="Iraq">Iraq</option>
+                          <option value="Ireland">Ireland</option>
+                          <option value="Isle of Man">Isle of Man</option>
+                          <option value="Israel">Israel</option>
+                          <option value="Italy">Italy</option>
+                          <option value="Jamaica">Jamaica</option>
+                          <option value="Japan">Japan</option>
+                          <option value="Jordan">Jordan</option>
+                          <option value="Kazakhstan">Kazakhstan</option>
+                          <option value="Kenya">Kenya</option>
+                          <option value="Kiribati">Kiribati</option>
+                          <option value="Korea North">Korea North</option>
+                          <option value="Korea Sout">Korea South</option>
+                          <option value="Kuwait">Kuwait</option>
+                          <option value="Kyrgyzstan">Kyrgyzstan</option>
+                          <option value="Laos">Laos</option>
+                          <option value="Latvia">Latvia</option>
+                          <option value="Lebanon">Lebanon</option>
+                          <option value="Lesotho">Lesotho</option>
+                          <option value="Liberia">Liberia</option>
+                          <option value="Libya">Libya</option>
+                          <option value="Liechtenstein">Liechtenstein</option>
+                          <option value="Lithuania">Lithuania</option>
+                          <option value="Luxembourg">Luxembourg</option>
+                          <option value="Macau">Macau</option>
+                          <option value="Macedonia">Macedonia</option>
+                          <option value="Madagascar">Madagascar</option>
+                          <option value="Malaysia">Malaysia</option>
+                          <option value="Malawi">Malawi</option>
+                          <option value="Maldives">Maldives</option>
+                          <option value="Mali">Mali</option>
+                          <option value="Malta">Malta</option>
+                          <option value="Marshall Islands">Marshall Islands</option>
+                          <option value="Martinique">Martinique</option>
+                          <option value="Mauritania">Mauritania</option>
+                          <option value="Mauritius">Mauritius</option>
+                          <option value="Mayotte">Mayotte</option>
+                          <option value="Mexico">Mexico</option>
+                          <option value="Midway Islands">Midway Islands</option>
+                          <option value="Moldova">Moldova</option>
+                          <option value="Monaco">Monaco</option>
+                          <option value="Mongolia">Mongolia</option>
+                          <option value="Montserrat">Montserrat</option>
+                          <option value="Morocco">Morocco</option>
+                          <option value="Mozambique">Mozambique</option>
+                          <option value="Myanmar">Myanmar</option>
+                          <option value="Nambia">Nambia</option>
+                          <option value="Nauru">Nauru</option>
+                          <option value="Nepal">Nepal</option>
+                          <option value="Netherland Antilles">Netherland Antilles</option>
+                          <option value="Netherlands">Netherlands (Holland, Europe)</option>
+                          <option value="Nevis">Nevis</option>
+                          <option value="New Caledonia">New Caledonia</option>
+                          <option value="New Zealand">New Zealand</option>
+                          <option value="Nicaragua">Nicaragua</option>
+                          <option value="Niger">Niger</option>
+                          <option value="Nigeria">Nigeria</option>
+                          <option value="Niue">Niue</option>
+                          <option value="Norfolk Island">Norfolk Island</option>
+                          <option value="Norway">Norway</option>
+                          <option value="Oman">Oman</option>
+                          <option value="Pakistan">Pakistan</option>
+                          <option value="Palau Island">Palau Island</option>
+                          <option value="Palestine">Palestine</option>
+                          <option value="Panama">Panama</option>
+                          <option value="Papua New Guinea">Papua New Guinea</option>
+                          <option value="Paraguay">Paraguay</option>
+                          <option value="Peru">Peru</option>
+                          <option value="Phillipines">Philippines</option>
+                          <option value="Pitcairn Island">Pitcairn Island</option>
+                          <option value="Poland">Poland</option>
+                          <option value="Portugal">Portugal</option>
+                          <option value="Puerto Rico">Puerto Rico</option>
+                          <option value="Qatar">Qatar</option>
+                          <option value="Republic of Montenegro">Republic of Montenegro</option>
+                          <option value="Republic of Serbia">Republic of Serbia</option>
+                          <option value="Reunion">Reunion</option>
+                          <option value="Romania">Romania</option>
+                          <option value="Russia">Russia</option>
+                          <option value="Rwanda">Rwanda</option>
+                          <option value="St Barthelemy">St Barthelemy</option>
+                          <option value="St Eustatius">St Eustatius</option>
+                          <option value="St Helena">St Helena</option>
+                          <option value="St Kitts-Nevis">St Kitts-Nevis</option>
+                          <option value="St Lucia">St Lucia</option>
+                          <option value="St Maarten">St Maarten</option>
+                          <option value="St Pierre & Miquelon">St Pierre & Miquelon</option>
+                          <option value="St Vincent & Grenadines">St Vincent & Grenadines</option>
+                          <option value="Saipan">Saipan</option>
+                          <option value="Samoa">Samoa</option>
+                          <option value="Samoa American">Samoa American</option>
+                          <option value="San Marino">San Marino</option>
+                          <option value="Sao Tome & Principe">Sao Tome & Principe</option>
+                          <option value="Saudi Arabia">Saudi Arabia</option>
+                          <option value="Senegal">Senegal</option>
+                          <option value="Seychelles">Seychelles</option>
+                          <option value="Sierra Leone">Sierra Leone</option>
+                          <option value="Singapore">Singapore</option>
+                          <option value="Slovakia">Slovakia</option>
+                          <option value="Slovenia">Slovenia</option>
+                          <option value="Solomon Islands">Solomon Islands</option>
+                          <option value="Somalia">Somalia</option>
+                          <option value="South Africa">South Africa</option>
+                          <option value="Spain">Spain</option>
+                          <option value="Sri Lanka">Sri Lanka</option>
+                          <option value="Sudan">Sudan</option>
+                          <option value="Suriname">Suriname</option>
+                          <option value="Swaziland">Swaziland</option>
+                          <option value="Sweden">Sweden</option>
+                          <option value="Switzerland">Switzerland</option>
+                          <option value="Syria">Syria</option>
+                          <option value="Tahiti">Tahiti</option>
+                          <option value="Taiwan">Taiwan</option>
+                          <option value="Tajikistan">Tajikistan</option>
+                          <option value="Tanzania">Tanzania</option>
+                          <option value="Thailand">Thailand</option>
+                          <option value="Togo">Togo</option>
+                          <option value="Tokelau">Tokelau</option>
+                          <option value="Tonga">Tonga</option>
+                          <option value="Trinidad & Tobago">Trinidad & Tobago</option>
+                          <option value="Tunisia">Tunisia</option>
+                          <option value="Turkey">Turkey</option>
+                          <option value="Turkmenistan">Turkmenistan</option>
+                          <option value="Turks & Caicos Is">Turks & Caicos Is</option>
+                          <option value="Tuvalu">Tuvalu</option>
+                          <option value="Uganda">Uganda</option>
+                          <option value="United Kingdom">United Kingdom</option>
+                          <option value="Ukraine">Ukraine</option>
+                          <option value="United Arab Erimates">United Arab Emirates</option>
+                          <option value="United States of America" selected="selected">United States of America</option>
+                          <option value="Uraguay">Uruguay</option>
+                          <option value="Uzbekistan">Uzbekistan</option>
+                          <option value="Vanuatu">Vanuatu</option>
+                          <option value="Vatican City State">Vatican City State</option>
+                          <option value="Venezuela">Venezuela</option>
+                          <option value="Vietnam">Vietnam</option>
+                          <option value="Virgin Islands (Brit)">Virgin Islands (Brit)</option>
+                          <option value="Virgin Islands (USA)">Virgin Islands (USA)</option>
+                          <option value="Wake Island">Wake Island</option>
+                          <option value="Wallis & Futana Is">Wallis & Futana Is</option>
+                          <option value="Yemen">Yemen</option>
+                          <option value="Zaire">Zaire</option>
+                          <option value="Zambia">Zambia</option>
+                          <option value="Zimbabwe">Zimbabwe</option>
+                        </select>
+                        <p class="text-muted form-text mb-0">
+                          Country
+                        </p>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <button type="button" class="btn btn-secondary w-100" (click)="checkAddress(street1)"><u class="dotted">Validate Address</u> <fa-icon [icon]="street1.loading ? ['fas', 'spinner'] : (street1Input!=street1.street1Input || cityInput!=street1.cityInput || stateInput!=street1.stateInput || countryInput!=street1.countryInput || !validateClickedAddress) ? ['fas', 'minus'] : street1.badAddress ? ['fas', 'times'] : ['fas', 'check']" [spin]="street1.loading" [styles]="!street1.loading && !(street1Input!=street1.street1Input || cityInput!=street1.cityInput || stateInput!=street1.stateInput || countryInput!=street1.countryInput || !validateClickedAddress) ? street1.badAddress ? {'color': 'red'} : {'color': '7FFF00'} : ''"></fa-icon></button>
+                    </div>
+                    <div *ngIf="this.page==1 && this.haveAddress=='Yes' && (this.attemptNext || (street1.dirty || street1.touched || street2.dirty || street2.touched || city.dirty || city.touched || state.dirty || state.touched || zip.dirty || zip.touched || country.dirty || country.touched) || this.validateClickedAddress)">
+                      <div *ngIf="street1Input!=street1.street1Input || cityInput!=street1.cityInput || stateInput!=street1.stateInput || countryInput!=street1.countryInput || !validateClickedAddress" class="alert alert-danger">
+                        You must validate your address
+                      </div>
+                      <div *ngIf="!(street1Input!=street1.street1Input || cityInput!=street1.cityInput || stateInput!=street1.stateInput || countryInput!=street1.countryInput || !validateClickedAddress) && street1.badAddress" class="alert alert-danger">
+                        That is not a valid address
+                      </div>
+                    </div>
+                    <div *ngIf="!street1.loading && !(street1Input!=street1.street1Input || cityInput!=street1.cityInput || stateInput!=street1.stateInput || countryInput!=street1.countryInput || !validateClickedAddress) && !street1.badAddress" class="alert alert-info">
+                      Please make sure that the address above is correct
+                    </div>
+                  </div>
+                  <!-- Accomodations -->
+                  <div class="form-group">
+                    <label for="specialAccomadations">Please list any special accommodations you may require (e.g. late arrival, early departure)</label>
+                    <textarea class="form-control" id="specialAccomadations" name="specialAccomadations" rows="3" [(ngModel)]="specialAccomadations" #accomadations=ngModel></textarea>
+                  </div>
+                  <!-- Accomodations -->
+                  
+                  
+				<!-- Vaccination Card-->
+				<div class="form-row">
+					<div class="col-md-4 minheight86">
+						<label for="haveVaccinationNo" class="full-width-dropdown">Do you have a vaccination card? (Solely used for logistical statistics and won't be shared)</label>
+						<div class="form-check-inline">
+						<input class="form-check-input" type="radio" name="haveVaccination" id="noHaveVaccination" value="No" [(ngModel)]="haveVaccination">
+						<label class="form-check-label" for="noHaveVaccination">
+							No
+						</label>
+						</div>
+						<div class="form-check-inline">
+						<input class="form-check-input" type="radio" name="haveVaccination" id="yesHaveVaccination" value="Yes" [(ngModel)]="haveVaccination">
+						<label class="form-check-label" for="yesHaveVaccination">
+							Yes
+						</label>
+						</div>
+					</div>
+				</div>
+				<!-- Vaccination Card-->
+                  
+                  
+                  
+
+                </div>
+              </div>
+
+
+              <div [className]="this.page==2 ? '':'hide-completely'">
+                <p>
+                  I have read and agree to the MLH Code of Conduct. I further agree to the terms of both the MLH Contest Terms and Conditions and the MLH Privacy Policy.</p>
+                <div class="custom-control custom-switch bottom-div">
+                  <input type="checkbox" class="custom-control-input" id="termsCodeOfConduct" name="termsCodeOfConduct" [(ngModel)]="termsCodeOfConduct" #codeOfConduct=ngModel>
+                  <label class="custom-control-label" for="termsCodeOfConduct">Yes!</label>
+                </div>
+                <div *ngIf="this.page==2 && this.attemptNext && !codeOfConduct.value" class="alert alert-danger">
+                  You must agree to the Terms and Conditions.
+                </div>
+                <p>
+                  I authorize you to share my application/registration information with Major League Hacking for event administration, ranking, and MLH administration in-line with the MLH Privacy Policy.”</p>
+                <div class="custom-control custom-switch bottom-div">
+                  <input type="checkbox" class="custom-control-input" id="termsMLH" name="termsMLH" [(ngModel)]="termsMLH" #mlh=ngModel>
+                  <label class="custom-control-label" for="termsMLH">Yes!</label>
+                </div>
+                <div *ngIf="this.page==2 && this.attemptNext && !mlh.value" class="alert alert-danger">
+                  You must agree to the MLH affiliation policy.
+                </div>
+                <p>
+                  I authorize Major League Hacking to send me occasional messages about hackathons including pre- and post-event informational emails.
+                </p>
+                <div class="custom-control custom-switch bottom-div">
+                  <input type="checkbox" class="custom-control-input" id="termsDataSharing" name="termsDataSharing" [(ngModel)]="termsDataSharing" #dataSharing=ngModel>
+                  <label class="custom-control-label" for="termsDataSharing">Yes!</label>
+                </div>
+                <div *ngIf="this.page==2 && this.attemptNext && !dataSharing.value" class="alert alert-danger">
+                  You must agree to the data sharing policy.
+                </div>
+              </div>
+
+
+              <div [className]="this.page==3 ? '':'hide-completely'">
+                <div class="container">
+                  <label for="satisfactionRange">How was your experience with this survey?</label>
+                  <input type="range" class="custom-range" min="0" max="100" step="1" id="satisfactionRange" name="satisfactionRange" [(ngModel)]="satisfactionRange" #satisfaction=ngModel>
+                  <div class="row bottom-div">
+                    <div class="col-4 align-left">Extremely Bad</div>
+                    <div class="col-4 align-center">Average</div>
+                    <div class="col-4 align-right">Extremely Good</div>
+                  </div>
+                  <div class="form-group">
+                    <label for="questionsComments">Do you have any questions/comments about this form or anything else?</label>
+                    <textarea class="form-control" id="questionsComments" name="questionsComments" rows="3" [(ngModel)]="questionsComments" #comments=ngModel></textarea>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+
+          </fieldset>
+          <div class="row">
+            <div class="col">
+              <div *ngIf="this.page!=1">
+                <button type="button" class="btn btn-secondary" (click)="prevPage()">Back</button>
+              </div>
+            </div>
+            <div class="col text-right">
+              <div *ngIf="this.page!=this.numPages; else submit">
+                <button type="button" class="btn btn-primary .navbar-right" (click)="nextPage()">Next</button>
+              </div>
+              <ng-template #submit>
+                <button *ngIf="haveResume!='Yes' && haveVaccination!='Yes'" type="button" class="btn btn-primary .navbar-right" (click)="submitting();">Submit</button>
+                <button  *ngIf="haveResume=='Yes' || haveVaccination=='Yes'" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal" (click)="submittingWithFile();">
+                  Submit
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Submitting...</h5>
+                      </div>
+                      <div class="modal-body">
+                        <div class="progress">
+                          <div class="progress-bar progress-bar progress-bar-striped" role="progressbar" [style.width]="this.uploadPercentage+'%'" aria-valuenow="this.uploadPercentage" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
