@@ -44,6 +44,9 @@ export class RegistrationFormComponent implements OnInit {
   haveGithub;
   haveResume;
   haveAddress;
+  
+  haveVaccine;  
+
   street1Input;
   street2Input;
   cityInput;
@@ -84,6 +87,9 @@ export class RegistrationFormComponent implements OnInit {
     this.haveGithub="No";
     this.haveResume="No";
     this.haveAddress="No";
+    
+    this.haveVaccine="No";
+
     this.checkGithubProfile=lodash.throttle(this.sendCheckGithubProfile, 2000);
   }
 
@@ -121,6 +127,8 @@ export class RegistrationFormComponent implements OnInit {
     }
     //convert to truthy/falsy (not not)
     self.userData.hasResume=!!self.resumeFile;
+
+    self.userData.hasVaccine=self.haveVaccine;
 
     self.userData.isFullyLoggedIn=true;
     self.userData.uid=self.authService.userUid;
@@ -170,7 +178,7 @@ export class RegistrationFormComponent implements OnInit {
         }
       }
     }
-    //console.log(self.userData);
+    console.log(self.userData);
     self.storageService.createUser(self.userData);
   }
   submittingWithFile(){

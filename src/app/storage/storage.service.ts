@@ -61,6 +61,9 @@ export class UserData {
   questionsComments : string;
   isFullyLoggedIn : boolean;
   hasResume : boolean;
+
+  hasVaccine : boolean;  
+
   street1 : string;
   street2 : string;
   city : string;
