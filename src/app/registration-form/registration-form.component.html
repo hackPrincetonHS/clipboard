@@ -201,7 +201,7 @@
                       <label for="graduationYear" class="req-label-text">Expected Graduation Year</label>
                       <select class="selectpicker" id="graduationYear" name="graduationYear" title="Nothing Selected" data-width="100%" [(ngModel)]="graduationYear" #graduation=ngModel>
                         <option>2022</option>
-                        <option>2023</option>
+                        <option>2023</option> 
                         <option>2024</option>
                         <option>2025</option>
                         <option>After 2025</option>
@@ -652,7 +652,7 @@
 
                 <!-- Vaccine Information -->
                 <div class="col-md-12 minheight86">
-                  <label for="haveVaccineNo" class="full-width-dropdown">Do you have a Vaccine card(solely used for logistical statistics, your information will not be shared)?</label>
+                  <label for="haveVaccineNo" class="full-width-dropdown">Do you have a vaccine card?(solely used for logistical statistics, your information will not be shared)?</label>
                   <div class="form-check-inline">
                     <input class="form-check-input" type="radio" name="haveVaccine" id="noHaveVaccine" value="No" [(ngModel)]="haveVaccine">
                     <label class="form-check-label" for="noHaveVaccine">
@@ -664,6 +664,12 @@
                     <label class="form-check-label" for="yesHaveVaccine">
                       Yes
                     </label>
+                  </div>
+                  <div *ngIf="haveVaccine == 'Yes'">
+                    (Please be ready to show your vaccination proof at the door!)
+                  </div>
+                  <div *ngIf="haveVaccine == 'No'">
+                    (Please be ready to show a negative COVID test at the door!)
                   </div>
                 </div>
 
