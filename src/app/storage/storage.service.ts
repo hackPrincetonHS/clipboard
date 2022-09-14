@@ -72,6 +72,7 @@ export class UserData {
   zip4 : string;
   deliveryPoint : string;
   dateCreated : firestore.Timestamp;
+  email: string; // added 9/11/22
 }
 
 @Injectable()

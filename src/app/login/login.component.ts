@@ -81,6 +81,9 @@ export  class  LoginComponent  implements  OnInit {
       }
     }
     clickRegister(userEmail, userPassword, userConfirm){
+      
+      // track email added: 9/11/2022      
+
       this.firstClickRegister=true;
       this.loading=false;
       if(this.register) {

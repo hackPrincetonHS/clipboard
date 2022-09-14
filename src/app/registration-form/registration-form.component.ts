@@ -132,6 +132,11 @@ export class RegistrationFormComponent implements OnInit {
 
     self.userData.isFullyLoggedIn=true;
     self.userData.uid=self.authService.userUid;
+    
+    // email syncing added: 9/11/2022    
+    // whoever touches this code next, I pray for your soul and sanity.
+    self.userData.email = self.authService.userEmail;
+
     self.userData.firstName=self.inputFirstName.capitalize();
     self.userData.lastName=self.inputLastName.capitalize();
     self.userData.fullName=self.inputFirstName.capitalize()+" "+self.inputLastName.capitalize();
